@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Nov 1 Move"/>
+  <meta name="theme-color" content="#080c12"/>
+  <title>Nov 1 Move Tracker</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+    html,body{height:100%;background:#080c12;overscroll-behavior:none;}
+    body{font-family:'Inter',system-ui,sans-serif;color:#e8edf5;-webkit-font-smoothing:antialiased;}
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;}
+    input[type=number]{-moz-appearance:textfield;}
+    input,button{font-family:'Inter',system-ui,sans-serif;}
+    .mono{font-family:'JetBrains Mono',monospace;}
+    .tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;}
+    .tabs::-webkit-scrollbar{display:none;}
+    .toast{
+      position:fixed;bottom:36px;left:50%;transform:translateX(-50%) translateY(16px);
+      background:#0f1923;border:1px solid #00e5a0;color:#00e5a0;
+      padding:9px 22px;border-radius:24px;font-size:11px;letter-spacing:2px;
+      opacity:0;transition:all 0.25s ease;pointer-events:none;z-index:9999;
+      white-space:nowrap;text-transform:uppercase;font-weight:600;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+    .modal-bg{position:fixed;inset:0;background:rgba(4,8,14,0.88);z-index:500;
+      display:flex;align-items:flex-end;backdrop-filter:blur(4px);}
+    .modal-sheet{background:#0f1520;border:1px solid #1e2a3a;border-radius:20px 20px 0 0;
+      width:100%;max-height:88vh;overflow-y:auto;padding:22px 18px 48px;}
+    .modal-sheet::-webkit-scrollbar{display:none;}
+    input:focus{outline:none;}
+    .inp{background:#080c12;border:1px solid #1e2a3a;border-radius:10px;
+      color:#e8edf5;padding:10px 12px;font-size:14px;width:100%;transition:border-color 0.2s;}
+    .inp:focus{border-color:#00e5a0;}
+    .num-inp{background:#080c12;border:1px solid #1e2a3a;border-radius:10px;
+      color:#e8edf5;padding:8px 10px;font-size:15px;text-align:right;
+      font-family:'JetBrains Mono',monospace;transition:border-color 0.2s;}
+    .num-inp:focus{border-color:#00e5a0;}
+    .btn-primary{background:#00e5a0;border:none;color:#080c12;border-radius:10px;
+      padding:13px;width:100%;font-size:13px;font-weight:700;letter-spacing:1px;
+      text-transform:uppercase;cursor:pointer;transition:opacity 0.2s;}
+    .btn-primary:active{opacity:0.8;}
+    .btn-danger{background:transparent;border:1px solid #ff4f6a;color:#ff4f6a;
+      border-radius:10px;padding:11px;width:100%;font-size:12px;letter-spacing:1px;
+      text-transform:uppercase;cursor:pointer;margin-top:8px;}
+    .btn-edit{background:#0f1520;border:1px solid #1e2a3a;color:#7a8a9e;
+      border-radius:8px;padding:5px 10px;font-size:11px;cursor:pointer;
+      letter-spacing:0.5px;flex-shrink:0;transition:border-color 0.2s;}
+    .btn-edit:active{border-color:#00e5a0;color:#00e5a0;}
+    .btn-del{background:#ff4f6a18;border:1px solid #ff4f6a;color:#ff4f6a;
+      border-radius:7px;padding:5px 9px;font-size:11px;cursor:pointer;}
+    .lbl{font-size:9px;color:#4a5a6e;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+    .card{background:#0d1420;border:1px solid #1a2434;border-radius:14px;overflow:hidden;margin-bottom:14px;}
+    .card-header{padding:14px 16px;border-bottom:1px solid #1a2434;
+      display:flex;align-items:center;justify-content:space-between;}
+    .card-body{padding:10px 16px 14px;}
+    .row{display:flex;align-items:center;justify-content:space-between;
+      gap:10px;padding:9px 0;border-bottom:1px solid #1a243422;}
+    .row:last-child{border-bottom:none;}
+    .stat{min-width:68px;}
+    .stat .val{font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+    .stat .key{font-size:8px;color:#4a5a6e;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
+    .pill{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;
+      border-radius:20px;font-size:11px;font-weight:600;letter-spacing:0.5px;}
+    .bar-track{height:5px;background:#1a2434;border-radius:99px;overflow:hidden;}
+    .bar-fill{height:100%;border-radius:99px;transition:width 0.5s ease;}
+    .progress-ring-wrap{position:relative;display:inline-flex;align-items:center;justify-content:center;}
+    .add-row-btn{display:flex;align-items:center;justify-content:center;gap:6px;
+      width:100%;padding:10px;background:#0a1020;border:1px dashed #1e2a3a;
+      border-radius:10px;color:#4a5a6e;font-size:12px;cursor:pointer;
+      margin-top:10px;transition:border-color 0.2s,color 0.2s;}
+    .add-row-btn:active{border-color:#00e5a0;color:#00e5a0;}
+    .color-dot{width:26px;height:26px;border-radius:50%;cursor:pointer;transition:transform 0.15s;}
+    .color-dot:active{transform:scale(0.9);}
+    .section-divider{height:1px;background:#1a2434;margin:14px 0;}
+    .tip-box{border-left:3px solid;border-radius:8px;padding:9px 12px;font-size:12px;line-height:1.5;}
+    .month-bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;}
+    .month-bar-inner{width:100%;background:#080c12;border-radius:8px;
+      display:flex;align-items:flex-end;overflow:hidden;}
+    .checklist-item{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #1a243422;align-items:flex-start;}
+    .check-circle{width:18px;height:18px;border-radius:50%;flex-shrink:0;margin-top:1px;
+      display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;}
+  </style>
+</head>
+<body>
+<div id="app"></div>
+<div class="toast" id="toast">✓ SAVED</div>
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════════════════════════════
+const INCOME = 5390.00;
+const SAVE_KEY = "nov1tracker_v1";
+const SAVE_MONTHS = ["Sept","Oct","Nov"];
+const FURNITURE_GOAL = 5000;
+const MISC_BUDGET = 1000;
+
+// ═══════════════════════════════════════════════════════════════════
+// DEFAULT STATE
+// ═══════════════════════════════════════════════════════════════════
+const DEFAULT = {
+  tab: "overview",
+  budgets: {
+    // Tesla
+    tesla_ins:   198.78,
+    tesla_fsd:   106.67,
+    tesla_rim:   16.00,
+    tesla_wind:  16.00,
+    // Living
+    rent:        525.00,
+    // Phone & Tech
+    tmobile:     250.00,
+    apple_one:   37.95,
+    amazon:      7.53,
+    // Streaming
+    starz:       11.99,
+    paramount:   8.00,
+    disney:      10.00,
+    // Transport
+    supercharge: 60.00,
+  },
+  categories: {
+    tesla: {
+      label:"Tesla", color:"#e84855", icon:"⚡",
+      items:[
+        {id:"tesla_ins",  label:"Tesla Insurance"},
+        {id:"tesla_fsd",  label:"Tesla FSD"},
+        {id:"tesla_rim",  label:"Rim & Tire Protection"},
+        {id:"tesla_wind", label:"Windshield Protection"},
+      ]
+    },
+    housing: {
+      label:"Housing", color:"#00e5a0", icon:"🏠",
+      items:[
+        {id:"rent", label:"Rent"},
+      ]
+    },
+    phone: {
+      label:"Phone & Tech", color:"#4f9eff", icon:"📱",
+      items:[
+        {id:"tmobile",   label:"T-Mobile"},
+        {id:"apple_one", label:"Apple One"},
+        {id:"amazon",    label:"Amazon Prime"},
+      ]
+    },
+    streaming: {
+      label:"Streaming", color:"#b06aff", icon:"🎬",
+      items:[
+        {id:"starz",     label:"Starz"},
+        {id:"paramount", label:"Paramount+"},
+        {id:"disney",    label:"Disney+"},
+      ]
+    },
+    transport: {
+      label:"Transportation", color:"#ffb547", icon:"🚗",
+      items:[
+        {id:"supercharge", label:"Tesla Supercharging"},
+      ]
+    },
+    misc: {
+      label:"Misc / Personal", color:"#a78bfa", icon:"🔧",
+      items:[]
+    },
+    investing: {
+      label:"Investing", color:"#00e5a0", icon:"📊",
+      items:[
+        {id:"stocks",      label:"Stocks / ETFs",        },
+        {id:"crypto",      label:"Crypto",               },
+        {id:"retirement",  label:"401k / IRA",           },
+        {id:"options",     label:"Options / Trading",    },
+      ]
+    },
+  },
+  movingExpenses: [
+    {id:"mv1", label:"Bedroom Furniture (Master)",   amount:800,  estimate:"$800–$2,000"},
+    {id:"mv2", label:"Kids Rooms (2–3 beds)",        amount:1200, estimate:"$600–$2,400"},
+    {id:"mv3", label:"Living Room",                  amount:1200, estimate:"$800–$2,500"},
+    {id:"mv4", label:"Dining Table & Chairs",        amount:500,  estimate:"$400–$1,200"},
+    {id:"mv5", label:"Moving Truck",                 amount:300,  estimate:"$200–$400"},
+    {id:"mv6", label:"Misc / Lamps / Rugs",          amount:400,  estimate:"$300–$800"},
+  ],
+  checklist: [
+    {id:"cl1", label:"Open dedicated savings account",  done:false},
+    {id:"cl2", label:"Set up auto-transfer on the 1st", done:false},
+    {id:"cl3", label:"Call T-Mobile to renegotiate",    done:false},
+    {id:"cl4", label:"Rotate streaming — pick one",     done:false},
+    {id:"cl5", label:"Get 3 moving truck quotes",       done:false},
+    {id:"cl6", label:"Find free supercharger spots",    done:false},
+    {id:"cl7", label:"Browse Wayfair / FB Marketplace", done:false},
+    {id:"cl8", label:"Confirm townhouse lease signed",  done:false},
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════
+function loadState() {
+  try {
+    const s = localStorage.getItem(SAVE_KEY);
+    if (s) {
+      const p = JSON.parse(s);
+      return {
+        ...DEFAULT, ...p,
+        budgets:        {...DEFAULT.budgets,        ...(p.budgets||{})},
+        categories:     p.categories               || DEFAULT.categories,
+        movingExpenses: p.movingExpenses            || DEFAULT.movingExpenses,
+        checklist:      p.checklist                 || DEFAULT.checklist,
+      };
+    }
+  } catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT));
+}
+
+let S = loadState();
+let modal = null;
+let saveTimer = null;
+
+function save() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try {
+      localStorage.setItem(SAVE_KEY, JSON.stringify(S));
+      const t = document.getElementById("toast");
+      if(t){ t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),1800); }
+    } catch(e){}
+  }, 400);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════════
+const $ = id => document.getElementById(id);
+const fmt = n => Number(n||0).toLocaleString("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0});
+const fmtD = n => Number(n||0).toLocaleString("en-US",{style:"currency",currency:"USD",minimumFractionDigits:2,maximumFractionDigits:2});
+const uid = () => "x"+Math.random().toString(36).slice(2,8);
+const clamp = v => Math.max(0,Number(v)||0);
+const bv = id => clamp(S.budgets[id]);
+
+function catSum(key) {
+  return (S.categories[key]?.items||[]).reduce((s,i)=>s+bv(i.id),0);
+}
+function totalFixed() {
+  return Object.keys(S.categories)
+    .filter(k=>k!=="investing")
+    .reduce((s,k)=>s+catSum(k),0);
+}
+function totalInvesting() { return catSum("investing"); }
+function movingTotal() { return S.movingExpenses.reduce((s,e)=>s+clamp(e.amount),0); }
+function netSavings() { return INCOME - totalFixed() - MISC_BUDGET; }
+function investingFromSavings() { return Math.min(totalInvesting(), netSavings()); }
+
+// ═══════════════════════════════════════════════════════════════════
+// SVG RING
+// ═══════════════════════════════════════════════════════════════════
+function ring(pct, r, stroke, color, bg) {
+  const circ = 2 * Math.PI * r;
+  const filled = circ * Math.min(1, pct/100);
+  const sz = (r+stroke)*2+4;
+  return `<svg width="${sz}" height="${sz}" style="transform:rotate(-90deg)">
+    <circle cx="${sz/2}" cy="${sz/2}" r="${r}" fill="none" stroke="${bg||"#1a2434"}" stroke-width="${stroke}"/>
+    <circle cx="${sz/2}" cy="${sz/2}" r="${r}" fill="none" stroke="${color}" stroke-width="${stroke}"
+      stroke-dasharray="${filled} ${circ}" stroke-linecap="round"/>
+  </svg>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// STAT BOX
+// ═══════════════════════════════════════════════════════════════════
+function stat(key, val, color) {
+  return `<div class="stat">
+    <div class="key">${key}</div>
+    <div class="val" style="color:${color||"#e8edf5"}">${val}</div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// NUMBER INPUT ROW
+// ═══════════════════════════════════════════════════════════════════
+function numRow(item, value) {
+  return `<div class="row">
+    <label style="font-size:13px;color:#8a9ab0;flex:1;line-height:1.3">${item.label}</label>
+    <div style="display:flex;align-items:center;gap:5px;flex-shrink:0">
+      <span style="font-size:12px;color:#2a3a4e">$</span>
+      <input type="number" inputmode="decimal" data-bid="${item.id}" value="${value}"
+        class="num-inp" style="width:86px"/>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CATEGORY CARD
+// ═══════════════════════════════════════════════════════════════════
+function catCard(key, showEdit=true) {
+  const cat = S.categories[key];
+  if (!cat) return "";
+  const total = catSum(key);
+  const rows = cat.items.map(i=>numRow(i, bv(i.id))).join("");
+  return `<div class="card">
+    <div class="card-header">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:17px">${cat.icon}</span>
+        <div>
+          <div style="font-weight:700;font-size:13px;color:${cat.color}">${cat.label}</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="mono" style="font-size:14px;font-weight:600;color:#e8edf5">${fmt(total)}</span>
+        ${showEdit?`<button class="btn-edit" data-editcat="${key}">✏️ Edit</button>`:""}
+      </div>
+    </div>
+    <div class="card-body">${rows||'<div style="font-size:12px;color:#4a5a6e;text-align:center;padding:8px">No items yet</div>'}</div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TAB: OVERVIEW
+// ═══════════════════════════════════════════════════════════════════
+function buildOverview() {
+  const tf = totalFixed();
+  const ns = netSavings();
+  const mt = movingTotal();
+  const proj = [ns, ns*2, ns*3];
+  const hitIdx = proj.findIndex(p=>p>=mt);
+  const goalMonth = hitIdx>=0 ? SAVE_MONTHS[hitIdx] : "After Nov";
+  const byNov = proj[2];
+  const leftover = byNov - mt;
+
+  // Progress ring for furniture goal
+  const ringPct = mt>0 ? Math.min(100,(proj[2]/mt)*100) : 100;
+
+  // Savings rate
+  const rate = (ns/INCOME*100).toFixed(1);
+
+  const monthBars = SAVE_MONTHS.map((m,i)=>{
+    const val = Math.max(0, proj[i]);
+    const pct = mt>0 ? Math.min(100,(val/Math.max(ns*3,1))*100) : 100;
+    const hit = val >= mt && mt > 0;
+    return `<div class="month-bar">
+      <div class="mono" style="font-size:10px;font-weight:600;color:${hit?"#00e5a0":"#8a9ab0"}">${fmt(val)}</div>
+      <div class="month-bar-inner" style="height:80px">
+        <div style="width:100%;height:${pct}%;background:${hit?"linear-gradient(0deg,#00e5a0,#00c98a)":"linear-gradient(0deg,#4f9eff88,#4f9eff44)"};
+          border-radius:6px;min-height:4px;transition:height 0.5s ease"></div>
+      </div>
+      <div style="font-size:11px;color:#4a5a6e;font-weight:500">${m}</div>
+      ${hit?`<div style="font-size:9px;color:#00e5a0;letter-spacing:1px;font-weight:700">GOAL ✓</div>`:""}
+    </div>`;
+  }).join("");
+
+  // Tips
+  const tips = [];
+  if(bv("tmobile")>=200) tips.push({c:"#ffb547",msg:"📱 T-Mobile at "+fmt(bv("tmobile"))+"/mo — call to renegotiate. Could save $80–$100/mo."});
+  const streamTotal = ["starz","paramount","disney"].reduce((s,id)=>s+bv(id),0);
+  if(streamTotal>30) tips.push({c:"#b06aff",msg:"🎬 Rotating streaming services could save ~$30/mo over 3 months."});
+  if(ns>=3000) tips.push({c:"#00e5a0",msg:"💪 Excellent savings rate of "+rate+"% — you're well ahead of your goal."});
+  const tipsHtml = tips.map(t=>`<div class="tip-box" style="border-color:${t.c};background:${t.c}10;color:${t.c};margin-bottom:8px">${t.msg}</div>`).join("");
+
+  return `
+  <!-- Hero strip -->
+  <div style="background:linear-gradient(135deg,#0d1a2a,#080c12);border:1px solid #1a2434;
+    border-radius:16px;padding:20px;margin-bottom:14px;position:relative;overflow:hidden">
+    <div style="position:absolute;top:-30px;right:-30px;width:160px;height:160px;
+      background:radial-gradient(circle,#00e5a015,transparent 70%);pointer-events:none"></div>
+    <div style="font-size:9px;color:#4a5a6e;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px">November 1 Move Plan</div>
+    <div style="font-size:28px;font-weight:800;color:#e8edf5;letter-spacing:-0.5px;margin-bottom:4px">${fmt(INCOME)}<span style="font-size:14px;color:#4a5a6e;font-weight:400">/mo</span></div>
+    <div style="font-size:13px;color:#4a5a6e;margin-bottom:18px">3 paychecks · Sept 1 → Oct 1 → Nov 1</div>
+    <div style="display:flex;flex-wrap:wrap;gap:14px">
+      ${stat("Fixed Expenses", fmt(tf), "#ff4f6a")}
+      ${stat("Misc Buffer", fmt(MISC_BUDGET), "#ffb547")}
+      ${stat("Savings/mo", fmt(ns), "#00e5a0")}
+      ${stat("Savings Rate", rate+"%", "#4f9eff")}
+    </div>
+  </div>
+
+  <!-- Furniture goal ring + projection -->
+  <div class="card" style="border-color:#00e5a033">
+    <div class="card-body" style="padding:16px">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;flex-wrap:wrap">
+        <div class="progress-ring-wrap" style="flex-shrink:0">
+          ${ring(ringPct,44,6,"#00e5a0","#1a2434")}
+          <div style="position:absolute;text-align:center">
+            <div class="mono" style="font-size:13px;font-weight:700;color:#00e5a0">${ringPct.toFixed(0)}%</div>
+          </div>
+        </div>
+        <div>
+          <div class="lbl">Furniture Goal</div>
+          <div class="mono" style="font-size:22px;font-weight:700;color:#00e5a0">${fmt(mt)}</div>
+          <div style="font-size:12px;color:#4a5a6e;margin-top:2px">Target: ${fmt(FURNITURE_GOAL)} · Hit by <span style="color:#00e5a0;font-weight:600">${goalMonth}</span></div>
+        </div>
+        <div style="margin-left:auto;text-align:right">
+          <div class="lbl">By Nov 1</div>
+          <div class="mono" style="font-size:18px;font-weight:700;color:${byNov>=mt?"#00e5a0":"#ff4f6a"}">${fmt(byNov)}</div>
+          <div style="font-size:11px;color:${leftover>=0?"#00e5a0":"#ff4f6a"};margin-top:2px">
+            ${leftover>=0?"✅ "+fmt(leftover)+" left over":"⚠️ "+fmt(Math.abs(leftover))+" short"}
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-end">${monthBars}</div>
+    </div>
+  </div>
+
+  <!-- 3-month breakdown table -->
+  <div class="card">
+    <div class="card-header">
+      <span style="font-weight:600;font-size:13px;color:#e8edf5">3-Month Breakdown</span>
+    </div>
+    <div class="card-body">
+      ${[
+        {label:"Monthly Income",           val:INCOME,      color:"#00e5a0"},
+        {label:"Fixed Expenses",           val:tf,          color:"#ff4f6a"},
+        {label:"Misc Buffer",              val:MISC_BUDGET, color:"#ffb547"},
+        {label:"Net Savings / Month",      val:ns,          color:"#4f9eff"},
+        {label:"Total Saved (3 months)",   val:byNov,       color:"#00e5a0"},
+        {label:"Furniture Fund",           val:mt,          color:"#b06aff"},
+        {label:"Left Over After Move",     val:Math.max(0,leftover), color:"#00e5a0"},
+      ].map(r=>`<div class="row">
+        <span style="font-size:13px;color:#8a9ab0">${r.label}</span>
+        <span class="mono" style="font-size:14px;font-weight:600;color:${r.color}">${fmt(r.val)}</span>
+      </div>`).join("")}
+    </div>
+  </div>
+
+  <!-- Tips -->
+  ${tipsHtml}
+  `;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TAB: BUDGET
+// ═══════════════════════════════════════════════════════════════════
+function buildBudget() {
+  const tf = totalFixed();
+  const pct = (tf/INCOME*100).toFixed(1);
+  return `
+  <div style="background:#0d1420;border:1px solid #1a2434;border-radius:14px;padding:14px 16px;margin-bottom:14px;
+    display:flex;flex-wrap:wrap;gap:14px;align-items:center">
+    ${stat("Total Expenses", fmt(tf), "#ff4f6a")}
+    ${stat("% of Income", pct+"%", "#ffb547")}
+    ${stat("Remaining", fmt(INCOME-tf), "#00e5a0")}
+    <div style="flex:1;min-width:120px">
+      <div class="lbl" style="margin-bottom:5px">Expense Ratio</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${Math.min(100,pct)}%;background:linear-gradient(90deg,#00e5a0,${pct>80?"#ff4f6a":"#4f9eff"})"></div>
+      </div>
+    </div>
+  </div>
+  ${Object.keys(S.categories).filter(k=>k!=="investing").map(k=>catCard(k)).join("")}
+  <div style="background:#0a1020;border:1px solid #1a2434;border-radius:14px;padding:14px 16px;margin-bottom:14px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div class="lbl">Misc Buffer (fixed)</div>
+        <div class="mono" style="font-size:20px;font-weight:700;color:#ffb547">${fmt(MISC_BUDGET)}<span style="font-size:12px;color:#4a5a6e">/mo</span></div>
+        <div style="font-size:11px;color:#4a5a6e;margin-top:3px">Dining · Kids · Personal · Unplanned</div>
+      </div>
+      <div style="background:#ffb54718;border:1px solid #ffb54744;border-radius:10px;padding:10px 14px;text-align:center">
+        <div style="font-size:10px;color:#ffb547;margin-bottom:3px">3 MONTHS</div>
+        <div class="mono" style="font-size:16px;font-weight:700;color:#ffb547">${fmt(MISC_BUDGET*3)}</div>
+      </div>
+    </div>
+  </div>
+  <button class="add-row-btn" data-addcat="1">＋ Add Category</button>
+  `;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TAB: MOVING
+// ═══════════════════════════════════════════════════════════════════
+function buildMoving() {
+  const mt = movingTotal();
+  const ns = netSavings();
+  const proj = [ns,ns*2,ns*3];
+  const hitMo = proj.findIndex(p=>p>=mt);
+
+  const rows = S.movingExpenses.map(e=>`
+    <div class="row">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;color:#c8d4e0">${e.label}</div>
+        ${e.estimate?`<div style="font-size:10px;color:#4a5a6e;margin-top:1px">Est: ${e.estimate}</div>`:""}
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <span style="font-size:12px;color:#2a3a4e">$</span>
+        <input type="number" inputmode="decimal" data-meid="${e.id}" value="${clamp(e.amount)}"
+          class="num-inp" style="width:86px"/>
+        <button class="btn-edit" data-editme="${e.id}">✏️</button>
+      </div>
+    </div>`).join("");
+
+  const bars = SAVE_MONTHS.map((m,i)=>{
+    const val = Math.max(0,proj[i]);
+    const pct = mt>0?Math.min(100,(val/mt)*100):100;
+    const hit = val>=mt&&mt>0;
+    return `<div class="month-bar">
+      <div class="mono" style="font-size:10px;font-weight:600;color:${hit?"#00e5a0":"#e8edf5"}">${fmt(val)}</div>
+      <div class="month-bar-inner" style="height:90px">
+        <div style="width:100%;height:${pct}%;background:${hit?"linear-gradient(0deg,#00e5a0,#00c98a)":"linear-gradient(0deg,#b06aff88,#b06aff44)"};
+          border-radius:6px;min-height:4px;transition:height 0.5s"></div>
+      </div>
+      <div style="font-size:11px;color:#4a5a6e;font-weight:500">${m}</div>
+      ${hit?`<div style="font-size:9px;color:#00e5a0;letter-spacing:1px;font-weight:700">FUNDED ✓</div>`:""}
+    </div>`;
+  }).join("");
+
+  return `
+  <div style="background:#0d1420;border:1px solid #b06aff44;border-radius:14px;padding:16px;margin-bottom:14px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+      <div>
+        <div class="lbl">Total Furniture Budget</div>
+        <div class="mono" style="font-size:28px;font-weight:800;color:#b06aff">${fmt(mt)}</div>
+        <div style="font-size:11px;color:#4a5a6e;margin-top:3px">
+          ${hitMo>=0?`Funded by <span style="color:#00e5a0;font-weight:600">${SAVE_MONTHS[hitMo]}</span>`:`Needs ${fmt(mt-proj[2])} more`}
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        ${stat("Savings/mo", fmt(ns), "#00e5a0")}
+        ${stat("After Furniture", fmt(Math.max(0,proj[2]-mt)), "#4f9eff")}
+      </div>
+    </div>
+    <div style="display:flex;gap:8px">${bars}</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:17px">📦</span>
+        <span style="font-weight:700;font-size:13px;color:#b06aff">Moving Expenses</span>
+      </div>
+      <span class="mono" style="font-size:14px;font-weight:600;color:#e8edf5">${fmt(mt)}</span>
+    </div>
+    <div class="card-body">
+      ${rows}
+      <button class="add-row-btn" data-addme="1" style="margin-top:12px">＋ Add Expense</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span style="font-weight:600;font-size:13px;color:#e8edf5">💡 Moving Tips</span></div>
+    <div class="card-body">
+      ${[
+        ["Book truck 4–6 weeks early","Rates spike in summer/fall — lock it in now."],
+        ["Facebook Marketplace","Great for dressers, dining sets, kids beds. Save 50–70%."],
+        ["Wayfair / Ashley Furniture","Best for new couches and bed frames on a budget."],
+        ["Budget 10% extra","Unexpected costs are almost guaranteed on move day."],
+        ["Overlap by 1 week","Keep current place 1 extra week for a stress-free move."],
+      ].map(([t,d])=>`<div class="checklist-item">
+        <div style="font-size:14px;flex-shrink:0">→</div>
+        <div>
+          <div style="font-size:12px;color:#b06aff;font-weight:600;margin-bottom:2px">${t}</div>
+          <div style="font-size:11px;color:#4a5a6e">${d}</div>
+        </div>
+      </div>`).join("")}
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TAB: INVESTING
+// ═══════════════════════════════════════════════════════════════════
+function buildInvesting() {
+  const mi = totalInvesting();
+  const ns = netSavings();
+  const leftAfterFurniture = Math.max(0, ns*3 - movingTotal());
+  return `
+  <div style="background:#0d1420;border:1px solid #00e5a044;border-radius:14px;padding:16px;margin-bottom:14px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+      <div>
+        <div class="lbl">Monthly Investing</div>
+        <div class="mono" style="font-size:26px;font-weight:800;color:#00e5a0">${fmt(mi)}</div>
+      </div>
+      <div style="background:#00e5a010;border:1px solid #00e5a022;border-radius:10px;padding:10px 14px;max-width:200px;font-size:11px;color:#00e5a0;line-height:1.5">
+        ${mi>0?"📈 Great — investing while saving for the move.":"Set a monthly investing amount to track growth alongside your move fund."}
+      </div>
+    </div>
+  </div>
+  ${catCard("investing")}
+  <div class="card">
+    <div class="card-header"><span style="font-weight:600;font-size:13px;color:#e8edf5">3-Month Contribution</span></div>
+    <div class="card-body">
+      <div style="display:flex;gap:8px">
+        ${SAVE_MONTHS.map((m,i)=>`<div style="flex:1;background:#080c12;border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:10px;color:#4a5a6e;margin-bottom:5px">${m}</div>
+          <div class="mono" style="font-size:14px;font-weight:700;color:#00e5a0">${fmt(mi*(i+1))}</div>
+          <div style="font-size:9px;color:#2a3a4e;margin-top:2px">contributed</div>
+        </div>`).join("")}
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header"><span style="font-weight:600;font-size:13px;color:#e8edf5">After-Move Opportunity</span></div>
+    <div class="card-body">
+      <div style="font-size:12px;color:#8a9ab0;margin-bottom:10px">After furniture is funded, you'll have <span style="color:#00e5a0;font-weight:700">${fmt(leftAfterFurniture)}</span> free by Nov 1 to allocate.</div>
+      ${[
+        ["1","Emergency Fund (3 months expenses)","#ffb547"],
+        ["2","Max out 401k / IRA contributions","#00e5a0"],
+        ["3","Stocks / ETF investing","#4f9eff"],
+        ["4","Crypto / active trading","#00e5a0"],
+      ].map(([n,l,c])=>`<div class="checklist-item">
+        <div class="check-circle" style="background:${c}18;border:1px solid ${c};color:${c}">${n}</div>
+        <span style="font-size:12px;color:#c8d4e0">${l}</span>
+      </div>`).join("")}
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TAB: CHECKLIST
+// ═══════════════════════════════════════════════════════════════════
+function buildChecklist() {
+  const done = S.checklist.filter(c=>c.done).length;
+  const total = S.checklist.length;
+  const pct = total>0?(done/total*100):0;
+  const items = S.checklist.map(c=>`
+    <div class="row" style="cursor:pointer" data-toggle="${c.id}">
+      <div style="display:flex;align-items:center;gap:12px;flex:1">
+        <div style="width:22px;height:22px;border-radius:50%;flex-shrink:0;
+          background:${c.done?"#00e5a0":"transparent"};
+          border:2px solid ${c.done?"#00e5a0":"#1e2a3a"};
+          display:flex;align-items:center;justify-content:center;
+          font-size:11px;font-weight:700;color:#080c12;transition:all 0.2s">
+          ${c.done?"✓":""}
+        </div>
+        <span style="font-size:13px;color:${c.done?"#4a5a6e":"#c8d4e0"};
+          text-decoration:${c.done?"line-through":"none"};transition:all 0.2s">${c.label}</span>
+      </div>
+      <button class="btn-del" data-delcl="${c.id}" style="opacity:0.4">✕</button>
+    </div>`).join("");
+
+  return `
+  <div class="card" style="border-color:#00e5a033">
+    <div class="card-body" style="padding:16px">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+        <div class="progress-ring-wrap" style="flex-shrink:0">
+          ${ring(pct,36,5,"#00e5a0","#1a2434")}
+          <div style="position:absolute;text-align:center">
+            <div class="mono" style="font-size:12px;font-weight:700;color:#00e5a0">${done}/${total}</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-weight:700;font-size:16px;color:#e8edf5">Move Checklist</div>
+          <div style="font-size:12px;color:#4a5a6e;margin-top:2px">${done===total?"All done — you're ready! 🎉":"Complete before November 1"}</div>
+        </div>
+      </div>
+      <div class="bar-track" style="margin-bottom:14px">
+        <div class="bar-fill" style="width:${pct}%;background:linear-gradient(90deg,#00e5a0,#4f9eff)"></div>
+      </div>
+      ${items}
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <input type="text" id="newCheckItem" placeholder="Add checklist item..." class="inp" style="flex:1;font-size:13px"/>
+        <button id="addCheckItem" style="background:#00e5a022;border:1px solid #00e5a0;color:#00e5a0;
+          border-radius:10px;padding:10px 14px;font-size:13px;cursor:pointer;white-space:nowrap;flex-shrink:0">＋ Add</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MODALS
+// ═══════════════════════════════════════════════════════════════════
+function buildModal() {
+  if (!modal) return "";
+  let body = "";
+  const colors = ["#00e5a0","#4f9eff","#ffb547","#ff4f6a","#b06aff","#e84855","#fb923c","#38bdf8","#a78bfa"];
+
+  const colorPicker = (selected) => `<div style="display:flex;gap:8px;flex-wrap:wrap">
+    ${colors.map(c=>`<div class="color-dot" data-pickcolor="${c}"
+      style="background:${c};border:${c===selected?"3px solid #fff":"3px solid transparent"}"></div>`).join("")}
+  </div>`;
+
+  const closeBtn = `<button id="modalClose" style="background:#0f1520;border:1px solid #1e2a3a;
+    color:#4a5a6e;border-radius:8px;padding:7px 12px;font-size:13px;cursor:pointer">✕</button>`;
+
+  if (modal.type==="editCat") {
+    const cat = S.categories[modal.key];
+    const isCore = ["tesla","housing","phone","streaming","transport","misc","investing"].includes(modal.key);
+    const itemRows = cat.items.map(i=>`<div class="row" style="gap:8px">
+      <input type="text" data-itemlbl="${i.id}" value="${i.label}"
+        class="inp" style="flex:1;font-size:13px"/>
+      <button class="btn-del" data-delitem="${i.id}">✕</button>
+    </div>`).join("");
+
+    body = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+        <div>
+          <div class="lbl">Edit Category</div>
+          <div style="font-size:18px;font-weight:700;color:${cat.color}">${cat.icon} ${cat.label}</div>
+        </div>
+        ${closeBtn}
+      </div>
+      <div class="lbl">Name</div>
+      <input type="text" id="catName" value="${cat.label}" class="inp" style="margin-bottom:12px"/>
+      <div class="lbl">Icon</div>
+      <input type="text" id="catIcon" value="${cat.icon}" class="inp" style="margin-bottom:12px;width:70px"/>
+      <div class="lbl" style="margin-bottom:8px">Color</div>
+      ${colorPicker(cat.color)}
+      <div class="section-divider"></div>
+      <div class="lbl">Line Items</div>
+      <div id="editItems">${itemRows||'<div style="font-size:12px;color:#4a5a6e;padding:8px 0">No items</div>'}</div>
+      <div style="display:flex;gap:8px;margin-top:10px;margin-bottom:16px">
+        <input type="text" id="newItemLbl" placeholder="New item..." class="inp" style="flex:1;font-size:13px"/>
+        <button id="addItem" style="background:#00e5a022;border:1px solid #00e5a0;color:#00e5a0;
+          border-radius:10px;padding:10px 13px;font-size:13px;cursor:pointer;white-space:nowrap">＋</button>
+      </div>
+      <button class="btn-primary" id="saveCat">✓ Save Changes</button>
+      ${!isCore?`<button class="btn-danger" id="delCat">🗑 Delete Category</button>`:""}`;
+  }
+
+  if (modal.type==="addCat") {
+    modal.color = modal.color||"#4f9eff";
+    body = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+        <div style="font-size:18px;font-weight:700;color:#e8edf5">＋ New Category</div>
+        ${closeBtn}
+      </div>
+      <div class="lbl">Name</div>
+      <input type="text" id="catName" placeholder="e.g. Pet Expenses" class="inp" style="margin-bottom:12px"/>
+      <div class="lbl">Icon (emoji)</div>
+      <input type="text" id="catIcon" placeholder="🐶" class="inp" style="margin-bottom:12px;width:70px"/>
+      <div class="lbl" style="margin-bottom:8px">Color</div>
+      ${colorPicker(modal.color)}
+      <div style="margin-top:16px"></div>
+      <button class="btn-primary" id="saveCat">✓ Create Category</button>`;
+  }
+
+  if (modal.type==="editMe") {
+    const e = S.movingExpenses.find(x=>x.id===modal.id)||{};
+    body = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+        <div style="font-size:18px;font-weight:700;color:#e8edf5">Edit Expense</div>
+        ${closeBtn}
+      </div>
+      <div class="lbl">Label</div>
+      <input type="text" id="meLabel" value="${e.label||""}" class="inp" style="margin-bottom:12px"/>
+      <div class="lbl">Estimate Range (optional)</div>
+      <input type="text" id="meEst" value="${e.estimate||""}" placeholder="e.g. $500–$1,000" class="inp" style="margin-bottom:16px"/>
+      <button class="btn-primary" id="saveMe" style="margin-bottom:8px">✓ Save</button>
+      <button class="btn-danger" id="deleteMe">🗑 Delete Expense</button>`;
+  }
+
+  if (modal.type==="addMe") {
+    body = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+        <div style="font-size:18px;font-weight:700;color:#e8edf5">＋ New Expense</div>
+        ${closeBtn}
+      </div>
+      <div class="lbl">Label</div>
+      <input type="text" id="meLabel" placeholder="e.g. Storage Unit" class="inp" style="margin-bottom:12px"/>
+      <div class="lbl">Amount ($)</div>
+      <input type="number" inputmode="decimal" id="meAmt" placeholder="0" class="inp" style="margin-bottom:12px"/>
+      <div class="lbl">Estimate Range (optional)</div>
+      <input type="text" id="meEst" placeholder="e.g. $100–$300" class="inp" style="margin-bottom:16px"/>
+      <button class="btn-primary" id="saveNewMe">✓ Add Expense</button>`;
+  }
+
+  return `<div class="modal-bg" id="modalBg">
+    <div class="modal-sheet">${body}</div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// HEADER + TABS
+// ═══════════════════════════════════════════════════════════════════
+function buildHeader() {
+  const TABS = [
+    {id:"overview",   label:"🏁 Overview"},
+    {id:"budget",     label:"💰 Budget"},
+    {id:"moving",     label:"📦 Moving"},
+    {id:"investing",  label:"📊 Invest"},
+    {id:"checklist",  label:"✅ Plan"},
+  ];
+  const tabs = TABS.map(t=>`<button data-tab="${t.id}" style="
+    background:${S.tab===t.id?"#0d1a2a":"transparent"};
+    border:${S.tab===t.id?"1px solid #1e2a3a":"1px solid transparent"};
+    border-bottom:none;
+    color:${S.tab===t.id?"#e8edf5":"#4a5a6e"};
+    padding:8px 12px;border-radius:8px 8px 0 0;
+    font-size:11px;white-space:nowrap;flex-shrink:0;font-weight:${S.tab===t.id?"600":"400"};
+    cursor:pointer;transition:color 0.2s;">${t.label}</button>`).join("");
+
+  return `<div style="background:linear-gradient(180deg,#0a1018,#080c12);
+    border-bottom:1px solid #1a2434;padding:16px 14px 0;
+    position:sticky;top:0;z-index:100">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+      <div>
+        <div style="font-size:9px;letter-spacing:3px;color:#4a5a6e;text-transform:uppercase;margin-bottom:3px">Move Plan · Nov 1, 2026</div>
+        <div style="font-size:18px;font-weight:800;color:#e8edf5;letter-spacing:-0.3px">@wabibi's Move Tracker</div>
+      </div>
+      <div style="background:#00e5a010;border:1px solid #00e5a033;border-radius:10px;padding:7px 13px;text-align:center">
+        <div style="font-size:8px;color:#4a5a6e;letter-spacing:2px;margin-bottom:2px">INCOME</div>
+        <div class="mono" style="font-size:16px;font-weight:700;color:#00e5a0">${fmt(INCOME)}</div>
+      </div>
+    </div>
+    <div class="tabs">${tabs}</div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════════════
+function render() {
+  let content = "";
+  if (S.tab==="overview")  content = buildOverview();
+  if (S.tab==="budget")    content = buildBudget();
+  if (S.tab==="moving")    content = buildMoving();
+  if (S.tab==="investing") content = buildInvesting();
+  if (S.tab==="checklist") content = buildChecklist();
+
+  document.getElementById("app").innerHTML =
+    buildHeader() +
+    `<div style="padding:16px 14px 80px;max-width:680px;margin:0 auto">${content}</div>` +
+    buildModal();
+
+  attachEvents();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// EVENTS
+// ═══════════════════════════════════════════════════════════════════
+function attachEvents() {
+  const app = document.getElementById("app");
+
+  // Tabs
+  app.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>{
+    S.tab=b.dataset.tab; modal=null; render();
+  }));
+
+  // Budget inputs
+  app.querySelectorAll("input[data-bid]").forEach(inp=>inp.addEventListener("input",()=>{
+    S.budgets[inp.dataset.bid]=clamp(inp.value); save(); refreshTotals();
+  }));
+
+  // Moving expense amount inputs
+  app.querySelectorAll("input[data-meid]").forEach(inp=>inp.addEventListener("input",()=>{
+    const e=S.movingExpenses.find(x=>x.id===inp.dataset.meid);
+    if(e){e.amount=clamp(inp.value); save(); refreshTotals();}
+  }));
+
+  // Edit category buttons
+  app.querySelectorAll("[data-editcat]").forEach(b=>b.addEventListener("click",()=>{
+    modal={type:"editCat",key:b.dataset.editcat}; render();
+  }));
+
+  // Add category
+  const addCat=app.querySelector("[data-addcat]");
+  if(addCat) addCat.addEventListener("click",()=>{modal={type:"addCat"};render();});
+
+  // Edit moving expense
+  app.querySelectorAll("[data-editme]").forEach(b=>b.addEventListener("click",()=>{
+    modal={type:"editMe",id:b.dataset.editme}; render();
+  }));
+
+  // Add moving expense
+  const addMe=app.querySelector("[data-addme]");
+  if(addMe) addMe.addEventListener("click",()=>{modal={type:"addMe"};render();});
+
+  // Checklist toggles
+  app.querySelectorAll("[data-toggle]").forEach(row=>row.addEventListener("click",e=>{
+    if(e.target.closest("[data-delcl]")) return;
+    const item=S.checklist.find(c=>c.id===row.dataset.toggle);
+    if(item){item.done=!item.done;save();render();}
+  }));
+
+  // Checklist delete
+  app.querySelectorAll("[data-delcl]").forEach(b=>b.addEventListener("click",e=>{
+    e.stopPropagation();
+    S.checklist=S.checklist.filter(c=>c.id!==b.dataset.delcl);
+    save();render();
+  }));
+
+  // Add checklist item
+  const addCI=document.getElementById("addCheckItem");
+  if(addCI) addCI.addEventListener("click",()=>{
+    const inp=document.getElementById("newCheckItem");
+    const lbl=inp?.value?.trim();
+    if(!lbl) return;
+    S.checklist.push({id:uid(),label:lbl,done:false});
+    inp.value=""; save(); render();
+  });
+
+  // Modal close
+  const mc=document.getElementById("modalClose");
+  if(mc) mc.addEventListener("click",()=>{modal=null;render();});
+  const mb=document.getElementById("modalBg");
+  if(mb) mb.addEventListener("click",e=>{if(e.target===mb){modal=null;render();}});
+
+  // ── Edit Cat Modal ──
+  if(modal?.type==="editCat") {
+    const key=modal.key;
+    app.querySelectorAll("[data-pickcolor]").forEach(d=>d.addEventListener("click",()=>{
+      S.categories[key].color=d.dataset.pickcolor; render();
+    }));
+    app.querySelectorAll("[data-delitem]").forEach(b=>b.addEventListener("click",()=>{
+      S.categories[key].items=S.categories[key].items.filter(i=>i.id!==b.dataset.delitem);
+      render();
+    }));
+    const addI=document.getElementById("addItem");
+    if(addI) addI.addEventListener("click",()=>{
+      const v=document.getElementById("newItemLbl")?.value?.trim();
+      if(!v) return;
+      const id=uid(); S.categories[key].items.push({id,label:v}); S.budgets[id]=0; render();
+    });
+    const saveC=document.getElementById("saveCat");
+    if(saveC) saveC.addEventListener("click",()=>{
+      app.querySelectorAll("[data-itemlbl]").forEach(inp=>{
+        const i=S.categories[key].items.find(x=>x.id===inp.dataset.itemlbl);
+        if(i) i.label=inp.value.trim()||i.label;
+      });
+      const n=document.getElementById("catName")?.value?.trim();
+      const ic=document.getElementById("catIcon")?.value?.trim();
+      if(n) S.categories[key].label=n;
+      if(ic) S.categories[key].icon=ic;
+      save(); modal=null; render();
+    });
+    const delC=document.getElementById("delCat");
+    if(delC) delC.addEventListener("click",()=>{
+      if(confirm(`Delete "${S.categories[key].label}"?`)){
+        delete S.categories[key]; save(); modal=null; render();
+      }
+    });
+  }
+
+  // ── Add Cat Modal ──
+  if(modal?.type==="addCat") {
+    app.querySelectorAll("[data-pickcolor]").forEach(d=>d.addEventListener("click",()=>{
+      modal.color=d.dataset.pickcolor;
+      app.querySelectorAll("[data-pickcolor]").forEach(x=>{
+        x.style.border=x.dataset.pickcolor===modal.color?"3px solid #fff":"3px solid transparent";
+      });
+    }));
+    const saveC=document.getElementById("saveCat");
+    if(saveC) saveC.addEventListener("click",()=>{
+      const n=document.getElementById("catName")?.value?.trim();
+      const ic=document.getElementById("catIcon")?.value?.trim()||"📁";
+      if(!n) return;
+      const k=uid();
+      S.categories[k]={label:n,icon:ic,color:modal.color||"#4f9eff",items:[]};
+      save(); modal=null; render();
+    });
+  }
+
+  // ── Edit Moving Expense Modal ──
+  if(modal?.type==="editMe") {
+    const saveMe=document.getElementById("saveMe");
+    if(saveMe) saveMe.addEventListener("click",()=>{
+      const e=S.movingExpenses.find(x=>x.id===modal.id);
+      if(e){
+        e.label=document.getElementById("meLabel")?.value?.trim()||e.label;
+        e.estimate=document.getElementById("meEst")?.value?.trim()||"";
+      }
+      save(); modal=null; render();
+    });
+    const delMe=document.getElementById("deleteMe");
+    if(delMe) delMe.addEventListener("click",()=>{
+      S.movingExpenses=S.movingExpenses.filter(x=>x.id!==modal.id);
+      save(); modal=null; render();
+    });
+  }
+
+  // ── Add Moving Expense Modal ──
+  if(modal?.type==="addMe") {
+    const saveNM=document.getElementById("saveNewMe");
+    if(saveNM) saveNM.addEventListener("click",()=>{
+      const lbl=document.getElementById("meLabel")?.value?.trim();
+      if(!lbl) return;
+      S.movingExpenses.push({
+        id:uid(), label:lbl,
+        amount:clamp(document.getElementById("meAmt")?.value),
+        estimate:document.getElementById("meEst")?.value?.trim()||"",
+      });
+      save(); modal=null; render();
+    });
+  }
+}
+
+function refreshTotals() { render(); }
+
+// ═══════════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════════
+render();
+</script>
+</body>
+</html>
