@@ -876,6 +876,30 @@ function attachEvents() {
     if(e){e.amount=clamp(inp.value); save(); refreshTotals();}
   }));
 
+  // One-time expense amount inputs
+  app.querySelectorAll("input[data-otid]").forEach(inp=>inp.addEventListener("input",()=>{
+    const e=S.oneTimeExpenses.find(x=>x.id===inp.dataset.otid);
+    if(e){e.amount=clamp(inp.value); save(); refreshTotals();}
+  }));
+
+  // Delete one-time expense
+  app.querySelectorAll("[data-delot]").forEach(b=>b.addEventListener("click",()=>{
+    S.oneTimeExpenses=S.oneTimeExpenses.filter(x=>x.id!==b.dataset.delot);
+    save(); render();
+  }));
+
+  // Add one-time expense
+  const addOT=app.querySelector("[data-addot]");
+  if(addOT) addOT.addEventListener("click",()=>{
+    const label=prompt("What's this one-time expense for?");
+    if(!label) return;
+    const amount=Number(prompt("Amount ($)?"))||0;
+    const month=prompt("Which month does it hit? (Sept, Oct, or Nov)","Sept");
+    const validMonth = SAVE_MONTHS.includes(month) ? month : "Sept";
+    S.oneTimeExpenses.push({id:uid(),label,amount:clamp(amount),month:validMonth});
+    save(); render();
+  });
+
   // Edit category buttons
   app.querySelectorAll("[data-editcat]").forEach(b=>b.addEventListener("click",()=>{
     modal={type:"editCat",key:b.dataset.editcat}; render();
