@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-  <meta name="apple-mobile-web-app-title" content="Nov 1 Move"/>
+  <meta name="apple-mobile-web-app-title" content="God's Plan"/>
   <meta name="theme-color" content="#080c12"/>
-  <title>Nov 1 Move Tracker</title>
+  <title>God's Plan</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
     *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -353,7 +353,6 @@ function buildOverview() {
 
   // Tips
   const tips = [];
-  if(bv("tmobile")>=200) tips.push({c:"#ffb547",msg:"📱 T-Mobile at "+fmt(bv("tmobile"))+"/mo — call to renegotiate. Could save $80–$100/mo."});
   const streamTotal = ["starz","paramount","disney"].reduce((s,id)=>s+bv(id),0);
   if(streamTotal>30) tips.push({c:"#b06aff",msg:"🎬 Rotating streaming services could save ~$30/mo over 3 months."});
   if(ns>=3000) tips.push({c:"#00e5a0",msg:"💪 Excellent savings rate of "+rate+"% — you're well ahead of your goal."});
@@ -785,7 +784,7 @@ function buildHeader() {
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
       <div>
         <div style="font-size:9px;letter-spacing:3px;color:#4a5a6e;text-transform:uppercase;margin-bottom:3px">Move Plan · Nov 1, 2026</div>
-        <div style="font-size:18px;font-weight:800;color:#e8edf5;letter-spacing:-0.3px">@wabibi's Move Tracker</div>
+        <div style="font-size:18px;font-weight:800;color:#e8edf5;letter-spacing:-0.3px">God's Plan</div>
       </div>
       <div style="background:#00e5a010;border:1px solid #00e5a033;border-radius:10px;padding:7px 13px;text-align:center">
         <div style="font-size:8px;color:#4a5a6e;letter-spacing:2px;margin-bottom:2px">INCOME</div>
