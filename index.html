@@ -184,6 +184,9 @@ const DEFAULT = {
     {id:"mv5", label:"Moving Truck",                 amount:300,  estimate:"$200–$400"},
     {id:"mv6", label:"Misc / Lamps / Rugs",          amount:400,  estimate:"$300–$800"},
   ],
+  oneTimeExpenses: [
+    {id:"ot1", label:"Car Repairs", amount:1780, month:"Sept"},
+  ],
   checklist: [
     {id:"cl1", label:"Open dedicated savings account",  done:false},
     {id:"cl2", label:"Set up auto-transfer on the 1st", done:false},
@@ -208,6 +211,7 @@ function loadState() {
         budgets:        {...DEFAULT.budgets,        ...(p.budgets||{})},
         categories:     p.categories               || DEFAULT.categories,
         movingExpenses: p.movingExpenses            || DEFAULT.movingExpenses,
+        oneTimeExpenses: p.oneTimeExpenses          || DEFAULT.oneTimeExpenses,
         checklist:      p.checklist                 || DEFAULT.checklist,
       };
     }
@@ -250,7 +254,17 @@ function totalFixed() {
 }
 function totalInvesting() { return catSum("investing"); }
 function movingTotal() { return S.movingExpenses.reduce((s,e)=>s+clamp(e.amount),0); }
+function oneTimeTotal() { return S.oneTimeExpenses.reduce((s,e)=>s+clamp(e.amount),0); }
+function oneTimeForMonth(m) { return S.oneTimeExpenses.filter(e=>e.month===m).reduce((s,e)=>s+clamp(e.amount),0); }
 function netSavings() { return INCOME - totalFixed() - MISC_BUDGET; }
+function cumulativeSavings() {
+  // returns running total by month, subtracting one-time expenses in the month they hit
+  let running = 0;
+  return SAVE_MONTHS.map(m => {
+    running += netSavings() - oneTimeForMonth(m);
+    return running;
+  });
+}
 function investingFromSavings() { return Math.min(totalInvesting(), netSavings()); }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -323,7 +337,7 @@ function buildOverview() {
   const tf = totalFixed();
   const ns = netSavings();
   const mt = movingTotal();
-  const proj = [ns, ns*2, ns*3];
+  const proj = cumulativeSavings();
   const hitIdx = proj.findIndex(p=>p>=mt);
   const goalMonth = hitIdx>=0 ? SAVE_MONTHS[hitIdx] : "After Nov";
   const byNov = proj[2];
@@ -411,6 +425,7 @@ function buildOverview() {
         {label:"Monthly Income",           val:INCOME,      color:"#00e5a0"},
         {label:"Fixed Expenses",           val:tf,          color:"#ff4f6a"},
         {label:"Misc Buffer",              val:MISC_BUDGET, color:"#ffb547"},
+        {label:"One-Time Expenses",        val:oneTimeTotal(), color:"#ff4f6a"},
         {label:"Net Savings / Month",      val:ns,          color:"#4f9eff"},
         {label:"Total Saved (3 months)",   val:byNov,       color:"#00e5a0"},
         {label:"Furniture Fund",           val:mt,          color:"#b06aff"},
@@ -470,7 +485,7 @@ function buildBudget() {
 function buildMoving() {
   const mt = movingTotal();
   const ns = netSavings();
-  const proj = [ns,ns*2,ns*3];
+  const proj = cumulativeSavings();
   const hitMo = proj.findIndex(p=>p>=mt);
 
   const rows = S.movingExpenses.map(e=>`
@@ -518,6 +533,32 @@ function buildMoving() {
       </div>
     </div>
     <div style="display:flex;gap:8px">${bars}</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:17px">⚠️</span>
+        <span style="font-weight:700;font-size:13px;color:#ff4f6a">One-Time Expenses</span>
+      </div>
+      <span class="mono" style="font-size:14px;font-weight:600;color:#e8edf5">${fmt(oneTimeTotal())}</span>
+    </div>
+    <div class="card-body">
+      ${S.oneTimeExpenses.map(e=>`
+        <div class="row">
+          <div style="flex:1;min-width:0">
+            <div style="font-size:13px;color:#c8d4e0">${e.label}</div>
+            <div style="font-size:10px;color:#4a5a6e;margin-top:1px">Hits in ${e.month}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+            <span style="font-size:12px;color:#2a3a4e">$</span>
+            <input type="number" inputmode="decimal" data-otid="${e.id}" value="${clamp(e.amount)}"
+              class="num-inp" style="width:86px"/>
+            <button class="btn-del" data-delot="${e.id}">✕</button>
+          </div>
+        </div>`).join("")}
+      <button class="add-row-btn" data-addot="1" style="margin-top:12px">＋ Add One-Time Expense</button>
+    </div>
   </div>
 
   <div class="card">
