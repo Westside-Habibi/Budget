@@ -1,3986 +1,2658 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="God's Plan">
-<meta name="theme-color" content="#000000">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no"/>
+<meta name="theme-color" content="#0b0d12"/>
 <title>God's Plan</title>
+
 <style>
 :root{
-  --bg:#000;
-  --card:#1c1c1e;
-  --card2:#121214;
-  --line:rgba(84,84,88,.36);
-  --text:#fff;
-  --secondary:rgba(235,235,245,.60);
-  --tertiary:rgba(235,235,245,.30);
-  --blue:#0a84ff;
-  --green:#30d158;
-  --red:#ff453a;
-  --orange:#ff9f0a;
-  --purple:#bf5af2;
-  --cyan:#64d2ff;
-  --radius:16px;
-  --large-radius:22px;
+  --bg:#080a0f;
+  --panel:#10131a;
+  --panel2:#151923;
+  --panel3:#1b202b;
+  --text:#f5f7fb;
+  --muted:#8d95a5;
+  --muted2:#667080;
+  --line:#252b37;
+  --green:#36d399;
+  --green2:#1fa774;
+  --red:#ff5c6c;
+  --yellow:#f6c453;
+  --blue:#6ea8fe;
+  --purple:#a78bfa;
+  --radius:18px;
+  --radius-sm:12px;
+  --shadow:0 14px 40px rgba(0,0,0,.28);
 }
+
 *{
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
 }
+
 html,body{
   margin:0;
   padding:0;
-  min-height:100%;
   background:var(--bg);
   color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,sans-serif;
-  -webkit-font-smoothing:antialiased;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,Arial,sans-serif;
+  min-height:100%;
 }
+
 body{
-  padding-bottom:calc(82px + env(safe-area-inset-bottom));
+  padding-bottom:90px;
 }
-button,input{
-  font-family:inherit;
+
+button,
+input,
+select{
+  font:inherit;
 }
+
 button{
   border:0;
-  background:none;
   color:inherit;
+  cursor:pointer;
 }
-input{
+
+input,
+select{
   color:var(--text);
-}
-input:focus{
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:12px;
   outline:none;
 }
-::-webkit-scrollbar{
+
+input:focus,
+select:focus{
+  border-color:#485263;
+}
+
+.app{
+  width:100%;
+  max-width:760px;
+  margin:0 auto;
+  padding:18px 16px 100px;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.brand{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+.brand-title{
+  font-size:25px;
+  font-weight:800;
+  letter-spacing:-.7px;
+}
+
+.brand-sub{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.icon-btn{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+}
+
+.screen{
   display:none;
 }
-.nav{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:rgba(0,0,0,.86);
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-  border-bottom:.5px solid var(--line);
-  padding-top:max(8px,env(safe-area-inset-top));
+
+.screen.active{
+  display:block;
 }
-.nav-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:8px 16px 10px;
-}
-.title{
-  font-size:34px;
-  line-height:1;
-  font-weight:750;
-  letter-spacing:-.8px;
-}
-.subtitle{
-  margin-top:5px;
-  font-size:13px;
-  color:var(--secondary);
-}
-.income-button{
-  color:var(--blue);
-  font-size:15px;
-  font-weight:600;
-}
-.month-scroll{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding:0 16px 12px;
-}
-.month-chip{
-  flex:none;
-  border-radius:99px;
-  background:#242426;
-  color:var(--secondary);
-  padding:8px 15px;
-  font-size:14px;
-  font-weight:600;
-  white-space:nowrap;
-}
-.month-chip.active{
-  background:var(--blue);
-  color:#fff;
-}
+
 .hero{
-  margin:18px 16px 20px;
-  padding:21px;
-  border-radius:var(--large-radius);
-  background:linear-gradient(145deg,#1d1d20,#0d0d0f);
-  border:.5px solid var(--line);
-  overflow:hidden;
-  position:relative;
+  background:
+    radial-gradient(circle at 90% 0%,rgba(54,211,153,.13),transparent 35%),
+    linear-gradient(145deg,#111720,#0e1118);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:22px;
+  box-shadow:var(--shadow);
+  margin-bottom:14px;
 }
-.hero-glow{
-  position:absolute;
-  width:250px;
-  height:250px;
-  right:-100px;
-  top:-100px;
-  background:radial-gradient(circle,rgba(48,209,88,.16),transparent 70%);
-  pointer-events:none;
-}
-.eyebrow{
-  color:var(--tertiary);
+
+.hero-label{
+  color:var(--muted);
+  font-size:12px;
   text-transform:uppercase;
-  letter-spacing:.6px;
-  font-size:11px;
-  font-weight:700;
+  letter-spacing:1px;
+  margin-bottom:8px;
 }
-.hero-number{
-  margin-top:5px;
-  font-size:40px;
-  font-weight:750;
-  letter-spacing:-1px;
-  font-variant-numeric:tabular-nums;
+
+.hero-value{
+  font-size:42px;
+  line-height:1;
+  font-weight:850;
+  letter-spacing:-1.8px;
 }
-.hero-caption{
-  margin-top:3px;
-  font-size:14px;
-  color:var(--secondary);
+
+.hero-value.negative{
+  color:var(--red);
 }
-.stats{
-  display:flex;
-  flex-wrap:wrap;
-  gap:22px;
-  margin-top:18px;
+
+.hero-value.positive{
+  color:var(--green);
 }
-.stat-label{
-  color:var(--tertiary);
-  font-size:10px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.4px;
-}
-.stat-value{
-  margin-top:3px;
-  font-size:17px;
-  font-weight:700;
-  font-variant-numeric:tabular-nums;
-}
-.progress{
-  height:6px;
-  margin-top:18px;
-  background:rgba(118,118,128,.24);
-  border-radius:99px;
-  overflow:hidden;
-}
-.progress-fill{
-  height:100%;
-  border-radius:99px;
-  background:var(--green);
-}
-.progress-row{
+
+.hero-meta{
   display:flex;
   justify-content:space-between;
-  margin-top:7px;
-  color:var(--tertiary);
-  font-size:12px;
-}
-.section{
-  margin:0 16px 30px;
-}
-.section-title{
-  padding:0 4px 7px;
-  margin-top:24px;
-  color:var(--secondary);
-  font-size:12px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-}
-.section-title:first-child{
-  margin-top:0;
-}
-.group{
-  overflow:hidden;
-  border-radius:var(--radius);
-  background:var(--card);
-}
-.row{
-  min-height:45px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 16px;
-  border-bottom:.5px solid var(--line);
-}
-.row:last-child{
-  border-bottom:0;
-}
-.row-label{
-  flex:1;
-  min-width:0;
-  font-size:16px;
-}
-.row-sub{
-  margin-top:2px;
-  color:var(--tertiary);
-  font-size:12px;
-}
-.row-value{
-  color:var(--secondary);
-  font-size:16px;
-  font-variant-numeric:tabular-nums;
-  flex:none;
-}
-.chevron{
-  color:var(--tertiary);
-  font-size:19px;
-}
-.dot{
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  flex:none;
-}
-.num-input{
-  width:95px;
-  border:0;
-  background:transparent;
-  text-align:right;
-  font-size:16px;
-  font-variant-numeric:tabular-nums;
-}
-.text-input{
-  flex:1;
-  min-width:0;
-  border:0;
-  background:transparent;
-  font-size:16px;
-}
-.add-row{
-  width:100%;
-  min-height:45px;
-  display:flex;
-  align-items:center;
-  padding:10px 16px;
-  color:var(--blue);
-  font-size:16px;
-  text-align:left;
-}
-.footer-note{
-  padding:7px 4px 0;
-  color:var(--tertiary);
-  font-size:12px;
-  line-height:1.45;
-}
-.balance-positive{
-  color:var(--green)!important;
-}
-.balance-negative{
-  color:var(--red)!important;
-}
-.starting-card{
-  margin:0 16px 14px;
-  padding:15px 17px;
-  border-radius:15px;
-  background:rgba(10,132,255,.10);
-  border:.5px solid rgba(10,132,255,.20);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.starting-label{
-  color:var(--secondary);
+  gap:12px;
+  margin-top:15px;
+  color:var(--muted);
   font-size:13px;
 }
-.starting-value{
-  color:var(--blue);
-  font-size:18px;
-  font-weight:700;
-  font-variant-numeric:tabular-nums;
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  margin-bottom:14px;
+  overflow:hidden;
 }
-.tabbar{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  z-index:200;
-  display:flex;
-  padding-bottom:env(safe-area-inset-bottom);
-  background:rgba(28,28,30,.88);
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-  border-top:.5px solid var(--line);
+
+.card-pad{
+  padding:17px;
 }
-.tab{
-  flex:1;
-  padding:8px 2px 7px;
-  color:var(--tertiary);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:3px;
-}
-.tab.active{
-  color:var(--blue);
-}
-.tab-icon{
-  font-size:21px;
-  line-height:1;
-}
-.tab-label{
-  font-size:10px;
-  font-weight:600;
-}
-.fab{
-  position:fixed;
-  right:20px;
-  bottom:calc(78px + env(safe-area-inset-bottom));
-  z-index:300;
-  width:56px;
-  height:56px;
-  border-radius:50%;
-  background:var(--blue);
-  color:#fff;
-  font-size:29px;
-  box-shadow:0 5px 20px rgba(10,132,255,.40);
-}
-.fab-bg{
-  position:fixed;
-  inset:0;
-  z-index:299;
-  background:rgba(0,0,0,.42);
-}
-.fab-menu{
-  position:fixed;
-  right:20px;
-  bottom:calc(142px + env(safe-area-inset-bottom));
-  z-index:301;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-end;
-  gap:8px;
-}
-.fab-option{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 17px 10px 13px;
-  background:var(--card);
-  border:.5px solid var(--line);
-  border-radius:99px;
-  font-size:15px;
-  font-weight:600;
-  box-shadow:0 5px 18px rgba(0,0,0,.35);
-}
-.sheet-bg{
-  position:fixed;
-  inset:0;
-  z-index:900;
-  background:rgba(0,0,0,.48);
-  display:flex;
-  align-items:flex-end;
-}
-.sheet{
-  width:100%;
-  max-height:90vh;
-  overflow-y:auto;
-  background:#1c1c1e;
-  border-radius:21px 21px 0 0;
-  padding-bottom:max(20px,env(safe-area-inset-bottom));
-}
-.handle{
-  width:36px;
-  height:5px;
-  border-radius:99px;
-  background:rgba(120,120,128,.36);
-  margin:8px auto 3px;
-}
-.sheet-nav{
-  min-height:51px;
+
+.section-head{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 16px;
-  border-bottom:.5px solid var(--line);
+  gap:12px;
+  padding:17px 17px 13px;
 }
-.sheet-title{
-  font-size:17px;
+
+.section-title{
+  font-size:16px;
+  font-weight:750;
+}
+
+.section-sub{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+
+.btn{
+  border-radius:11px;
+  padding:9px 12px;
+  background:var(--panel3);
+  border:1px solid var(--line);
+  font-size:12px;
   font-weight:650;
 }
-.sheet-btn{
-  color:var(--blue);
-  font-size:17px;
-}
-.sheet-btn.bold{
-  font-weight:600;
-}
-.sheet-body{
-  padding:20px 16px;
-}
-.field{
-  margin-bottom:20px;
-}
-.field-label{
-  margin-bottom:8px;
-  color:var(--secondary);
-  font-size:12px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.4px;
-}
-.field-box{
-  padding:12px 14px;
-  border-radius:11px;
-  background:rgba(118,118,128,.15);
-}
-.field-box input{
-  width:100%;
-  border:0;
-  background:transparent;
-  font-size:16px;
-}
-.delete-button{
-  width:100%;
-  padding:14px;
-  color:var(--red);
-  font-size:17px;
-}
-.callout{
-  padding:13px 14px;
-  border-radius:12px;
-  background:rgba(10,132,255,.10);
-  color:var(--secondary);
-  font-size:14px;
-  line-height:1.45;
-}
-.color-grid{
-  display:flex;
-  flex-wrap:wrap;
-  gap:13px;
-}
-.color-dot{
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  position:relative;
-}
-.color-dot.selected:after{
-  content:"";
-  position:absolute;
-  inset:-4px;
-  border:2px solid white;
-  border-radius:50%;
-}
-.check{
-  width:25px;
-  height:25px;
-  border-radius:50%;
-  border:2px solid rgba(235,235,245,.3);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  color:var(--green);
-  flex:none;
-}
-.check.done{
+
+.btn.primary{
+  background:var(--green);
+  color:#06120d;
   border-color:var(--green);
 }
-.strike{
-  text-decoration:line-through;
-  opacity:.48;
+
+.btn.danger{
+  color:#fff;
+  background:rgba(255,92,108,.12);
+  border-color:rgba(255,92,108,.25);
 }
-.month-delete{
+
+.btn.small{
+  padding:7px 9px;
+  font-size:11px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  padding:0 17px 17px;
+}
+
+.stat{
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:13px;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:5px;
+}
+
+.stat-value{
+  font-size:18px;
+  font-weight:760;
+}
+
+.stat-value.green{
+  color:var(--green);
+}
+
+.stat-value.red{
   color:var(--red);
-  font-size:22px;
-  padding:4px 0 4px 8px;
 }
-.month-add-box{
+
+.stat-value.yellow{
+  color:var(--yellow);
+}
+
+.progress{
+  height:8px;
+  border-radius:99px;
+  overflow:hidden;
+  background:#252b34;
+}
+
+.progress-fill{
+  height:100%;
+  background:var(--green);
+  border-radius:inherit;
+  transition:width .25s ease;
+}
+
+.progress-fill.warning{
+  background:var(--yellow);
+}
+
+.progress-fill.danger{
+  background:var(--red);
+}
+
+.month-picker{
   display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:14px;
+}
+
+.month-picker select{
+  flex:1;
+  height:44px;
+  padding:0 12px;
+}
+
+.month-nav{
+  display:flex;
+  gap:6px;
+}
+
+.month-nav button{
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  background:var(--panel);
+  border:1px solid var(--line);
+}
+
+.income-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:13px 17px;
+  border-top:1px solid var(--line);
+}
+
+.income-row:first-child{
+  border-top:0;
+}
+
+.row-left{
+  min-width:0;
+}
+
+.row-title{
+  font-size:14px;
+  font-weight:650;
+}
+
+.row-sub{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:3px;
+}
+
+.amount{
+  font-size:14px;
+  font-weight:750;
+  white-space:nowrap;
+}
+
+.amount.green{
+  color:var(--green);
+}
+
+.amount.red{
+  color:var(--red);
+}
+
+.category{
+  border-top:1px solid var(--line);
+}
+
+.category:first-child{
+  border-top:0;
+}
+
+.category-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 17px;
+  cursor:pointer;
+}
+
+.category-name{
+  font-weight:700;
+  font-size:14px;
+}
+
+.category-total{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.expense-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px 17px 11px 24px;
+  border-top:1px solid rgba(37,43,55,.72);
+  min-height:58px;
+  transition:background .15s ease,opacity .15s ease;
+}
+
+.expense-row:hover{
+  background:rgba(255,255,255,.015);
+}
+
+.expense-row.paid{
+  background:rgba(54,211,153,.045);
+}
+
+.expense-row.paid .expense-name{
+  text-decoration:line-through;
+  color:var(--muted);
+}
+
+.expense-main{
+  flex:1;
+  min-width:0;
+  cursor:pointer;
+}
+
+.expense-name{
+  font-size:13px;
+  font-weight:600;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.expense-note{
+  color:var(--muted);
+  font-size:10px;
+  margin-top:2px;
+}
+
+.expense-amount{
+  font-size:13px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+.paid-check{
+  width:23px;
+  height:23px;
+  min-width:23px;
+  border-radius:7px;
+  border:1px solid #46505f;
+  background:#0c0f15;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:transparent;
+  font-size:14px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.paid-check.checked{
+  background:var(--green);
+  border-color:var(--green);
+  color:#06120d;
+}
+
+.expense-status{
+  font-size:9px;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+.expense-row.paid .expense-status{
+  color:var(--green);
+}
+
+.paid-summary{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  padding:0 17px 17px;
+}
+
+.paid-card{
+  background:var(--panel2);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:13px;
+}
+
+.paid-card-label{
+  color:var(--muted);
+  font-size:10px;
+  margin-bottom:5px;
+}
+
+.paid-card-value{
+  font-size:17px;
+  font-weight:760;
+}
+
+.paid-card-value.green{
+  color:var(--green);
+}
+
+.paid-card-value.red{
+  color:var(--red);
+}
+
+.empty{
+  padding:25px 17px;
+  color:var(--muted);
+  text-align:center;
+  font-size:13px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
   gap:10px;
 }
-.month-add-box input{
-  flex:1;
+
+.form-field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
 }
-.month-add-box button{
-  color:var(--blue);
+
+.form-field.full{
+  grid-column:1/-1;
+}
+
+.form-field label{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.form-field input,
+.form-field select{
+  width:100%;
+  min-height:44px;
+  padding:0 12px;
+}
+
+.form-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  margin-top:14px;
+}
+
+.month-list{
+  display:flex;
+  flex-direction:column;
+}
+
+.month-item{
+  padding:15px 17px;
+  border-top:1px solid var(--line);
+  cursor:pointer;
+}
+
+.month-item:first-child{
+  border-top:0;
+}
+
+.month-item-top{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.month-item-name{
+  font-weight:700;
+}
+
+.month-item-net{
+  font-weight:750;
+}
+
+.month-item-net.green{
+  color:var(--green);
+}
+
+.month-item-net.red{
+  color:var(--red);
+}
+
+.month-item-meta{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:5px;
+}
+
+.goal{
+  padding:17px;
+}
+
+.goal-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:12px;
+}
+
+.goal-name{
   font-size:16px;
-  font-weight:600;
+  font-weight:780;
+}
+
+.goal-date{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:3px;
+}
+
+.goal-value{
+  font-size:22px;
+  font-weight:800;
+}
+
+.nav{
+  position:fixed;
+  left:50%;
+  bottom:12px;
+  transform:translateX(-50%);
+  width:min(728px,calc(100% - 24px));
+  background:rgba(17,20,27,.94);
+  border:1px solid var(--line);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-radius:18px;
+  padding:7px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:5px;
+  z-index:100;
+  box-shadow:0 14px 45px rgba(0,0,0,.42);
+}
+
+.nav-btn{
+  background:transparent;
+  border-radius:13px;
+  padding:8px 4px;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:650;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+}
+
+.nav-btn.active{
+  color:var(--text);
+  background:var(--panel3);
+}
+
+.nav-icon{
+  font-size:17px;
+  line-height:1;
+}
+
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.68);
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:200;
+  padding:12px;
+}
+
+.modal-backdrop.show{
+  display:flex;
+}
+
+.modal{
+  width:min(720px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#11151d;
+  border:1px solid var(--line);
+  border-radius:22px;
+  box-shadow:0 30px 80px rgba(0,0,0,.55);
+}
+
+.modal-head{
+  position:sticky;
+  top:0;
+  z-index:2;
+  background:#11151d;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 17px;
+}
+
+.modal-title{
+  font-weight:800;
+  font-size:16px;
+}
+
+.modal-body{
+  padding:17px;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:88px;
+  transform:translateX(-50%) translateY(20px);
+  background:#eafaf3;
+  color:#07140e;
+  padding:10px 14px;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:700;
+  opacity:0;
+  pointer-events:none;
+  transition:.2s ease;
+  z-index:300;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+.chevron{
+  color:var(--muted2);
+  transition:transform .2s ease;
+}
+
+.category.open .chevron{
+  transform:rotate(180deg);
+}
+
+.hidden{
+  display:none!important;
+}
+
+.text-muted{
+  color:var(--muted);
+}
+
+.text-green{
+  color:var(--green);
+}
+
+.text-red{
+  color:var(--red);
+}
+
+.text-yellow{
+  color:var(--yellow);
+}
+
+@media(max-width:430px){
+  .app{
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  .hero-value{
+    font-size:37px;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .form-field.full{
+    grid-column:auto;
+  }
 }
 </style>
 </head>
+
 <body>
-<div id="app"></div>
-<div id="toast"></div>
+
+<div class="app">
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-title">God's Plan</div>
+      <div class="brand-sub">Your money. Your plan. Your move.</div>
+    </div>
+    <button class="icon-btn" id="settingsBtn">⚙️</button>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section class="screen active" id="screen-overview">
+
+    <div class="month-picker">
+      <button class="month-nav" id="prevMonth">‹</button>
+      <select id="overviewMonth"></select>
+      <button class="month-nav" id="nextMonth">›</button>
+    </div>
+
+    <div class="hero">
+      <div class="hero-label">Available after expenses</div>
+      <div class="hero-value" id="heroNet">$0</div>
+      <div class="hero-meta">
+        <span id="heroIncome">$0 income</span>
+        <span id="heroExpenses">$0 expenses</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Monthly Snapshot</div>
+          <div class="section-sub" id="snapshotMonth"></div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Income</div>
+          <div class="stat-value green" id="statIncome">$0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Expenses</div>
+          <div class="stat-value red" id="statExpenses">$0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Carryover</div>
+          <div class="stat-value" id="statCarry">$0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Extra Income</div>
+          <div class="stat-value yellow" id="statExtra">$0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-head">
+        <div>
+          <div class="section-title" id="overviewPaymentTitle">Payments</div>
+          <div class="section-sub">Track what has actually been paid</div>
+        </div>
+        <div class="text-green" id="overviewPaidPercent">0%</div>
+      </div>
+
+      <div class="card-pad" style="padding-top:0">
+        <div class="progress">
+          <div class="progress-fill" id="overviewPaidProgress" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div class="paid-summary">
+        <div class="paid-card">
+          <div class="paid-card-label">PAID</div>
+          <div class="paid-card-value green" id="overviewPaidAmount">$0</div>
+        </div>
+
+        <div class="paid-card">
+          <div class="paid-card-label">OUTSTANDING</div>
+          <div class="paid-card-value red" id="overviewUnpaidAmount">$0</div>
+        </div>
+
+        <div class="paid-card">
+          <div class="paid-card-label">PAID ITEMS</div>
+          <div class="paid-card-value" id="overviewPaidCount">0 / 0</div>
+        </div>
+
+        <div class="paid-card">
+          <div class="paid-card-label">UNPAID ITEMS</div>
+          <div class="paid-card-value" id="overviewUnpaidCount">0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Goal</div>
+          <div class="section-sub">Keep the plan moving forward</div>
+        </div>
+      </div>
+
+      <div class="goal">
+        <div class="goal-top">
+          <div>
+            <div class="goal-name" id="goalName">Move Day</div>
+            <div class="goal-date" id="goalDate"></div>
+          </div>
+          <div class="goal-value" id="goalValue">$0</div>
+        </div>
+
+        <div class="progress">
+          <div class="progress-fill" id="goalProgress" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- BUDGET -->
+  <section class="screen" id="screen-budget">
+
+    <div class="month-picker">
+      <button class="month-nav" id="budgetPrev">‹</button>
+      <select id="budgetMonth"></select>
+      <button class="month-nav" id="budgetNext">›</button>
+    </div>
+
+    <div class="card">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Budget</div>
+          <div class="section-sub">Tap an expense to edit it</div>
+        </div>
+        <button class="btn primary" id="addExpenseBtn">+ Add</button>
+      </div>
+
+      <div id="budgetCategories"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Payment Status</div>
+          <div class="section-sub">Check expenses off as you pay them</div>
+        </div>
+      </div>
+
+      <div class="paid-summary">
+        <div class="paid-card">
+          <div class="paid-card-label">PAID</div>
+          <div class="paid-card-value green" id="budgetPaidAmount">$0</div>
+        </div>
+
+        <div class="paid-card">
+          <div class="paid-card-label">NOT PAID</div>
+          <div class="paid-card-value red" id="budgetUnpaidAmount">$0</div>
+        </div>
+
+        <div class="paid-card">
+          <div class="paid-card-label">PAID</div>
+          <div class="paid-card-value" id="budgetPaidCount">0</div>
+        </div>
+
+        <div class="paid-card">
+          <div class="paid-card-label">NOT PAID</div>
+          <div class="paid-card-value" id="budgetUnpaidCount">0</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- MONTHS -->
+  <section class="screen" id="screen-months">
+
+    <div class="card">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Months</div>
+          <div class="section-sub">Each month keeps its own expenses</div>
+        </div>
+        <button class="btn primary" id="addMonthBtn">+ Month</button>
+      </div>
+
+      <div class="month-list" id="monthList"></div>
+    </div>
+
+  </section>
+
+  <!-- SETTINGS -->
+  <section class="screen" id="screen-settings">
+
+    <div class="card">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Settings</div>
+          <div class="section-sub">Control your plan</div>
+        </div>
+      </div>
+
+      <div class="card-pad">
+        <div class="form-grid">
+
+          <div class="form-field">
+            <label>Default Monthly Income</label>
+            <input id="defaultIncomeInput" type="number" step="0.01"/>
+          </div>
+
+          <div class="form-field">
+            <label>Goal Month</label>
+            <input id="goalMonthInput" type="month"/>
+          </div>
+
+          <div class="form-field full">
+            <label>Goal Name</label>
+            <input id="goalNameInput" type="text"/>
+          </div>
+
+        </div>
+
+        <div class="form-actions">
+          <button class="btn primary" id="saveSettingsBtn">Save Settings</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Data</div>
+          <div class="section-sub">Your budget is stored locally on this device</div>
+        </div>
+      </div>
+
+      <div class="card-pad" style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn" id="exportBtn">Export Backup</button>
+        <button class="btn" id="importBtn">Import Backup</button>
+        <button class="btn danger" id="resetBtn">Reset App</button>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="nav">
+  <button class="nav-btn active" data-screen="overview">
+    <span class="nav-icon">◉</span>
+    Overview
+  </button>
+
+  <button class="nav-btn" data-screen="budget">
+    <span class="nav-icon">▤</span>
+    Budget
+  </button>
+
+  <button class="nav-btn" data-screen="months">
+    <span class="nav-icon">▦</span>
+    Months
+  </button>
+
+  <button class="nav-btn" data-screen="settings">
+    <span class="nav-icon">⚙</span>
+    Settings
+  </button>
+</nav>
+
+<!-- EXPENSE MODAL -->
+<div class="modal-backdrop" id="expenseModal">
+  <div class="modal">
+
+    <div class="modal-head">
+      <div class="modal-title" id="expenseModalTitle">Add Expense</div>
+      <button class="icon-btn" id="closeExpenseModal">×</button>
+    </div>
+
+    <div class="modal-body">
+
+      <div class="form-grid">
+
+        <div class="form-field full">
+          <label>Name</label>
+          <input id="expenseName" type="text" placeholder="Expense name"/>
+        </div>
+
+        <div class="form-field">
+          <label>Amount</label>
+          <input id="expenseAmount" type="number" step="0.01" placeholder="0.00"/>
+        </div>
+
+        <div class="form-field">
+          <label>Category</label>
+          <select id="expenseCategory"></select>
+        </div>
+
+        <div class="form-field full">
+          <label>Note</label>
+          <input id="expenseNote" type="text" placeholder="Optional"/>
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+        <button class="btn danger hidden" id="deleteExpenseBtn">Delete</button>
+        <button class="btn" id="cancelExpenseBtn">Cancel</button>
+        <button class="btn primary" id="saveExpenseBtn">Save Expense</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MONTH MODAL -->
+<div class="modal-backdrop" id="monthModal">
+  <div class="modal">
+
+    <div class="modal-head">
+      <div class="modal-title">Add Month</div>
+      <button class="icon-btn" id="closeMonthModal">×</button>
+    </div>
+
+    <div class="modal-body">
+
+      <div class="form-grid">
+
+        <div class="form-field">
+          <label>Month</label>
+          <input id="newMonthInput" type="month"/>
+        </div>
+
+        <div class="form-field">
+          <label>Monthly Income</label>
+          <input id="newMonthIncome" type="number" step="0.01"/>
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+        <button class="btn" id="cancelMonthBtn">Cancel</button>
+        <button class="btn primary" id="saveMonthBtn">Add Month</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<input type="file" id="importFile" accept=".json" style="display:none"/>
+
+<div class="toast" id="toast">Saved</div>
+
 <script>
-const SAVE_KEY="godsplan_v3";
-const APP_START="2026-09";
-const DEFAULT_INCOME=5390;
-const COLORS=[
-  "#0a84ff",
-  "#30d158",
-  "#ff9f0a",
-  "#ff453a",
-  "#bf5af2",
-  "#64d2ff",
-  "#5e5ce6",
-  "#ff375f",
-  "#ffd60a"
-];
-const DEFAULT_CATEGORIES={
-  tesla:{
-    label:"Tesla",
-    color:"#ff453a",
-    icon:"⚡",
-    items:[
-      {id:"tesla_ins",label:"Tesla Insurance",amount:198.78},
-      {id:"tesla_fsd",label:"Tesla FSD",amount:106.67},
-      {id:"tesla_rim",label:"Rim & Tire Protection",amount:16},
-      {id:"tesla_wind",label:"Windshield Protection",amount:16}
-    ]
-  },
+/* =========================================================
+   GOD'S PLAN
+   ========================================================= */
+
+const APP_START = "2026-09";
+const DEFAULT_INCOME = 5390;
+const DEFAULT_GOAL_MONTH = "2026-11";
+const DEFAULT_GOAL_NAME = "Move Day";
+
+const CATEGORY_DEFINITIONS = {
   housing:{
     label:"Housing",
-    color:"#0a84ff",
-    icon:"🏠",
-    items:[
-      {id:"rent",label:"Rent",amount:525}
-    ]
+    items:[]
   },
-  phone:{
-    label:"Phone & Tech",
-    color:"#64d2ff",
-    icon:"📱",
-    items:[
-      {id:"tmobile",label:"T-Mobile",amount:250},
-      {id:"apple_one",label:"Apple One",amount:39.99},
-      {id:"applecare_daughter",label:"AppleCare+ (Daughter's Phone)",amount:19.99},
-      {id:"amazon_prime",label:"Amazon Prime",amount:7.53}
-    ]
-  },
-  streaming:{
-    label:"Streaming",
-    color:"#bf5af2",
-    icon:"▶️",
-    items:[
-      {id:"starz",label:"Starz",amount:11.99},
-      {id:"paramount",label:"Paramount+",amount:8},
-      {id:"disney",label:"Disney+",amount:10}
-    ]
+  utilities:{
+    label:"Utilities",
+    items:[]
   },
   transportation:{
     label:"Transportation",
-    color:"#ff9f0a",
-    icon:"🚗",
-    items:[
-      {id:"supercharging",label:"Tesla Supercharging",amount:60}
-    ]
+    items:[]
   },
-  misc:{
-    label:"Misc / Personal",
-    color:"#5e5ce6",
-    icon:"✨",
+  food:{
+    label:"Food",
+    items:[]
+  },
+  subscriptions:{
+    label:"Subscriptions",
+    items:[]
+  },
+  personal:{
+    label:"Personal",
+    items:[]
+  },
+  other:{
+    label:"Other",
     items:[]
   }
 };
-const DEFAULT_INVESTING={
-  investing:{
-    label:"Investing",
-    color:"#30d158",
-    icon:"📈",
-    items:[
-      {id:"stocks",label:"Stocks / ETFs",amount:0},
-      {id:"crypto",label:"Crypto",amount:0},
-      {id:"retirement",label:"Retirement",amount:0},
-      {id:"trading",label:"Options / Trading",amount:0}
-    ]
+
+const catKeys = Object.keys(CATEGORY_DEFINITIONS);
+
+let state = {
+  months: {},
+  paidExpenses: {},
+  settings:{
+    defaultIncome:DEFAULT_INCOME,
+    goalMonth:DEFAULT_GOAL_MONTH,
+    goalName:DEFAULT_GOAL_NAME
   }
 };
-const DEFAULT_GOALS=[
-  {id:"bedroom",label:"Bedroom Furniture (Master)",amount:800,estimate:""},
-  {id:"kidsrooms",label:"Kids Rooms (2–3 beds)",amount:1200,estimate:""},
-  {id:"livingroom",label:"Living Room",amount:1200,estimate:""},
-  {id:"dining",label:"Dining Table & Chairs",amount:500,estimate:""},
-  {id:"movingtruck",label:"Moving Truck",amount:300,estimate:""},
-  {id:"miscgoal",label:"Misc / Lamps / Rugs",amount:400,estimate:""},
-  {id:"buffer",label:"Living Buffer",amount:2100,estimate:""}
-];
-const DEFAULT_CHECKLIST=[
-  {id:"check_savings",label:"Open dedicated savings account",done:false},
-  {id:"check_transfer",label:"Set up auto-transfer on the 1st",done:false},
-  {id:"check_streaming",label:"Rotate streaming — pick one",done:false},
-  {id:"check_truck",label:"Get 3 moving truck quotes",done:false},
-  {id:"check_charge",label:"Find free supercharger spots",done:false},
-  {id:"check_wayfair",label:"Browse Wayfair / FB Marketplace",done:false},
-  {id:"check_lease",label:"Confirm townhouse lease signed",done:false}
-];
-const DEFAULT_MONTHS=[
-  "2026-09",
-  "2026-10",
-  "2026-11",
-  "2026-12",
-  "2027-01"
-];
-const DEFAULT_STATE={
-  tab:"overview",
-  activeMonth:"2026-09",
-  goalMonth:"2027-01",
-  goalLabel:"Move Day",
-  /*
-    THIS IS NOW THE SOURCE OF TRUTH
-    FOR WHICH MONTHS EXIST.
-  */
-  months:[...DEFAULT_MONTHS],
-  income:DEFAULT_INCOME,
-  miscBudget:1000,
-  furnitureGoal:6500,
-  categories:JSON.parse(JSON.stringify({
-    ...DEFAULT_CATEGORIES,
-    ...DEFAULT_INVESTING
-  })),
-  monthBudgets:{},
-  goalExpenses:JSON.parse(JSON.stringify(DEFAULT_GOALS)),
-  oneTimeExpenses:[
-    {
-      id:"ot_car_repairs",
-      label:"Car Repairs",
-      amount:1780,
-      month:"2026-09"
-    },
-    {
-      id:"ot_sep_rent",
-      label:"September Rent (deferred, paid early)",
-      amount:525,
-      month:"2026-09"
-    },
-    {
-      id:"ot_overdraft",
-      label:"Overdraft Payoff",
-      amount:728.67,
-      month:"2026-09"
-    },
-    {
-      id:"ot_debt",
-      label:"Debt Payment",
-      amount:1000,
-      month:"2026-09"
-    },
-    {
-      id:"ot_xbox",
-      label:"Xbox Series S (promised to son)",
-      amount:538.74,
-      month:"2026-09"
-    }
-  ],
-  monthOverrides:{
-    "2026-09":{
-      extraIncome:[
-        {
-          id:"ei_deal_2026_09",
-          label:"Deal / Contract Payment",
-          amount:4500
-        }
-      ]
-    }
-  },
-  checklist:JSON.parse(JSON.stringify(DEFAULT_CHECKLIST))
-};
-let S;
-let sheet=null;
-let fabOpen=false;
-let saveTimer=null;
-/* =============================
-   HELPERS
-============================= */
-function clone(x){
-  return JSON.parse(JSON.stringify(x));
-}
+
+let activeMonth = APP_START;
+let currentScreen = "overview";
+let editingExpense = null;
+
+const $ = id => document.getElementById(id);
+
 function uid(){
-  return "id_"+Math.random().toString(36).slice(2)+Date.now().toString(36);
+  return Math.random().toString(36).slice(2)+Date.now().toString(36);
 }
-function n(v){
-  const x=parseFloat(v);
-  return Number.isFinite(x)?x:0;
-}
-function money(v){
-  return n(v).toLocaleString("en-US",{
+
+function money(value){
+  const n = Number(value)||0;
+
+  return n.toLocaleString("en-US",{
     style:"currency",
     currency:"USD",
-    minimumFractionDigits:2
+    minimumFractionDigits:0,
+    maximumFractionDigits:2
   });
 }
-function esc(v){
-  return String(v??"")
+
+function moneyExact(value){
+  const n = Number(value)||0;
+
+  return n.toLocaleString("en-US",{
+    style:"currency",
+    currency:"USD",
+    minimumFractionDigits:2,
+    maximumFractionDigits:2
+  });
+}
+
+function monthShort(ym){
+  const d = new Date(ym+"-01T12:00:00");
+  return d.toLocaleDateString("en-US",{
+    month:"short",
+    year:"numeric"
+  });
+}
+
+function monthLong(ym){
+  const d = new Date(ym+"-01T12:00:00");
+  return d.toLocaleDateString("en-US",{
+    month:"long",
+    year:"numeric"
+  });
+}
+
+function nextMonth(ym){
+  const [y,m] = ym.split("-").map(Number);
+  const d = new Date(y,m-1,1);
+  d.setMonth(d.getMonth()+1);
+
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+}
+
+function prevMonth(ym){
+  const [y,m] = ym.split("-").map(Number);
+  const d = new Date(y,m-1,1);
+  d.setMonth(d.getMonth()-1);
+
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+}
+
+function sortedMonths(){
+  return Object.keys(state.months).sort();
+}
+
+function ensureMonth(ym,income){
+  if(!state.months[ym]){
+    state.months[ym] = {
+      income: income !== undefined
+        ? Number(income)||0
+        : Number(state.settings.defaultIncome)||DEFAULT_INCOME,
+
+      extraIncome:0,
+
+      carryover:0,
+
+      expenses:{
+        housing:[],
+        utilities:[],
+        transportation:[],
+        food:[],
+        subscriptions:[],
+        personal:[],
+        other:[]
+      }
+    };
+  }
+
+  const m = state.months[ym];
+
+  m.expenses = m.expenses || {};
+
+  catKeys.forEach(k=>{
+    if(!Array.isArray(m.expenses[k])){
+      m.expenses[k] = [];
+    }
+  });
+
+  if(m.income === undefined){
+    m.income = Number(state.settings.defaultIncome)||DEFAULT_INCOME;
+  }
+
+  if(m.extraIncome === undefined){
+    m.extraIncome = 0;
+  }
+
+  if(m.carryover === undefined){
+    m.carryover = 0;
+  }
+
+  return m;
+}
+
+function initializeMonths(){
+  ensureMonth(APP_START,DEFAULT_INCOME);
+
+  const initialMonths = [
+    "2026-09",
+    "2026-10",
+    "2026-11",
+    "2026-12",
+    "2027-01"
+  ];
+
+  initialMonths.forEach(ym=>{
+    ensureMonth(ym);
+  });
+
+  recalculateCarryovers();
+}
+
+function save(){
+  localStorage.setItem("godsPlanState",JSON.stringify(state));
+}
+
+function load(){
+  try{
+    const raw = localStorage.getItem("godsPlanState");
+
+    if(raw){
+      const parsed = JSON.parse(raw);
+
+      if(parsed && typeof parsed === "object"){
+        state = parsed;
+      }
+    }
+  }catch(e){
+    console.error("Could not load saved data",e);
+  }
+
+  state.settings = state.settings || {};
+
+  state.settings.defaultIncome =
+    Number(state.settings.defaultIncome)||DEFAULT_INCOME;
+
+  state.settings.goalMonth =
+    state.settings.goalMonth || DEFAULT_GOAL_MONTH;
+
+  state.settings.goalName =
+    state.settings.goalName || DEFAULT_GOAL_NAME;
+
+  state.months = state.months || {};
+
+  /* Paid-status migration */
+  state.paidExpenses = state.paidExpenses || {};
+
+  initializeMonths();
+
+  if(!state.months[activeMonth]){
+    activeMonth = sortedMonths()[0] || APP_START;
+  }
+
+  save();
+}
+
+function monthData(ym){
+  return ensureMonth(ym);
+}
+
+/* =========================================================
+   CARRYOVER
+   Each month gets the previous month's resulting balance.
+   Expenses remain completely independent by month.
+   ========================================================= */
+
+function totalExpenses(ym){
+  const m = monthData(ym);
+
+  return catKeys.reduce((sum,key)=>{
+    return sum + m.expenses[key].reduce(
+      (s,item)=>s+(Number(item.amount)||0),
+      0
+    );
+  },0);
+}
+
+function totalBaseIncome(ym){
+  return Number(monthData(ym).income)||0;
+}
+
+function totalExtraIncome(ym){
+  return Number(monthData(ym).extraIncome)||0;
+}
+
+function totalIncome(ym){
+  return totalBaseIncome(ym)+totalExtraIncome(ym);
+}
+
+function monthNetBeforeCarry(ym){
+  return totalIncome(ym)-totalExpenses(ym);
+}
+
+function monthNet(ym){
+  const m = monthData(ym);
+
+  return Number(m.carryover||0)+monthNetBeforeCarry(ym);
+}
+
+function recalculateCarryovers(){
+  const months = sortedMonths();
+
+  if(!months.length) return;
+
+  /*
+    IMPORTANT:
+    The carryover is calculated from the previous month's
+    final balance. Changing an expense in October does NOT
+    modify October's expenses into September or December.
+  */
+
+  let previousBalance = 0;
+
+  months.forEach((ym,index)=>{
+    const m = monthData(ym);
+
+    if(index===0){
+      /*
+        First month starts with its existing carryover.
+        If none exists, use zero.
+      */
+      m.carryover = Number(m.carryover)||0;
+    }else{
+      m.carryover = previousBalance;
+    }
+
+    previousBalance =
+      Number(m.carryover||0)
+      + totalIncome(ym)
+      - totalExpenses(ym);
+  });
+}
+
+/* =========================================================
+   PAID EXPENSE TRACKING
+   ========================================================= */
+
+function paidExpenseKey(ym,type,id){
+  return `${ym}__${type}__${id}`;
+}
+
+function isExpensePaid(ym,type,id){
+  return !!state.paidExpenses[
+    paidExpenseKey(ym,type,id)
+  ];
+}
+
+function toggleExpensePaid(ym,type,id){
+  const key = paidExpenseKey(ym,type,id);
+
+  if(state.paidExpenses[key]){
+    delete state.paidExpenses[key];
+  }else{
+    state.paidExpenses[key] = true;
+  }
+
+  save();
+}
+
+function expenseEntriesForMonth(ym){
+  const m = monthData(ym);
+
+  const entries = [];
+
+  catKeys.forEach(type=>{
+    m.expenses[type].forEach(item=>{
+      entries.push({
+        type,
+        id:item.id,
+        name:item.name,
+        amount:Number(item.amount)||0,
+        item
+      });
+    });
+  });
+
+  return entries;
+}
+
+function paidStatsForMonth(ym){
+  const entries = expenseEntriesForMonth(ym);
+
+  let paidAmount = 0;
+  let unpaidAmount = 0;
+  let paidCount = 0;
+  let unpaidCount = 0;
+
+  entries.forEach(entry=>{
+    if(isExpensePaid(ym,entry.type,entry.id)){
+      paidAmount += entry.amount;
+      paidCount++;
+    }else{
+      unpaidAmount += entry.amount;
+      unpaidCount++;
+    }
+  });
+
+  return {
+    totalAmount:paidAmount+unpaidAmount,
+    paidAmount,
+    unpaidAmount,
+    paidCount,
+    unpaidCount,
+    totalCount:entries.length
+  };
+}
+
+function expenseCheck(type,id,ym){
+  const checked = isExpensePaid(ym,type,id);
+
+  return `
+    <button
+      class="paid-check ${checked ? "checked":""}"
+      data-paidtype="${escapeHtml(type)}"
+      data-paidid="${escapeHtml(id)}"
+      data-paidmonth="${escapeHtml(ym)}"
+      aria-label="${checked ? "Mark unpaid":"Mark paid"}"
+      type="button"
+    >${checked ? "✓":""}</button>
+  `;
+}
+
+function trackedExpenseRow(type,item,ym){
+  const paid = isExpensePaid(ym,type,item.id);
+
+  return `
+    <div class="expense-row ${paid ? "paid":""}"
+         data-expense-row="${escapeHtml(item.id)}">
+
+      ${expenseCheck(type,item.id,ym)}
+
+      <div class="expense-main"
+           data-edit-type="${escapeHtml(type)}"
+           data-edit-id="${escapeHtml(item.id)}">
+
+        <div class="expense-name">
+          ${escapeHtml(item.name)}
+        </div>
+
+        ${
+          item.note
+          ? `<div class="expense-note">${escapeHtml(item.note)}</div>`
+          :""
+        }
+
+        <div class="expense-status">
+          ${paid ? "Paid":"Not paid"}
+        </div>
+
+      </div>
+
+      <div class="expense-amount">
+        ${money(item.amount)}
+      </div>
+
+    </div>
+  `;
+}
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function escapeHtml(value){
+  return String(value ?? "")
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
 }
-function monthKey(date){
-  return date.getFullYear()+"-"+String(date.getMonth()+1).padStart(2,"0");
-}
-function shiftMonth(ym,delta){
-  const [y,m]=ym.split("-").map(Number);
-  return monthKey(new Date(y,m-1+delta,1));
-}
-function monthLabel(ym){
-  const [y,m]=ym.split("-").map(Number);
-  return new Date(y,m-1,1).toLocaleDateString("en-US",{
-    month:"long",
-    year:"numeric"
-  });
-}
-function shortMonth(ym){
-  const [y,m]=ym.split("-").map(Number);
-  return new Date(y,m-1,1).toLocaleDateString("en-US",{
-    month:"short",
-    year:"numeric"
-  });
-}
-function showToast(text){
-  const el=document.getElementById("toast");
-  el.textContent=text;
-  Object.assign(el.style,{
-    display:"block",
-    position:"fixed",
-    left:"50%",
-    bottom:"calc(94px + env(safe-area-inset-bottom))",
-    transform:"translateX(-50%)",
-    background:"rgba(50,50,52,.97)",
-    color:"#fff",
-    padding:"9px 16px",
-    borderRadius:"99px",
-    fontSize:"14px",
-    fontWeight:"600",
-    zIndex:"2000"
-  });
-  clearTimeout(showToast.timer);
-  showToast.timer=setTimeout(()=>{
-    el.style.display="none";
-  },1400);
-}
-/* =============================
-   MONTH SYSTEM
-============================= */
-/*
-  S.months is now the ONLY source of truth.
-  This fixes the old problem where the app
-  only displayed September and January.
-  Example:
-  [
-    "2026-09",
-    "2026-10",
-    "2026-11",
-    "2026-12",
-    "2027-01"
-  ]
-*/
-function allMonths(){
-  if(!Array.isArray(S.months)){
-    S.months=[...DEFAULT_MONTHS];
-  }
-  return [...new Set(S.months)].sort();
-}
-function addMonthKey(ym){
-  if(!S.months.includes(ym)){
-    S.months.push(ym);
-  }
-  S.months.sort();
-  ensureMonth(ym);
-}
-function removeMonthKey(ym){
-  /*
-    September is the starting month and cannot
-    be deleted because there would be no
-    beginning to the carry-over chain.
-  */
-  if(ym===APP_START){
-    showToast("September cannot be removed");
-    return false;
-  }
-  if(S.months.length<=1){
-    showToast("Keep at least one month");
-    return false;
-  }
-  S.months=
-    S.months.filter(m=>m!==ym);
-  /*
-    If the deleted month was active,
-    move to the closest remaining month.
-  */
-  if(S.activeMonth===ym){
-    const months=allMonths();
-    const previous=
-      months.filter(m=>m<ym).pop();
-    const next=
-      months.find(m=>m>ym);
-    S.activeMonth=
-      previous ||
-      next ||
-      APP_START;
-  }
-  /*
-    If the deleted month was the goal month,
-    move the goal to the last remaining month.
-  */
-  if(S.goalMonth===ym){
-    const months=allMonths();
-    S.goalMonth=
-      months[months.length-1];
-  }
-  return true;
-}
-function normalizeBudget(budget){
-  const defaults=clone({
-    ...DEFAULT_CATEGORIES,
-    ...DEFAULT_INVESTING
-  });
-  const result={};
-  Object.keys(defaults).forEach(key=>{
-    const source=
-      budget?.[key] ||
-      defaults[key];
-    result[key]={
-      label:source.label,
-      color:source.color,
-      icon:source.icon,
-      items:Array.isArray(source.items)
-        ?source.items.map(item=>({
-            id:item.id||uid(),
-            label:item.label||"Item",
-            amount:n(item.amount)
-          }))
-        :[]
-    };
-  });
-  Object.keys(budget||{}).forEach(key=>{
-    if(!result[key]){
-      const source=budget[key];
-      result[key]={
-        label:source.label||key,
-        color:source.color||"#0a84ff",
-        icon:source.icon||"📁",
-        items:Array.isArray(source.items)
-          ?source.items.map(item=>({
-              id:item.id||uid(),
-              label:item.label||"Item",
-              amount:n(item.amount)
-            }))
-          :[]
-      };
-    }
-  });
-  return result;
-}
-function ensureMonth(ym){
-  if(!S.monthBudgets){
-    S.monthBudgets={};
-  }
-  if(S.monthBudgets[ym]){
-    return;
-  }
-  const months=allMonths();
-  const index=months.indexOf(ym);
-  /*
-    Find the immediately preceding EXISTING
-    month in the actual month list.
-  */
-  const previous=
-    index>0
-      ?months[index-1]
-      :null;
-  if(
-    previous &&
-    S.monthBudgets[previous]
-  ){
-    S.monthBudgets[ym]=
-      clone(S.monthBudgets[previous]);
-  }else{
-    S.monthBudgets[ym]=
-      normalizeBudget(
-        S.categories
-      );
-  }
-}
-function ensureAllMonths(){
-  const months=allMonths();
-  months.forEach(ym=>{
-    ensureMonth(ym);
-  });
-}
-function categoryBudget(ym){
-  ensureMonth(ym);
-  return S.monthBudgets[ym];
-}
-function categoryTotal(ym,category){
-  return (category?.items||[])
-    .reduce(
-      (sum,item)=>sum+n(item.amount),
-      0
-    );
-}
-function recurringSpending(ym){
-  const budget=categoryBudget(ym);
-  return Object.entries(budget)
-    .filter(([key])=>key!=="investing")
-    .reduce(
-      (sum,[,category])=>
-        sum+categoryTotal(ym,category),
-      0
-    );
-}
-function investmentSpending(ym){
-  return categoryTotal(
-    ym,
-    categoryBudget(ym).investing
-  );
-}
-function getMiscBudget(ym){
-  const ov=
-    S.monthOverrides?.[ym];
-  if(
-    ov &&
-    Object.prototype.hasOwnProperty.call(
-      ov,
-      "miscBudget"
-    )
-  ){
-    return n(ov.miscBudget);
-  }
-  return n(S.miscBudget);
-}
-function oneTimeTotal(ym){
-  return (S.oneTimeExpenses||[])
-    .filter(e=>e.month===ym)
-    .reduce(
-      (sum,e)=>sum+n(e.amount),
-      0
-    );
-}
-function baseIncome(ym){
-  const ov=
-    S.monthOverrides?.[ym];
-  if(
-    ov &&
-    Object.prototype.hasOwnProperty.call(
-      ov,
-      "income"
-    )
-  ){
-    return n(ov.income);
-  }
-  return n(S.income);
-}
-function extraIncome(ym){
-  return (
-    S.monthOverrides?.[ym]?.extraIncome||[]
-  )
-  .reduce(
-    (sum,e)=>sum+n(e.amount),
+
+/* =========================================================
+   CATEGORY RENDERING
+   ========================================================= */
+
+function categoryList(key,trackPaid=false){
+  const m = monthData(activeMonth);
+  const items = m.expenses[key] || [];
+  const total = items.reduce(
+    (sum,item)=>sum+(Number(item.amount)||0),
     0
   );
-}
-function totalIncome(ym){
-  return baseIncome(ym)+extraIncome(ym);
-}
-function totalSpending(ym){
-  return recurringSpending(ym)+
-    getMiscBudget(ym)+
-    investmentSpending(ym)+
-    oneTimeTotal(ym);
-}
-function monthlyNet(ym){
-  return totalIncome(ym)-totalSpending(ym);
-}
-/*
-  IMPORTANT:
-  Starting balance is calculated from the
-  previous MONTH THAT ACTUALLY EXISTS.
-  If you have:
-  Sep
-  Oct
-  Nov
-  Dec
-  Jan
-  Jan starts from December's ending balance.
-  If you delete November:
-  Sep
-  Oct
-  Dec
-  Jan
-  December starts from October's ending balance.
-  Nothing is permanently linked between budgets.
-*/
-function startingBalance(ym){
-  const months=allMonths();
-  const index=months.indexOf(ym);
-  if(index<=0){
-    return 0;
-  }
-  const previous=
-    months[index-1];
-  return endingBalance(previous);
-}
-function endingBalance(ym){
-  return startingBalance(ym)+
-    monthlyNet(ym);
-}
-function goalTotal(){
-  return (S.goalExpenses||[])
-    .reduce(
-      (sum,e)=>sum+n(e.amount),
-      0
-    );
-}
-function projectedGoalBalance(){
-  let balance=0;
-  allMonths().forEach(ym=>{
-    if(ym<=S.goalMonth){
-      balance=endingBalance(ym);
-    }
-  });
-  return Math.max(0,balance);
-}
-function goalPercent(){
-  const target=goalTotal();
-  if(!target)return 0;
-  return Math.min(
-    100,
-    Math.max(
-      0,
-      Math.round(
-        projectedGoalBalance()/target*100
-      )
-    )
-  );
-}
-/* =============================
-   MIGRATION
-============================= */
-function migrateState(state){
-  /*
-    Upgrade old data to the explicit
-    months architecture.
-    If the old version only had September
-    and January, we intentionally create:
-    September
-    October
-    November
-    December
-    January
-  */
-  if(!Array.isArray(state.months)){
-    state.months=
-      [...DEFAULT_MONTHS];
-  }else{
-    /*
-      Always make sure the initial five
-      months exist after the upgrade.
-    */
-    DEFAULT_MONTHS.forEach(ym=>{
-      if(!state.months.includes(ym)){
-        state.months.push(ym);
-      }
-    });
-    state.months.sort();
-  }
-  if(!state.monthBudgets){
-    state.monthBudgets={};
-  }
-  ensureStateCategories(state);
-  /*
-    Preserve September from the previous app.
-  */
-  state.monthBudgets[APP_START]=
-    normalizeBudget(
-      state.monthBudgets[APP_START] ||
-      state.categories
-    );
-  /*
-    Build October through January from
-    the immediately previous month.
-    Existing month budgets are preserved.
-  */
-  const months=
-    [...state.months].sort();
-  months.forEach((ym,index)=>{
-    if(
-      !state.monthBudgets[ym]
-    ){
-      const previous=
-        index>0
-          ?months[index-1]
-          :null;
-      if(
-        previous &&
-        state.monthBudgets[previous]
-      ){
-        state.monthBudgets[ym]=
-          clone(
-            state.monthBudgets[previous]
-          );
-      }else{
-        state.monthBudgets[ym]=
-          normalizeBudget(
-            state.categories
-          );
-      }
-    }
-  });
-  state.monthOverrides=
-    state.monthOverrides||{};
-  state.monthOverrides["2026-09"]=
-    state.monthOverrides["2026-09"]||{};
-  const sep=
-    state.monthOverrides["2026-09"];
-  sep.extraIncome=
-    Array.isArray(sep.extraIncome)
-      ?sep.extraIncome
-      :[];
-  let deal=
-    sep.extraIncome.find(
-      e=>
-        e.label==="Deal / Contract Payment"
-    );
-  if(deal){
-    deal.amount=4500;
-  }else{
-    sep.extraIncome.push({
-      id:"ei_deal_2026_09",
-      label:"Deal / Contract Payment",
-      amount:4500
-    });
-  }
-  state.oneTimeExpenses=
-    Array.isArray(state.oneTimeExpenses)
-      ?state.oneTimeExpenses
-      :[];
-  function upsertOneTime(
-    label,
-    amount,
-    month
-  ){
-    const existing=
-      state.oneTimeExpenses.find(
-        e=>
-          e.label===label &&
-          e.month===month
-      );
-    if(existing){
-      existing.amount=amount;
-    }else{
-      state.oneTimeExpenses.push({
-        id:
-          "ot_"+
-          label
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g,"_"),
-        label,
-        amount,
-        month
-      });
-    }
-  }
-  upsertOneTime(
-    "Car Repairs",
-    1780,
-    "2026-09"
-  );
-  upsertOneTime(
-    "September Rent (deferred, paid early)",
-    525,
-    "2026-09"
-  );
-  state.oneTimeExpenses=
-    state.oneTimeExpenses.filter(
-      e=>
-        !(
-          e.label==="September Rent (deferred)" &&
-          e.month==="2026-09"
-        )
-    );
-  upsertOneTime(
-    "Overdraft Payoff",
-    728.67,
-    "2026-09"
-  );
-  upsertOneTime(
-    "Debt Payment",
-    1000,
-    "2026-09"
-  );
-  upsertOneTime(
-    "Xbox Series S (promised to son)",
-    538.74,
-    "2026-09"
-  );
-  const phone=
-    state.monthBudgets["2026-09"]?.phone;
-  if(phone){
-    const items=
-      Array.isArray(phone.items)
-        ?phone.items
-        :(phone.items=[]);
-    const appleOne=
-      items.find(
-        i=>
-          i.id==="apple_one" ||
-          i.label==="Apple One"
-      );
-    if(appleOne){
-      appleOne.amount=39.99;
-    }
-    let appleCare=
-      items.find(
-        i=>
-          i.id==="applecare_daughter" ||
-          (
-            i.label &&
-            i.label.includes("AppleCare+")
-          )
-      );
-    if(appleCare){
-      appleCare.id=
-        "applecare_daughter";
-      appleCare.label=
-        "AppleCare+ (Daughter's Phone)";
-      appleCare.amount=19.99;
-    }else{
-      items.push({
-        id:"applecare_daughter",
-        label:"AppleCare+ (Daughter's Phone)",
-        amount:19.99
-      });
-    }
-  }
-  if(
-    sep.miscBudget===2362.08
-  ){
-    delete sep.miscBudget;
-  }
-  /*
-    Make sure goal month exists.
-  */
-  if(
-    !state.months.includes(
-      state.goalMonth
-    )
-  ){
-    state.months.push(
-      state.goalMonth
-    );
-    state.months.sort();
-  }
-  return state;
-}
-function ensureStateCategories(state){
-  const defaults={
-    ...clone(DEFAULT_CATEGORIES),
-    ...clone(DEFAULT_INVESTING)
-  };
-  state.categories=
-    state.categories||
-    clone(defaults);
-  Object.keys(defaults).forEach(key=>{
-    if(!state.categories[key]){
-      state.categories[key]=
-        clone(defaults[key]);
-    }
-  });
-}
-function loadState(){
-  try{
-    const raw=
-      localStorage.getItem(SAVE_KEY);
-    if(raw){
-      const parsed=
-        JSON.parse(raw);
-      const defaults=
-        clone(DEFAULT_STATE);
-      S={
-        ...defaults,
-        ...parsed,
-        months:
-          Array.isArray(parsed.months)
-            ?parsed.months
-            :undefined,
-        categories:
-          parsed.categories||
-          defaults.categories,
-        monthBudgets:
-          parsed.monthBudgets||
-          {},
-        goalExpenses:
-          parsed.goalExpenses||
-          defaults.goalExpenses,
-        oneTimeExpenses:
-          parsed.oneTimeExpenses||
-          [],
-        monthOverrides:
-          parsed.monthOverrides||
-          {},
-        checklist:
-          parsed.checklist||
-          defaults.checklist
-      };
-      migrateState(S);
-      ensureAllMonths();
-      localStorage.setItem(
-        SAVE_KEY,
-        JSON.stringify(S)
-      );
-      return;
-    }
-  }catch(err){
-    console.error(
-      "God's Plan load error:",
-      err
-    );
-  }
-  S=
-    clone(DEFAULT_STATE);
-  migrateState(S);
-  ensureAllMonths();
-  localStorage.setItem(
-    SAVE_KEY,
-    JSON.stringify(S)
-  );
-}
-function save(){
-  clearTimeout(saveTimer);
-  saveTimer=setTimeout(()=>{
-    try{
-      localStorage.setItem(
-        SAVE_KEY,
-        JSON.stringify(S)
-      );
-      showToast("✓ Saved");
-    }catch(err){
-      console.error(err);
-      showToast("Could not save");
-    }
-  },250);
-}
-/* =============================
-   RENDER
-============================= */
-function render(){
-  ensureAllMonths();
-  let content="";
-  if(S.tab==="overview"){
-    content=renderOverview();
-  }
-  if(S.tab==="budget"){
-    content=renderBudget();
-  }
-  if(S.tab==="goal"){
-    content=renderGoal();
-  }
-  if(S.tab==="investing"){
-    content=renderInvesting();
-  }
-  if(S.tab==="more"){
-    content=renderMore();
-  }
-  document.getElementById("app").innerHTML=
-    renderNav()+
-    content+
-    renderTabs()+
-    renderFab()+
-    renderSheet();
-  bindEvents();
-}
-/* =============================
-   NAV
-============================= */
-function renderNav(){
+
+  const category = CATEGORY_DEFINITIONS[key];
+
   return `
-    <div class="nav">
-      <div class="nav-top">
+    <div class="category" data-category="${escapeHtml(key)}">
+
+      <div class="category-header">
         <div>
-          <div class="title">
-            God's Plan
-          </div>
-          <div class="subtitle">
-            ${esc(monthLabel(S.activeMonth))}
+          <div class="category-name">
+            ${escapeHtml(category.label)}
           </div>
         </div>
-        <button
-          class="income-button"
-          data-income
-        >
-          Income
-        </button>
-      </div>
-      <div class="month-scroll">
-        ${allMonths().map(m=>`
-          <button
-            class="month-chip ${
-              m===S.activeMonth
-                ?"active"
-                :""
-            }"
-            data-month="${esc(m)}"
-          >
-            ${esc(shortMonth(m))}
-          </button>
-        `).join("")}
-      </div>
-    </div>
-  `;
-}
-/* =============================
-   HERO
-============================= */
-function renderHero(){
-  const income=
-    totalIncome(S.activeMonth);
-  const spending=
-    totalSpending(S.activeMonth);
-  const net=
-    monthlyNet(S.activeMonth);
-  const rate=
-    income>0
-      ?Math.round(net/income*100)
-      :0;
-  const projected=
-    projectedGoalBalance();
-  const target=
-    goalTotal();
-  const pct=
-    target>0
-      ?Math.min(
-          100,
-          Math.max(
-            0,
-            Math.round(
-              projected/target*100
-            )
-          )
-        )
-      :0;
-  return `
-    <div class="hero">
-      <div class="hero-glow"></div>
-      <div class="eyebrow">
-        ${esc(monthLabel(S.activeMonth))}
-      </div>
-      <div class="hero-number ${
-        net<0
-          ?"balance-negative"
-          :"balance-positive"
-      }">
-        ${money(net)}
-      </div>
-      <div class="hero-caption">
-        monthly net
-      </div>
-      <div class="stats">
-        <div>
-          <div class="stat-label">
-            Income
+
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="category-total">
+            ${money(total)}
           </div>
-          <div class="stat-value">
-            ${money(income)}
-          </div>
-        </div>
-        <div>
-          <div class="stat-label">
-            Expenses
-          </div>
-          <div class="stat-value">
-            ${money(spending)}
-          </div>
-        </div>
-        <div>
-          <div class="stat-label">
-            Savings Rate
-          </div>
-          <div class="stat-value">
-            ${rate}%
-          </div>
-        </div>
-        <div>
-          <div class="stat-label">
-            Ending Balance
-          </div>
-          <div class="stat-value ${
-            endingBalance(S.activeMonth)<0
-              ?"balance-negative"
-              :"balance-positive"
-          }">
-            ${money(
-              endingBalance(
-                S.activeMonth
-              )
-            )}
-          </div>
+          <div class="chevron">⌄</div>
         </div>
       </div>
-      <div class="progress">
-        <div
-          class="progress-fill"
-          style="width:${pct}%"
-        ></div>
-      </div>
-      <div class="progress-row">
-        <span>
-          ${esc(S.goalLabel)}
-        </span>
-        <span>
-          ${money(projected)} /
-          ${money(target)}
-        </span>
-      </div>
-    </div>
-  `;
-}
-/* =============================
-   OVERVIEW
-============================= */
-function renderOverview(){
-  const ym=S.activeMonth;
-  const extras=
-    S.monthOverrides?.[ym]?.extraIncome||[];
-  const oneTimes=
-    (S.oneTimeExpenses||[])
-      .filter(e=>e.month===ym);
-  const start=
-    startingBalance(ym);
-  return `
-    ${renderHero()}
-    <div class="starting-card">
-      <div class="starting-label">
-        Starting balance from previous month
-      </div>
-      <div class="starting-value">
-        ${money(start)}
-      </div>
-    </div>
-    <div class="section">
-      <div class="section-title">
-        Income
-      </div>
-      <div class="group">
-        <div
-          class="row"
-          data-income
-        >
-          <div class="row-label">
-            Base Income
-          </div>
-          <div class="row-value">
-            ${money(baseIncome(ym))}
-          </div>
-          <div class="chevron">
-            ›
-          </div>
-        </div>
-        <div class="row">
-          <div class="row-label">
-            Extra Income
-          </div>
-          <div class="row-value">
-            ${money(extraIncome(ym))}
-          </div>
-        </div>
-      </div>
-      ${
-        extras.length
-        ?`
-          <div class="footer-note">
-            ${extras.map(e=>
-              `${esc(e.label)} · ${money(e.amount)}`
-            ).join("<br>")}
-          </div>
-        `
-        :""
-      }
-      <div class="section-title">
-        Expenses
-      </div>
-      <div class="group">
-        ${Object.entries(
-          categoryBudget(ym)
-        )
-        .filter(([key])=>key!=="investing")
-        .map(([key,c])=>`
-          <div
-            class="row"
-            data-category="${esc(key)}"
-          >
-            <span
-              class="dot"
-              style="background:${c.color}"
-            ></span>
-            <div class="row-label">
-              ${esc(c.label)}
-            </div>
-            <div class="row-value">
-              ${money(
-                categoryTotal(ym,c)
-              )}
-            </div>
-            <div class="chevron">
-              ›
-            </div>
-          </div>
-        `).join("")}
-        <div class="row">
-          <div class="row-label">
-            Misc / Personal Buffer
-          </div>
-          <div class="row-value">
-            ${money(
-              getMiscBudget(ym)
-            )}
-          </div>
-        </div>
-        <div class="row">
-          <div class="row-label">
-            One-Time Expenses
-          </div>
-          <div class="row-value">
-            ${money(
-              oneTimeTotal(ym)
-            )}
-          </div>
-        </div>
-      </div>
-      ${
-        oneTimes.length
-        ?`
-          <div class="footer-note">
-            ${oneTimes.map(e=>
-              `${esc(e.label)} · ${money(e.amount)}`
-            ).join("<br>")}
-          </div>
-        `
-        :""
-      }
-      <div class="section-title">
-        Carry Over
-      </div>
-      <div class="group">
-        <div class="row">
-          <div class="row-label">
-            Starting Balance
-          </div>
-          <div class="row-value">
-            ${money(start)}
-          </div>
-        </div>
-        <div class="row">
-          <div class="row-label">
-            This Month
-          </div>
-          <div class="row-value ${
-            monthlyNet(ym)<0
-              ?"balance-negative"
-              :"balance-positive"
-          }">
-            ${money(
-              monthlyNet(ym)
-            )}
-          </div>
-        </div>
-        <div class="row">
-          <div class="row-label">
-            Ending Balance
-          </div>
-          <div class="row-value ${
-            endingBalance(ym)<0
-              ?"balance-negative"
-              :"balance-positive"
-          }">
-            ${money(
-              endingBalance(ym)
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-}
-/* =============================
-   BUDGET
-============================= */
-function renderBudget(){
-  const ym=S.activeMonth;
-  const budget=categoryBudget(ym);
-  return `
-    <div style="height:20px"></div>
-    <div class="section">
-      <div class="section-title">
-        ${esc(monthLabel(ym))} Budget
-      </div>
-      <div
-        class="callout"
-        style="margin-bottom:18px"
-      >
-        This month's expenses are independent.
-        Changes here only affect
-        <strong>${esc(shortMonth(ym))}</strong>.
-        Other months keep their own budgets.
-      </div>
-      ${Object.entries(budget)
-        .map(([key,c])=>`
-          <div class="section-title">
-            ${esc(c.label)}
-          </div>
-          <div class="group">
-            ${(c.items||[]).map(item=>`
-              <div class="row">
-                <div class="row-label">
-                  ${esc(item.label)}
-                </div>
-                <input
-                  class="num-input"
-                  type="number"
-                  step="0.01"
-                  value="${n(item.amount).toFixed(2)}"
-                  data-amount="${esc(key)}"
-                  data-item="${esc(item.id)}"
-                >
-              </div>
-            `).join("")}
-            <button
-              class="add-row"
-              data-edit-category="${esc(key)}"
-            >
-              Edit ${esc(c.label)}
-            </button>
-          </div>
-        `).join("")}
-      <div class="section-title">
-        Misc / Personal Buffer
-      </div>
-      <div class="group">
-        <div class="row">
-          <div class="row-label">
-            Monthly Buffer
-          </div>
-          <input
-            class="num-input"
-            type="number"
-            step="0.01"
-            value="${getMiscBudget(ym).toFixed(2)}"
-            data-misc
-          >
-        </div>
-      </div>
-      <div class="section-title">
-        One-Time Expenses
-      </div>
-      <div class="group">
-        ${(S.oneTimeExpenses||[])
-          .filter(e=>e.month===ym)
-          .map(e=>`
-            <div
-              class="row"
-              data-edit-one="${esc(e.id)}"
-            >
-              <div class="row-label">
-                ${esc(e.label)}
-              </div>
-              <div class="row-value">
-                ${money(e.amount)}
-              </div>
-              <div class="chevron">
-                ›
-              </div>
-            </div>
-          `).join("")}
-        <button
-          class="add-row"
-          data-add-one
-        >
-          ＋ Add One-Time Expense
-        </button>
-      </div>
-    </div>
-  `;
-}
-/* =============================
-   GOAL
-============================= */
-function renderGoal(){
-  const target=goalTotal();
-  const projected=projectedGoalBalance();
-  const pct=goalPercent();
-  return `
-    <div style="height:20px"></div>
-    <div class="hero">
-      <div class="eyebrow">
-        ${esc(S.goalLabel)}
-      </div>
-      <div class="hero-number">
-        ${money(projected)}
-      </div>
-      <div class="hero-caption">
-        projected balance by
-        ${esc(monthLabel(S.goalMonth))}
-      </div>
-      <div class="progress">
-        <div
-          class="progress-fill"
-          style="width:${pct}%"
-        ></div>
-      </div>
-      <div class="progress-row">
-        <span>
-          ${pct}%
-        </span>
-        <span>
-          ${money(target)}
-        </span>
-      </div>
-    </div>
-    <div class="section">
-      <div class="section-title">
-        Goal Settings
-      </div>
-      <div class="group">
-        <div
-          class="row"
-          data-goal-setting="name"
-        >
-          <div class="row-label">
-            Goal
-          </div>
-          <div class="row-value">
-            ${esc(S.goalLabel)}
-          </div>
-          <div class="chevron">
-            ›
-          </div>
-        </div>
-        <div
-          class="row"
-          data-goal-setting="month"
-        >
-          <div class="row-label">
-            Target Month
-          </div>
-          <div class="row-value">
-            ${esc(
-              monthLabel(
-                S.goalMonth
-              )
-            )}
-          </div>
-          <div class="chevron">
-            ›
-          </div>
-        </div>
-        <div
-          class="row"
-          data-goal-setting="amount"
-        >
-          <div class="row-label">
-            Target Amount
-          </div>
-          <div class="row-value">
-            ${money(target)}
-          </div>
-          <div class="chevron">
-            ›
-          </div>
-        </div>
-      </div>
-      <div class="section-title">
-        Goal Expenses
-      </div>
-      <div class="group">
-        ${(S.goalExpenses||[])
-          .map(e=>`
-            <div
-              class="row"
-              data-goal-item="${esc(e.id)}"
-            >
-              <div class="row-label">
-                ${esc(e.label)}
-                ${
-                  e.estimate
-                  ?`
-                    <div class="row-sub">
-                      ${esc(e.estimate)}
-                    </div>
-                  `
-                  :""
-                }
-              </div>
-              <div class="row-value">
-                ${money(e.amount)}
-              </div>
-              <div class="chevron">
-                ›
-              </div>
-            </div>
-          `).join("")}
-        <button
-          class="add-row"
-          data-add-goal
-        >
-          ＋ Add Goal Item
-        </button>
-      </div>
-    </div>
-  `;
-}
-/* =============================
-   INVESTING
-============================= */
-function renderInvesting(){
-  const ym=S.activeMonth;
-  const c=
-    categoryBudget(ym).investing;
-  return `
-    <div style="height:20px"></div>
-    <div class="hero">
-      <div class="eyebrow">
-        ${esc(monthLabel(ym))}
-      </div>
-      <div class="hero-number">
-        ${money(
-          investmentSpending(ym)
-        )}
-      </div>
-      <div class="hero-caption">
-        monthly planned investing
-      </div>
-    </div>
-    <div class="section">
-      <div
-        class="callout"
-        style="margin-bottom:18px"
-      >
-        Investment amounts are also
-        <strong>month-specific</strong>.
-        Changing one month will not change
-        another month.
-      </div>
-      <div class="section-title">
-        Investment Budget
-      </div>
-      <div class="group">
-        ${(c.items||[]).map(item=>`
-          <div class="row">
-            <div class="row-label">
-              ${esc(item.label)}
-            </div>
-            <input
-              class="num-input"
-              type="number"
-              step="0.01"
-              value="${n(item.amount).toFixed(2)}"
-              data-amount="investing"
-              data-item="${esc(item.id)}"
-            >
-          </div>
-        `).join("")}
-      </div>
-    </div>
-  `;
-}
-/* =============================
-   MORE
-============================= */
-function renderMore(){
-  return `
-    <div style="height:20px"></div>
-    <div class="section">
-      <div class="section-title">
-        Plan
-      </div>
-      <div class="group">
-        <div
-          class="row"
-          data-open-months
-        >
-          <div class="row-label">
-            Months
-          </div>
-          <div class="row-value">
-            ${allMonths().length}
-          </div>
-          <div class="chevron">
-            ›
-          </div>
-        </div>
-        <div
-          class="row"
-          data-open-checklist
-        >
-          <div class="row-label">
-            Checklist
-          </div>
-          <div class="chevron">
-            ›
-          </div>
-        </div>
-        <div
-          class="row"
-          data-open-settings
-        >
-          <div class="row-label">
-            Settings
-          </div>
-          <div class="chevron">
-            ›
-          </div>
-        </div>
-      </div>
-      <div class="section-title">
-        Carry Over
-      </div>
-      <div class="group">
-        ${allMonths().map(ym=>`
-          <div
-            class="row"
-            data-month-summary="${esc(ym)}"
-          >
-            <div class="row-label">
-              ${esc(monthLabel(ym))}
-              <div class="row-sub">
-                Start
-                ${money(
-                  startingBalance(ym)
-                )}
-                · Net
-                ${money(
-                  monthlyNet(ym)
-                )}
-                · End
-                ${money(
-                  endingBalance(ym)
-                )}
-              </div>
-            </div>
-            <div class="row-value ${
-              endingBalance(ym)<0
-                ?"balance-negative"
-                :"balance-positive"
-            }">
-              ${money(
-                endingBalance(ym)
-              )}
-            </div>
-            <div class="chevron">
-              ›
-            </div>
-          </div>
-        `).join("")}
-      </div>
-      <div class="section-title">
-        Account
-      </div>
-      <div class="group">
-        <div class="row">
-          <div class="row-label">
-            Default Monthly Income
-          </div>
-          <div class="row-value">
-            ${money(S.income)}
-          </div>
-        </div>
-        <div class="row">
-          <div class="row-label">
-            Default Misc Buffer
-          </div>
-          <div class="row-value">
-            ${money(S.miscBudget)}
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-}
-/* =============================
-   TABS
-============================= */
-function renderTabs(){
-  const tabs=[
-    ["overview","⌂","Overview"],
-    ["budget","▤","Budget"],
-    ["goal","◎","Goal"],
-    ["investing","↗","Invest"],
-    ["more","•••","More"]
-  ];
-  return `
-    <div class="tabbar">
-      ${tabs.map(([id,icon,label])=>`
-        <button
-          class="tab ${
-            S.tab===id
-              ?"active"
-              :""
-          }"
-          data-tab="${id}"
-        >
-          <div class="tab-icon">
-            ${icon}
-          </div>
-          <div class="tab-label">
-            ${label}
-          </div>
-        </button>
-      `).join("")}
-    </div>
-  `;
-}
-/* =============================
-   FAB
-============================= */
-function renderFab(){
-  if(!fabOpen){
-    return `
-      <button
-        class="fab"
-        data-fab-toggle
-      >
-        ＋
-      </button>
-    `;
-  }
-  return `
-    <div
-      class="fab-bg"
-      data-close-fab
-    ></div>
-    <div class="fab-menu">
-      <button
-        class="fab-option"
-        data-fab="extra"
-      >
-        ＋ Extra Income
-      </button>
-      <button
-        class="fab-option"
-        data-fab="expense"
-      >
-        − Expense
-      </button>
-      <button
-        class="fab-option"
-        data-fab="investment"
-      >
-        ↗ Investment
-      </button>
-      <button
-        class="fab-option"
-        data-fab="goal"
-      >
-        ◎ Goal Item
-      </button>
-      <button
-        class="fab-option"
-        data-fab="check"
-      >
-        ✓ Checklist
-      </button>
-    </div>
-    <button
-      class="fab"
-      data-fab-toggle
-      style="transform:rotate(45deg)"
-    >
-      ＋
-    </button>
-  `;
-}
-/* =============================
-   SHEET SHELL
-============================= */
-function sheetShell(
-  title,
-  body,
-  saveLabel="Done",
-  danger=""
-){
-  return `
-    <div
-      class="sheet-bg"
-      id="sheet-bg"
-    >
-      <div class="sheet">
-        <div class="handle"></div>
-        <div class="sheet-nav">
-          <button
-            class="sheet-btn"
-            data-sheet-cancel
-          >
-            Cancel
-          </button>
-          <div class="sheet-title">
-            ${esc(title)}
-          </div>
-          <button
-            class="sheet-btn bold"
-            data-sheet-save
-          >
-            ${esc(saveLabel)}
-          </button>
-        </div>
-        <div class="sheet-body">
-          ${body}
-          ${danger}
-        </div>
-      </div>
-    </div>
-  `;
-}
-/* =============================
-   SHEETS
-============================= */
-function renderSheet(){
-  if(!sheet)return "";
-  if(sheet.type==="income"){
-    const ym=sheet.month;
-    const extras=
-      S.monthOverrides?.[ym]?.extraIncome||[];
-    return sheetShell(
-      monthLabel(ym),
-      `
-        <div class="field">
-          <div class="field-label">
-            Base Monthly Income
-          </div>
-          <div class="field-box">
-            <input
-              id="income-input"
-              type="number"
-              step="0.01"
-              value="${baseIncome(ym).toFixed(2)}"
-            >
-          </div>
-        </div>
-        <div class="field">
-          <div class="field-label">
-            Extra Income
-          </div>
-          <div class="group">
-            ${extras.map(e=>`
-              <div
-                class="row"
-                data-edit-extra="${esc(e.id)}"
-              >
-                <div class="row-label">
-                  ${esc(e.label)}
-                </div>
-                <div class="row-value">
-                  ${money(e.amount)}
-                </div>
-                <div class="chevron">
-                  ›
-                </div>
-              </div>
-            `).join("")}
-            <button
-              class="add-row"
-              data-add-extra
-            >
-              ＋ Add Extra Income
-            </button>
-          </div>
-        </div>
-        <div class="callout">
-          Income is independent by month.
-          Changing ${esc(shortMonth(ym))}
-          will not change another month.
-        </div>
-      `
-    );
-  }
-  if(sheet.type==="extra"){
-    const ym=sheet.month;
-    const e=
-      sheet.id
-      ?(
-        S.monthOverrides?.[ym]?.extraIncome||[]
-      ).find(x=>x.id===sheet.id)
-      :null;
-    const danger=sheet.id
-      ?`
-        <button
-          class="delete-button"
-          data-delete-extra
-        >
-          Delete Extra Income
-        </button>
-      `
-      :"";
-    return sheetShell(
-      sheet.id
-        ?"Edit Extra Income"
-        :"Extra Income",
-      `
-        <div class="field">
-          <div class="field-label">
-            Description
-          </div>
-          <div class="field-box">
-            <input
-              id="extra-label"
-              type="text"
-              value="${esc(e?.label||"")}"
-              placeholder="Income source"
-            >
-          </div>
-        </div>
-        <div class="field">
-          <div class="field-label">
-            Amount
-          </div>
-          <div class="field-box">
-            <input
-              id="extra-amount"
-              type="number"
-              step="0.01"
-              value="${n(e?.amount||0).toFixed(2)}"
-            >
-          </div>
-        </div>
-      `,
-      "Done",
-      danger
-    );
-  }
-  if(sheet.type==="category"){
-    const ym=sheet.month;
-    const key=sheet.key;
-    const c=categoryBudget(ym)[key];
-    return sheetShell(
-      c.label,
-      `
-        <div class="field">
-          <div class="field-label">
-            Category Name
-          </div>
-          <div class="field-box">
-            <input
-              id="cat-name"
-              type="text"
-              value="${esc(c.label)}"
-            >
-          </div>
-        </div>
-        <div class="field">
-          <div class="field-label">
-            Icon
-          </div>
-          <div class="field-box">
-            <input
-              id="cat-icon"
-              type="text"
-              value="${esc(c.icon||"")}"
-            >
-          </div>
-        </div>
-        <div class="field">
-          <div class="field-label">
-            Color
-          </div>
-          <div class="color-grid">
-            ${COLORS.map(color=>`
-              <button
-                class="color-dot ${
-                  c.color===color
-                    ?"selected"
-                    :""
-                }"
-                style="background:${color}"
-                data-color="${color}"
-              ></button>
-            `).join("")}
-          </div>
-        </div>
-        <div class="field">
-          <div class="field-label">
-            Items
-          </div>
-          <div class="group">
-            ${(c.items||[]).map(item=>`
-              <div class="row">
-                <input
-                  class="text-input"
-                  value="${esc(item.label)}"
-                  data-item-label="${esc(item.id)}"
-                >
-                <button
-                  style="
-                    color:var(--red);
-                    font-size:22px;
-                  "
-                  data-delete-item="${esc(item.id)}"
-                >
-                  ×
-                </button>
-              </div>
-            `).join("")}
-            <div class="row">
-              <input
-                id="new-item"
-                class="text-input"
-                placeholder="New item"
-              >
-              <button
-                style="
-                  color:var(--blue);
-                  font-weight:600;
-                "
-                data-add-item
-              >
-                Add
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="callout">
-          These values belong only to
-          <strong>${esc(shortMonth(ym))}</strong>.
-          Other months have their own copy.
-        </div>
-      `,
-      "Done"
-    );
-  }
-  if(sheet.type==="one"){
-    const e=
-      sheet.id
-      ?S.oneTimeExpenses.find(
-        x=>x.id===sheet.id
-      )
-      :null;
-    const danger=sheet.id
-      ?`
-        <button
-          class="delete-button"
-          data-delete-one
-        >
-          Delete Expense
-        </button>
-      `
-      :"";
-    return sheetShell(
-      sheet.id
-        ?"Edit Expense"
-        :"One-Time Expense",
-      `
-        <div class="field">
-          <div class="field-label">
-            Description
-          </div>
-          <div class="field-box">
-            <input
-              id="one-label"
-              type="text"
-              value="${esc(e?.label||"")}"
-              placeholder="Expense"
-            >
-          </div>
-        </div>
-        <div class="field">
-          <div class="field-label">
-            Amount
-          </div>
-          <div class="field-box">
-            <input
-              id="one-amount"
-              type="number"
-              step="0.01"
-              value="${n(e?.amount||0).toFixed(2)}"
-            >
-          </div>
-        </div>
-        <div class="field">
-          <div class="field-label">
-            Month
-          </div>
-          <div
-            class="month-scroll"
-            style="padding:0"
-          >
-            ${allMonths().map(m=>`
-              <button
-                class="month-chip ${
-                  (sheet.month||S.activeMonth)===m
-                    ?"active"
-                    :""
-                }"
-                data-one-month="${esc(m)}"
-              >
-                ${esc(shortMonth(m))}
-              </button>
-            `).join("")}
-          </div>
-        </div>
-      `,
-      "Done",
-      danger
-    );
-  }
-  if(sheet.type==="goalItem"){
-    const e=
-      sheet.id
-      ?S.goalExpenses.find(
-        x=>x.id===sheet.id
-      )
-      :null;
-    const danger=sheet.id
-      ?`
-        <button
-          class="delete-button"
-          data-delete-goal
-        >
-          Delete Goal Item
-        </button>
-      `
-      :"";
-    return sheetShell(
-      sheet.id
-        ?"Edit Goal Item"
-        :"Goal Item",
-      `
-        <div class="field">
-          <div class="field-label">
-            Name
-          </div>
-          <div class="field-box">
-            <input
-              id="goal-item-label"
-              type="text"
-              value="${esc(e?.label||"")}"
-              placeholder="Goal expense"
-            >
-          </div>
-        </div>
-        <div class="field">
-          <div class="field-label">
-            Amount
-          </div>
-          <div class="field-box">
-            <input
-              id="goal-item-amount"
-              type="number"
-              step="0.01"
-              value="${n(e?.amount||0).toFixed(2)}"
-            >
-          </div>
-        </div>
-        <div class="field">
-          <div class="field-label">
-            Note
-          </div>
-          <div class="field-box">
-            <input
-              id="goal-item-note"
-              type="text"
-              value="${esc(e?.estimate||"")}"
-              placeholder="Optional"
-            >
-          </div>
-        </div>
-      `,
-      "Done",
-      danger
-    );
-  }
-  if(sheet.type==="goalName"){
-    return sheetShell(
-      "Goal Name",
-      `
-        <div class="field">
-          <div class="field-label">
-            Name
-          </div>
-          <div class="field-box">
-            <input
-              id="goal-name"
-              type="text"
-              value="${esc(S.goalLabel)}"
-            >
-          </div>
-        </div>
-      `
-    );
-  }
-  if(sheet.type==="goalMonth"){
-    return sheetShell(
-      "Target Month",
-      `
-        <div class="field">
-          <div
-            class="month-scroll"
-            style="padding:0"
-          >
-            ${allMonths().map(m=>`
-              <button
-                class="month-chip ${
-                  m===S.goalMonth
-                    ?"active"
-                    :""
-                }"
-                data-goal-month="${esc(m)}"
-              >
-                ${esc(shortMonth(m))}
-              </button>
-            `).join("")}
-          </div>
-        </div>
-      `
-    );
-  }
-  if(sheet.type==="goalAmount"){
-    return sheetShell(
-      "Target Amount",
-      `
-        <div class="field">
-          <div class="field-label">
-            Goal Target
-          </div>
-          <div class="field-box">
-            <input
-              id="goal-amount"
-              type="number"
-              step="0.01"
-              value="${goalTotal().toFixed(2)}"
-            >
-          </div>
-        </div>
-        <div class="callout">
-          This changes the total goal target
-          while keeping your individual goal
-          items intact as much as possible.
-        </div>
-      `
-    );
-  }
-  /*
-    NEW MONTH MANAGER
-  */
-  if(sheet.type==="months"){
-    const months=allMonths();
-    return sheetShell(
-      "Months",
-      `
-        <div
-          class="callout"
-          style="margin-bottom:18px"
-        >
-          Your plan currently has
-          <strong>${months.length} months</strong>.
-          Each month has its own budget.
-          Adding a month copies the previous
-          month's budget once. After that,
-          the months are completely independent.
-        </div>
-        <div class="group">
-          ${months.map((ym,index)=>`
-            <div
-              class="row"
-              data-select-month="${esc(ym)}"
-            >
-              <div class="row-label">
-                ${esc(monthLabel(ym))}
-                <div class="row-sub">
-                  Start
-                  ${money(
-                    startingBalance(ym)
-                  )}
-                  · Net
-                  ${money(
-                    monthlyNet(ym)
-                  )}
-                  · End
-                  ${money(
-                    endingBalance(ym)
-                  )}
-                </div>
-              </div>
-              <div class="row-value ${
-                endingBalance(ym)<0
-                  ?"balance-negative"
-                  :"balance-positive"
-              }">
-                ${money(
-                  endingBalance(ym)
-                )}
-              </div>
-              ${
-                ym!==APP_START
-                ?`
-                  <button
-                    class="month-delete"
-                    data-delete-month="${esc(ym)}"
-                  >
-                    ×
-                  </button>
-                `
-                :""
+
+      <div class="category-items">
+        ${
+          items.length
+          ? items.map(item=>{
+              if(trackPaid){
+                return trackedExpenseRow(
+                  key,
+                  item,
+                  activeMonth
+                );
               }
-            </div>
-          `).join("")}
-        </div>
-        <div class="section-title">
-          Add Month
-        </div>
-        <div class="group">
-          <div class="row">
-            <div class="row-label">
-              Add Next Month
-              <div class="row-sub">
-                Copies the last month's budget once
-              </div>
-            </div>
-            <button
-              style="
-                color:var(--blue);
-                font-size:16px;
-                font-weight:600;
-              "
-              data-add-month
-            >
-              ＋ Add
-            </button>
-          </div>
-          <div class="row">
-            <div class="row-label">
-              Add Custom Month
-              <div class="row-sub">
-                Example: February 2027
-              </div>
-            </div>
-            <button
-              style="
-                color:var(--blue);
-                font-size:16px;
-                font-weight:600;
-              "
-              data-add-custom-month
-            >
-              ＋ Add
-            </button>
-          </div>
-        </div>
-        <div
-          class="callout"
-          style="margin-top:18px"
-        >
-          <strong>September is protected</strong>
-          as the starting month.
-          You can add or remove every month
-          after September.
-        </div>
-      `
-    );
-  }
-  if(sheet.type==="addCustomMonth"){
-    return sheetShell(
-      "Add Month",
-      `
-        <div class="field">
-          <div class="field-label">
-            Month
-          </div>
-          <div class="field-box">
-            <input
-              id="custom-month"
-              type="month"
-            >
-          </div>
-        </div>
-        <div class="callout">
-          The new month will start with a copy
-          of the closest previous existing
-          month's budget.
-          After creation, it is independent.
-        </div>
-      `,
-      "Add"
-    );
-  }
-  if(sheet.type==="checklist"){
-    return sheetShell(
-      "Checklist",
-      `
-        <div class="group">
-          ${(S.checklist||[]).map(item=>`
-            <div
-              class="row"
-              data-toggle-check="${esc(item.id)}"
-            >
-              <div
-                class="check ${
-                  item.done
-                    ?"done"
-                    :""
-                }"
-              >
-                ${item.done?"✓":""}
-              </div>
-              <div
-                class="row-label ${
-                  item.done
-                    ?"strike"
-                    :""
-                }"
-              >
-                ${esc(item.label)}
-              </div>
-              <button
-                style="
-                  color:var(--red);
-                  font-size:22px;
-                "
-                data-delete-check="${esc(item.id)}"
-              >
-                ×
-              </button>
-            </div>
-          `).join("")}
-          <div class="row">
-            <input
-              id="new-check"
-              class="text-input"
-              placeholder="Add checklist item"
-            >
-            <button
-              style="
-                color:var(--blue);
-                font-weight:600;
-              "
-              data-add-check
-            >
-              Add
-            </button>
-          </div>
-        </div>
-      `
-    );
-  }
-  if(sheet.type==="settings"){
-    return sheetShell(
-      "Settings",
-      `
-        <div class="field">
-          <div class="field-label">
-            Default Monthly Income
-          </div>
-          <div class="field-box">
-            <input
-              id="settings-income"
-              type="number"
-              step="0.01"
-              value="${n(S.income).toFixed(2)}"
-            >
-          </div>
-        </div>
-        <div class="field">
-          <div class="field-label">
-            Default Misc Buffer
-          </div>
-          <div class="field-box">
-            <input
-              id="settings-misc"
-              type="number"
-              step="0.01"
-              value="${n(S.miscBudget).toFixed(2)}"
-            >
-          </div>
-        </div>
-        <div class="callout">
-          These are defaults for future months.
-          Existing months keep their own
-          saved values.
-        </div>
-      `,
-      "Save"
-    );
-  }
-  return "";
+
+              return `
+                <div class="expense-row">
+
+                  <div class="expense-main"
+                       data-edit-type="${escapeHtml(key)}"
+                       data-edit-id="${escapeHtml(item.id)}">
+
+                    <div class="expense-name">
+                      ${escapeHtml(item.name)}
+                    </div>
+
+                    ${
+                      item.note
+                      ? `<div class="expense-note">${escapeHtml(item.note)}</div>`
+                      :""
+                    }
+
+                  </div>
+
+                  <div class="expense-amount">
+                    ${money(item.amount)}
+                  </div>
+
+                </div>
+              `;
+            }).join("")
+          : `<div class="empty">No expenses in this category</div>`
+        }
+      </div>
+
+    </div>
+  `;
 }
-/* =============================
-   EVENTS
-============================= */
-function bindEvents(){
-  document.querySelectorAll("[data-tab]")
-    .forEach(btn=>{
-      btn.onclick=()=>{
-        S.tab=btn.dataset.tab;
-        fabOpen=false;
-        sheet=null;
-        save();
-        render();
-      };
-    });
-  document.querySelectorAll(
-    ".nav [data-month]"
-  ).forEach(btn=>{
-    btn.onclick=()=>{
-      S.activeMonth=
-        btn.dataset.month;
-      fabOpen=false;
-      sheet=null;
-      ensureMonth(
-        S.activeMonth
-      );
-      save();
-      render();
-    };
-  });
-  document.querySelectorAll(
-    "[data-category]"
-  ).forEach(btn=>{
-    btn.onclick=()=>{
-      sheet={
-        type:"category",
-        month:S.activeMonth,
-        key:btn.dataset.category,
-        color:
-          categoryBudget(
-            S.activeMonth
-          )[btn.dataset.category].color
-      };
-      render();
-    };
-  });
-  document.querySelectorAll(
-    "[data-edit-category]"
-  ).forEach(btn=>{
-    btn.onclick=()=>{
-      sheet={
-        type:"category",
-        month:S.activeMonth,
-        key:btn.dataset.editCategory,
-        color:
-          categoryBudget(
-            S.activeMonth
-          )[btn.dataset.editCategory].color
-      };
-      render();
-    };
-  });
-  document.querySelectorAll(
-    "[data-amount]"
-  ).forEach(input=>{
-    input.onchange=()=>{
-      const ym=S.activeMonth;
-      const key=input.dataset.amount;
-      const id=input.dataset.item;
-      const item=
-        categoryBudget(ym)
-          [key]
-          ?.items
-          ?.find(
-            x=>x.id===id
-          );
-      if(item){
-        item.amount=
-          n(input.value);
-        save();
-        render();
-      }
-    };
-  });
-  const misc=
-    document.querySelector(
-      "[data-misc]"
-    );
-  if(misc){
-    misc.onchange=()=>{
-      const ov=
-        S.monthOverrides[
-          S.activeMonth
-        ]||
-        (
-          S.monthOverrides[
-            S.activeMonth
-          ]={}
-        );
-      ov.miscBudget=
-        n(misc.value);
-      save();
-      render();
-    };
-  }
-  document.querySelectorAll(
-    "[data-edit-one]"
-  ).forEach(btn=>{
-    btn.onclick=()=>{
-      const e=
-        S.oneTimeExpenses.find(
-          x=>x.id===btn.dataset.editOne
-        );
-      if(!e)return;
-      sheet={
-        type:"one",
-        id:e.id,
-        month:e.month
-      };
-      render();
-    };
-  });
-  const addOne=
-    document.querySelector(
-      "[data-add-one]"
-    );
-  if(addOne){
-    addOne.onclick=()=>{
-      sheet={
-        type:"one",
-        month:S.activeMonth
-      };
-      render();
-    };
-  }
-  document.querySelectorAll(
-    "[data-goal-item]"
-  ).forEach(btn=>{
-    btn.onclick=()=>{
-      sheet={
-        type:"goalItem",
-        id:btn.dataset.goalItem
-      };
-      render();
-    };
-  });
-  const addGoal=
-    document.querySelector(
-      "[data-add-goal]"
-    );
-  if(addGoal){
-    addGoal.onclick=()=>{
-      sheet={
-        type:"goalItem"
-      };
-      render();
-    };
-  }
-  document.querySelectorAll(
-    "[data-goal-setting]"
-  ).forEach(btn=>{
-    btn.onclick=()=>{
-      const type=
-        btn.dataset.goalSetting;
-      if(type==="name"){
-        sheet={
-          type:"goalName"
-        };
-      }
-      if(type==="month"){
-        sheet={
-          type:"goalMonth"
-        };
-      }
-      if(type==="amount"){
-        sheet={
-          type:"goalAmount"
-        };
-      }
-      render();
-    };
-  });
-  document.querySelectorAll(
-    "[data-income]"
-  ).forEach(btn=>{
-    btn.onclick=()=>{
-      sheet={
-        type:"income",
-        month:S.activeMonth
-      };
-      render();
-    };
-  });
-  const openMonths=
-    document.querySelector(
-      "[data-open-months]"
-    );
-  if(openMonths){
-    openMonths.onclick=()=>{
-      sheet={
-        type:"months"
-      };
-      render();
-    };
-  }
-  const openChecklist=
-    document.querySelector(
-      "[data-open-checklist]"
-    );
-  if(openChecklist){
-    openChecklist.onclick=()=>{
-      sheet={
-        type:"checklist"
-      };
-      render();
-    };
-  }
-  const openSettings=
-    document.querySelector(
-      "[data-open-settings]"
-    );
-  if(openSettings){
-    openSettings.onclick=()=>{
-      sheet={
-        type:"settings"
-      };
-      render();
-    };
-  }
-  document.querySelectorAll(
-    "[data-month-summary]"
-  ).forEach(btn=>{
-    btn.onclick=()=>{
-      S.activeMonth=
-        btn.dataset.monthSummary;
-      save();
-      render();
-    };
-  });
-  const fabToggle=
-    document.querySelector(
-      "[data-fab-toggle]"
-    );
-  if(fabToggle){
-    fabToggle.onclick=()=>{
-      fabOpen=!fabOpen;
-      render();
-    };
-  }
-  const closeFab=
-    document.querySelector(
-      "[data-close-fab]"
-    );
-  if(closeFab){
-    closeFab.onclick=()=>{
-      fabOpen=false;
-      render();
-    };
-  }
-  document.querySelectorAll(
-    "[data-fab]"
-  ).forEach(btn=>{
-    btn.onclick=()=>{
-      const type=
-        btn.dataset.fab;
-      fabOpen=false;
-      if(type==="extra"){
-        sheet={
-          type:"extra",
-          month:S.activeMonth
-        };
-      }
-      if(type==="expense"){
-        sheet={
-          type:"one",
-          month:S.activeMonth
-        };
-      }
-      if(type==="investment"){
-        S.tab="investing";
-        save();
-        render();
-        return;
-      }
-      if(type==="goal"){
-        sheet={
-          type:"goalItem"
-        };
-      }
-      if(type==="check"){
-        sheet={
-          type:"checklist"
-        };
-      }
-      render();
-    };
-  });
-  bindSheetEvents();
+
+function renderBudget(){
+  $("budgetMonth").value = activeMonth;
+
+  $("budgetCategories").innerHTML =
+    catKeys.map(k=>categoryList(k,true)).join("");
+
+  renderBudgetPaymentStats();
 }
-/* =============================
-   SHEET EVENTS
-============================= */
-function bindSheetEvents(){
-  const cancel=
-    document.querySelector(
-      "[data-sheet-cancel]"
-    );
-  if(cancel){
-    cancel.onclick=()=>{
-      sheet=null;
-      render();
-    };
-  }
-  const bg=
-    document.getElementById(
-      "sheet-bg"
-    );
-  if(bg){
-    bg.onclick=e=>{
-      if(e.target===bg){
-        sheet=null;
-        render();
-      }
-    };
-  }
-  const saveBtn=
-    document.querySelector(
-      "[data-sheet-save]"
-    );
-  if(saveBtn){
-    saveBtn.onclick=
-      saveSheet;
-  }
-  /*
-    Income
-  */
-  if(sheet?.type==="income"){
-    const addExtra=
-      document.querySelector(
-        "[data-add-extra]"
-      );
-    if(addExtra){
-      addExtra.onclick=()=>{
-        sheet={
-          type:"extra",
-          month:sheet.month
-        };
-        render();
-      };
-    }
-    document.querySelectorAll(
-      "[data-edit-extra]"
-    ).forEach(btn=>{
-      btn.onclick=()=>{
-        sheet={
-          type:"extra",
-          id:btn.dataset.editExtra,
-          month:sheet.month
-        };
-        render();
-      };
-    });
-  }
-  /*
-    Extra income
-  */
-  if(sheet?.type==="extra"){
-    const del=
-      document.querySelector(
-        "[data-delete-extra]"
-      );
-    if(del){
-      del.onclick=()=>{
-        const list=
-          S.monthOverrides?.[
-            sheet.month
-          ]?.extraIncome||[];
-        S.monthOverrides[
-          sheet.month
-        ].extraIncome=
-          list.filter(
-            e=>e.id!==sheet.id
-          );
-        save();
-        sheet={
-          type:"income",
-          month:sheet.month
-        };
-        render();
-      };
-    }
-  }
-  /*
-    Category editor
-  */
-  if(sheet?.type==="category"){
-    document.querySelectorAll(
-      "[data-color]"
-    ).forEach(btn=>{
-      btn.onclick=()=>{
-        sheet.color=
-          btn.dataset.color;
-        document.querySelectorAll(
-          "[data-color]"
-        ).forEach(x=>{
-          x.classList.toggle(
-            "selected",
-            x.dataset.color===
-              sheet.color
-          );
-        });
-      };
-    });
-    document.querySelectorAll(
-      "[data-delete-item]"
-    ).forEach(btn=>{
-      btn.onclick=()=>{
-        const c=
-          categoryBudget(
-            sheet.month
-          )[sheet.key];
-        c.items=
-          c.items.filter(
-            i=>
-              i.id!==btn.dataset.deleteItem
-          );
-        save();
-        render();
-      };
-    });
-    const add=
-      document.querySelector(
-        "[data-add-item]"
-      );
-    if(add){
-      add.onclick=()=>{
-        const input=
-          document.getElementById(
-            "new-item"
-          );
-        const value=
-          input?.value?.trim();
-        if(!value)return;
-        categoryBudget(
-          sheet.month
-        )[sheet.key]
-          .items
-          .push({
-            id:uid(),
-            label:value,
-            amount:0
-          });
-        save();
-        render();
-      };
-    }
-  }
-  /*
-    One-time expense
-  */
-  if(sheet?.type==="one"){
-    document.querySelectorAll(
-      "[data-one-month]"
-    ).forEach(btn=>{
-      btn.onclick=()=>{
-        sheet.month=
-          btn.dataset.oneMonth;
-        document.querySelectorAll(
-          "[data-one-month]"
-        ).forEach(x=>{
-          x.classList.toggle(
-            "active",
-            x.dataset.oneMonth===
-              sheet.month
-          );
-        });
-      };
-    });
-    const del=
-      document.querySelector(
-        "[data-delete-one]"
-      );
-    if(del){
-      del.onclick=()=>{
-        S.oneTimeExpenses=
-          S.oneTimeExpenses.filter(
-            e=>e.id!==sheet.id
-          );
-        save();
-        sheet=null;
-        render();
-      };
-    }
-  }
-  /*
-    Goal item
-  */
-  if(sheet?.type==="goalItem"){
-    const del=
-      document.querySelector(
-        "[data-delete-goal]"
-      );
-    if(del){
-      del.onclick=()=>{
-        S.goalExpenses=
-          S.goalExpenses.filter(
-            e=>e.id!==sheet.id
-          );
-        save();
-        sheet=null;
-        render();
-      };
-    }
-  }
-  /*
-    Goal month
-  */
-  if(sheet?.type==="goalMonth"){
-    document.querySelectorAll(
-      "[data-goal-month]"
-    ).forEach(btn=>{
-      btn.onclick=()=>{
-        S.goalMonth=
-          btn.dataset.goalMonth;
-        save();
-        sheet=null;
-        render();
-      };
-    });
-  }
-  /*
-    MONTH MANAGER
-  */
-  if(sheet?.type==="months"){
-    /*
-      Select month
-    */
-    document.querySelectorAll(
-      "[data-select-month]"
-    ).forEach(btn=>{
-      btn.onclick=e=>{
-        /*
-          Don't select the month when
-          the delete button itself was tapped.
-        */
-        if(
-          e.target.closest(
-            "[data-delete-month]"
-          )
-        ){
-          return;
-        }
-        S.activeMonth=
-          btn.dataset.selectMonth;
-        ensureMonth(
-          S.activeMonth
-        );
-        save();
-        sheet=null;
-        render();
-      };
-    });
-    /*
-      Delete month
-    */
-    document.querySelectorAll(
-      "[data-delete-month]"
-    ).forEach(btn=>{
-      btn.onclick=e=>{
-        e.stopPropagation();
-        const ym=
-          btn.dataset.deleteMonth;
-        const ok=
-          confirm(
-            `Remove ${monthLabel(ym)} from your plan?`
-          );
-        if(!ok)return;
-        if(
-          removeMonthKey(ym)
-        ){
-          save();
-          showToast(
-            `${shortMonth(ym)} removed`
-          );
-          render();
-        }
-      };
-    });
-    /*
-      Add next month
-    */
-    const add=
-      document.querySelector(
-        "[data-add-month]"
-      );
-    if(add){
-      add.onclick=()=>{
-        const months=
-          allMonths();
-        const last=
-          months[months.length-1];
-        const next=
-          shiftMonth(last,1);
-        /*
-          Create it immediately.
-        */
-        const previousBudget=
-          S.monthBudgets[last]
-            ?clone(
-              S.monthBudgets[last]
-            )
-            :normalizeBudget(
-              S.categories
-            );
-        addMonthKey(next);
-        /*
-          Copy previous budget ONLY
-          during creation.
-        */
-        S.monthBudgets[next]=
-          clone(previousBudget);
-        /*
-          Copy previous month's income
-          as the initial value.
-        */
-        S.monthOverrides[next]=
-          S.monthOverrides[next]||{};
-        S.monthOverrides[next].income=
-          baseIncome(last);
-        S.activeMonth=next;
-        save();
-        sheet=null;
-        render();
-      };
-    }
-    /*
-      Add custom month
-    */
-    const custom=
-      document.querySelector(
-        "[data-add-custom-month]"
-      );
-    if(custom){
-      custom.onclick=()=>{
-        sheet={
-          type:"addCustomMonth"
-        };
-        render();
-      };
-    }
-  }
-  /*
-    Checklist
-  */
-  if(sheet?.type==="checklist"){
-    document.querySelectorAll(
-      "[data-toggle-check]"
-    ).forEach(row=>{
-      row.onclick=e=>{
-        if(
-          e.target.closest(
-            "[data-delete-check]"
-          )
-        ){
-          return;
-        }
-        const item=
-          S.checklist.find(
-            x=>
-              x.id===
-              row.dataset.toggleCheck
-          );
-        if(item){
-          item.done=!item.done;
-          save();
-          render();
-        }
-      };
-    });
-    document.querySelectorAll(
-      "[data-delete-check]"
-    ).forEach(btn=>{
-      btn.onclick=e=>{
-        e.stopPropagation();
-        S.checklist=
-          S.checklist.filter(
-            x=>
-              x.id!==
-              btn.dataset.deleteCheck
-          );
-        save();
-        render();
-      };
-    });
-    const add=
-      document.querySelector(
-        "[data-add-check]"
-      );
-    if(add){
-      add.onclick=()=>{
-        const input=
-          document.getElementById(
-            "new-check"
-          );
-        const value=
-          input?.value?.trim();
-        if(!value)return;
-        S.checklist.push({
-          id:uid(),
-          label:value,
-          done:false
-        });
-        save();
-        render();
-      };
-    }
-  }
+
+function renderBudgetPaymentStats(){
+  const stats = paidStatsForMonth(activeMonth);
+
+  $("budgetPaidAmount").textContent =
+    money(stats.paidAmount);
+
+  $("budgetUnpaidAmount").textContent =
+    money(stats.unpaidAmount);
+
+  $("budgetPaidCount").textContent =
+    stats.paidCount;
+
+  $("budgetUnpaidCount").textContent =
+    stats.unpaidCount;
 }
-/* =============================
-   SAVE SHEET
-============================= */
-function saveSheet(){
-  if(!sheet)return;
-  /*
-    Income
-  */
-  if(sheet.type==="income"){
-    const value=
-      document.getElementById(
-        "income-input"
-      )?.value;
-    S.monthOverrides[
-      sheet.month
-    ]=
-      S.monthOverrides[
-        sheet.month
-      ]||{};
-    S.monthOverrides[
-      sheet.month
-    ].income=
-      n(value);
-    save();
-    sheet=null;
-    render();
-    return;
-  }
-  /*
-    Extra income
-  */
-  if(sheet.type==="extra"){
-    const label=
-      document.getElementById(
-        "extra-label"
-      )?.value?.trim();
-    const amount=
-      n(
-        document.getElementById(
-          "extra-amount"
-        )?.value
-      );
-    if(!label)return;
-    S.monthOverrides[
-      sheet.month
-    ]=
-      S.monthOverrides[
-        sheet.month
-      ]||{};
-    S.monthOverrides[
-      sheet.month
-    ].extraIncome=
-      S.monthOverrides[
-        sheet.month
-      ].extraIncome||[];
-    const list=
-      S.monthOverrides[
-        sheet.month
-      ].extraIncome;
-    if(sheet.id){
-      const e=
-        list.find(
-          x=>x.id===sheet.id
-        );
-      if(e){
-        e.label=label;
-        e.amount=amount;
-      }
-    }else{
-      list.push({
-        id:uid(),
-        label,
-        amount
-      });
+
+/* =========================================================
+   OVERVIEW
+   ========================================================= */
+
+function renderOverview(){
+  const ym = activeMonth;
+  const m = monthData(ym);
+
+  const income = totalIncome(ym);
+  const expenses = totalExpenses(ym);
+  const carry = Number(m.carryover)||0;
+  const net = carry + income - expenses;
+
+  $("overviewMonth").value = ym;
+
+  $("snapshotMonth").textContent = monthLong(ym);
+
+  $("heroNet").textContent = money(net);
+  $("heroNet").className =
+    "hero-value "+(net<0 ? "negative":"positive");
+
+  $("heroIncome").textContent =
+    `${money(income)} income`;
+
+  $("heroExpenses").textContent =
+    `${money(expenses)} expenses`;
+
+  $("statIncome").textContent =
+    money(totalBaseIncome(ym));
+
+  $("statExpenses").textContent =
+    money(expenses);
+
+  $("statCarry").textContent =
+    money(carry);
+
+  $("statExtra").textContent =
+    money(totalExtraIncome(ym));
+
+  /* Payments */
+
+  const stats = paidStatsForMonth(ym);
+
+  $("overviewPaymentTitle").textContent =
+    `${monthShort(ym)} Payments`;
+
+  $("overviewPaidAmount").textContent =
+    money(stats.paidAmount);
+
+  $("overviewUnpaidAmount").textContent =
+    money(stats.unpaidAmount);
+
+  $("overviewPaidCount").textContent =
+    `${stats.paidCount} / ${stats.totalCount}`;
+
+  $("overviewUnpaidCount").textContent =
+    stats.unpaidCount;
+
+  const percent =
+    stats.totalAmount > 0
+      ? Math.round(
+          (stats.paidAmount / stats.totalAmount)*100
+        )
+      : 0;
+
+  $("overviewPaidPercent").textContent =
+    `${percent}%`;
+
+  $("overviewPaidProgress").style.width =
+    `${percent}%`;
+
+  /* Goal */
+
+  const goalMonth = state.settings.goalMonth;
+  const goalName = state.settings.goalName || DEFAULT_GOAL_NAME;
+
+  $("goalName").textContent = goalName;
+  $("goalDate").textContent = monthLong(goalMonth);
+
+  let goalValue = 0;
+
+  sortedMonths().forEach(month=>{
+    if(month <= goalMonth){
+      goalValue = monthNet(month);
     }
-    save();
-    sheet={
-      type:"income",
-      month:sheet.month
-    };
-    render();
-    return;
-  }
-  /*
-    Category
-  */
-  if(sheet.type==="category"){
-    const c=
-      categoryBudget(
-        sheet.month
-      )[sheet.key];
-    const name=
-      document.getElementById(
-        "cat-name"
-      )?.value?.trim();
-    const icon=
-      document.getElementById(
-        "cat-icon"
-      )?.value?.trim();
-    if(name)c.label=name;
-    if(icon)c.icon=icon;
-    if(sheet.color){
-      c.color=sheet.color;
-    }
-    document.querySelectorAll(
-      "[data-item-label]"
-    ).forEach(input=>{
-      const item=
-        c.items.find(
-          x=>
-            x.id===
-            input.dataset.itemLabel
-        );
-      if(item){
-        const value=
-          input.value.trim();
-        if(value){
-          item.label=value;
-        }
-      }
-    });
-    save();
-    sheet=null;
-    render();
-    return;
-  }
-  /*
-    One-time
-  */
-  if(sheet.type==="one"){
-    const label=
-      document.getElementById(
-        "one-label"
-      )?.value?.trim();
-    const amount=
-      n(
-        document.getElementById(
-          "one-amount"
-        )?.value
-      );
-    if(!label)return;
-    if(sheet.id){
-      const e=
-        S.oneTimeExpenses.find(
-          x=>x.id===sheet.id
-        );
-      if(e){
-        e.label=label;
-        e.amount=amount;
-        e.month=
-          sheet.month||e.month;
-      }
-    }else{
-      S.oneTimeExpenses.push({
-        id:uid(),
-        label,
-        amount,
-        month:
-          sheet.month||
-          S.activeMonth
-      });
-    }
-    save();
-    sheet=null;
-    render();
-    return;
-  }
-  /*
-    Goal item
-  */
-  if(sheet.type==="goalItem"){
-    const label=
-      document.getElementById(
-        "goal-item-label"
-      )?.value?.trim();
-    const amount=
-      n(
-        document.getElementById(
-          "goal-item-amount"
-        )?.value
-      );
-    const note=
-      document.getElementById(
-        "goal-item-note"
-      )?.value?.trim()||"";
-    if(!label)return;
-    if(sheet.id){
-      const e=
-        S.goalExpenses.find(
-          x=>x.id===sheet.id
-        );
-      if(e){
-        e.label=label;
-        e.amount=amount;
-        e.estimate=note;
-      }
-    }else{
-      S.goalExpenses.push({
-        id:uid(),
-        label,
-        amount,
-        estimate:note
-      });
-    }
-    save();
-    sheet=null;
-    render();
-    return;
-  }
-  /*
-    Goal name
-  */
-  if(sheet.type==="goalName"){
-    const value=
-      document.getElementById(
-        "goal-name"
-      )?.value?.trim();
-    if(value){
-      S.goalLabel=value;
-    }
-    save();
-    sheet=null;
-    render();
-    return;
-  }
-  /*
-    Goal amount
-  */
-  if(sheet.type==="goalAmount"){
-    const target=
-      n(
-        document.getElementById(
-          "goal-amount"
-        )?.value
-      );
-    const current=
-      goalTotal();
-    const difference=
-      target-current;
-    if(S.goalExpenses.length){
-      const last=
-        S.goalExpenses[
-          S.goalExpenses.length-1
-        ];
-      last.amount=
+  });
+
+  $("goalValue").textContent = money(goalValue);
+
+  const months = sortedMonths();
+
+  let progress = 0;
+
+  if(months.includes(goalMonth)){
+    const targetIndex = months.indexOf(goalMonth);
+    const currentIndex = Math.max(0,months.indexOf(ym));
+
+    if(targetIndex>0){
+      progress =
         Math.max(
           0,
-          n(last.amount)+difference
-        );
-    }else{
-      S.goalExpenses.push({
-        id:uid(),
-        label:"Move Day Goal",
-        amount:target,
-        estimate:""
-      });
-    }
-    save();
-    sheet=null;
-    render();
-    return;
-  }
-  /*
-    Custom month
-  */
-  if(sheet.type==="addCustomMonth"){
-    const input=
-      document.getElementById(
-        "custom-month"
-      );
-    const ym=
-      input?.value;
-    if(!ym){
-      showToast("Choose a month");
-      return;
-    }
-    if(S.months.includes(ym)){
-      showToast("Month already exists");
-      return;
-    }
-    /*
-      Find closest previous existing month.
-    */
-    const previous=
-      allMonths()
-        .filter(m=>m<ym)
-        .pop();
-    /*
-      If there is a previous month,
-      copy its budget once.
-    */
-    if(previous){
-      ensureMonth(previous);
-      S.monthBudgets[ym]=
-        clone(
-          S.monthBudgets[previous]
-        );
-      S.monthOverrides[ym]=
-        S.monthOverrides[ym]||{};
-      S.monthOverrides[ym].income=
-        baseIncome(previous);
-    }else{
-      S.monthBudgets[ym]=
-        normalizeBudget(
-          S.categories
+          Math.min(
+            100,
+            ((currentIndex)/targetIndex)*100
+          )
         );
     }
-    addMonthKey(ym);
-    S.activeMonth=ym;
-    save();
-    sheet=null;
-    render();
-    return;
   }
-  /*
-    Months sheet
-  */
-  if(sheet.type==="months"){
-    sheet=null;
-    render();
-    return;
-  }
-  /*
-    Checklist
-  */
-  if(sheet.type==="checklist"){
-    sheet=null;
-    render();
-    return;
-  }
-  /*
-    Settings
-  */
-  if(sheet.type==="settings"){
-    const income=
-      n(
-        document.getElementById(
-          "settings-income"
-        )?.value
-      );
-    const misc=
-      n(
-        document.getElementById(
-          "settings-misc"
-        )?.value
-      );
-    S.income=income;
-    S.miscBudget=misc;
-    save();
-    sheet=null;
-    render();
-    return;
-  }
-  sheet=null;
+
+  $("goalProgress").style.width =
+    `${progress}%`;
+}
+
+/* =========================================================
+   MONTH LIST
+   ========================================================= */
+
+function renderMonths(){
+  const months = sortedMonths();
+
+  $("monthList").innerHTML = months.map(ym=>{
+    const net = monthNet(ym);
+    const stats = paidStatsForMonth(ym);
+
+    return `
+      <div class="month-item"
+           data-month="${escapeHtml(ym)}">
+
+        <div class="month-item-top">
+
+          <div class="month-item-name">
+            ${escapeHtml(monthLong(ym))}
+          </div>
+
+          <div class="month-item-net ${net<0 ? "red":"green"}">
+            ${money(net)}
+          </div>
+
+        </div>
+
+        <div class="month-item-meta">
+          ${money(totalIncome(ym))} income
+          · ${money(totalExpenses(ym))} expenses
+          · ${stats.paidCount}/${stats.totalCount} paid
+          · ${money(stats.unpaidAmount)} outstanding
+        </div>
+
+      </div>
+    `;
+  }).join("");
+}
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+function renderSettings(){
+  $("defaultIncomeInput").value =
+    state.settings.defaultIncome;
+
+  $("goalMonthInput").value =
+    state.settings.goalMonth;
+
+  $("goalNameInput").value =
+    state.settings.goalName;
+}
+
+/* =========================================================
+   FULL RENDER
+   ========================================================= */
+
+function render(){
+  recalculateCarryovers();
+
+  renderOverview();
+  renderBudget();
+  renderMonths();
+  renderSettings();
+
+  save();
+}
+
+/* =========================================================
+   SCREEN NAVIGATION
+   ========================================================= */
+
+function showScreen(screen){
+  currentScreen = screen;
+
+  document.querySelectorAll(".screen").forEach(el=>{
+    el.classList.toggle(
+      "active",
+      el.id === `screen-${screen}`
+    );
+  });
+
+  document.querySelectorAll(".nav-btn").forEach(btn=>{
+    btn.classList.toggle(
+      "active",
+      btn.dataset.screen === screen
+    );
+  });
+
   render();
 }
-/* =============================
-   START
-============================= */
-loadState();
-ensureAllMonths();
+
+document.querySelectorAll(".nav-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    showScreen(btn.dataset.screen);
+  });
+});
+
+/* =========================================================
+   MONTH NAVIGATION
+   ========================================================= */
+
+function changeMonth(direction){
+  const months = sortedMonths();
+
+  let index = months.indexOf(activeMonth);
+
+  if(index===-1){
+    activeMonth = months[0] || APP_START;
+    index = months.indexOf(activeMonth);
+  }
+
+  index += direction;
+
+  if(index<0){
+    index=0;
+  }
+
+  if(index>=months.length){
+    index=months.length-1;
+  }
+
+  activeMonth = months[index];
+
+  render();
+}
+
+$("prevMonth").addEventListener("click",()=>{
+  changeMonth(-1);
+});
+
+$("nextMonth").addEventListener("click",()=>{
+  changeMonth(1);
+});
+
+$("budgetPrev").addEventListener("click",()=>{
+  changeMonth(-1);
+});
+
+$("budgetNext").addEventListener("click",()=>{
+  changeMonth(1);
+});
+
+$("overviewMonth").addEventListener("change",e=>{
+  activeMonth = e.target.value;
+  render();
+});
+
+$("budgetMonth").addEventListener("change",e=>{
+  activeMonth = e.target.value;
+  render();
+});
+
+/* =========================================================
+   CATEGORY OPEN/CLOSE
+   ========================================================= */
+
+$("budgetCategories").addEventListener("click",e=>{
+  const header = e.target.closest(".category-header");
+
+  if(header){
+    const category =
+      header.closest(".category");
+
+    category.classList.toggle("open");
+
+    const items =
+      category.querySelector(".category-items");
+
+    if(category.classList.contains("open")){
+      items.style.display = "block";
+    }else{
+      items.style.display = "none";
+    }
+  }
+});
+
+/* =========================================================
+   PAID CHECKBOX
+   ========================================================= */
+
+$("budgetCategories").addEventListener("click",e=>{
+  const check = e.target.closest("[data-paidtype]");
+
+  if(!check) return;
+
+  e.preventDefault();
+  e.stopPropagation();
+
+  const type = check.dataset.paidtype;
+  const id = check.dataset.paidid;
+  const ym = check.dataset.paidmonth;
+
+  toggleExpensePaid(ym,type,id);
+
+  renderBudget();
+  renderOverview();
+  renderMonths();
+
+  showToast(
+    isExpensePaid(ym,type,id)
+      ? "Marked paid"
+      : "Marked unpaid"
+  );
+});
+
+/* =========================================================
+   EDIT EXPENSE
+   ========================================================= */
+
+$("budgetCategories").addEventListener("click",e=>{
+  const main = e.target.closest("[data-edit-type]");
+
+  if(!main) return;
+
+  const type = main.dataset.editType;
+  const id = main.dataset.editId;
+
+  openExpenseEditor(type,id);
+});
+
+function openExpenseEditor(type,id){
+  const m = monthData(activeMonth);
+  const item =
+    m.expenses[type].find(x=>x.id===id);
+
+  if(!item) return;
+
+  editingExpense = {
+    type,
+    id
+  };
+
+  $("expenseModalTitle").textContent =
+    "Edit Expense";
+
+  $("expenseName").value =
+    item.name || "";
+
+  $("expenseAmount").value =
+    item.amount || "";
+
+  $("expenseCategory").value =
+    type;
+
+  $("expenseNote").value =
+    item.note || "";
+
+  $("deleteExpenseBtn").classList.remove("hidden");
+
+  $("expenseModal").classList.add("show");
+}
+
+function openNewExpense(){
+  editingExpense = null;
+
+  $("expenseModalTitle").textContent =
+    "Add Expense";
+
+  $("expenseName").value = "";
+  $("expenseAmount").value = "";
+  $("expenseCategory").value = "other";
+  $("expenseNote").value = "";
+
+  $("deleteExpenseBtn").classList.add("hidden");
+
+  $("expenseModal").classList.add("show");
+}
+
+$("addExpenseBtn").addEventListener(
+  "click",
+  openNewExpense
+);
+
+$("closeExpenseModal").addEventListener(
+  "click",
+  closeExpenseModal
+);
+
+$("cancelExpenseBtn").addEventListener(
+  "click",
+  closeExpenseModal
+);
+
+function closeExpenseModal(){
+  $("expenseModal").classList.remove("show");
+  editingExpense = null;
+}
+
+$("saveExpenseBtn").addEventListener("click",()=>{
+  const name =
+    $("expenseName").value.trim();
+
+  const amount =
+    Number($("expenseAmount").value)||0;
+
+  const category =
+    $("expenseCategory").value;
+
+  const note =
+    $("expenseNote").value.trim();
+
+  if(!name){
+    showToast("Enter an expense name");
+    return;
+  }
+
+  if(amount<0){
+    showToast("Amount cannot be negative");
+    return;
+  }
+
+  const m = monthData(activeMonth);
+
+  if(editingExpense){
+    const oldType = editingExpense.type;
+    const id = editingExpense.id;
+
+    const index =
+      m.expenses[oldType].findIndex(
+        x=>x.id===id
+      );
+
+    if(index===-1) return;
+
+    const oldItem =
+      m.expenses[oldType][index];
+
+    const updated = {
+      ...oldItem,
+      name,
+      amount,
+      note
+    };
+
+    /*
+      If category changes, move the expense
+      only inside THIS month.
+      No other month's expense data changes.
+    */
+
+    if(oldType !== category){
+      m.expenses[oldType].splice(index,1);
+
+      m.expenses[category].push({
+        ...updated
+      });
+    }else{
+      m.expenses[oldType][index] = updated;
+    }
+
+    showToast("Expense updated");
+
+  }else{
+
+    const item = {
+      id:uid(),
+      name,
+      amount,
+      note
+    };
+
+    m.expenses[category].push(item);
+
+    showToast("Expense added");
+  }
+
+  recalculateCarryovers();
+  save();
+  closeExpenseModal();
+  render();
+});
+
+$("deleteExpenseBtn").addEventListener("click",()=>{
+  if(!editingExpense) return;
+
+  const confirmed =
+    confirm("Delete this expense?");
+
+  if(!confirmed) return;
+
+  const m = monthData(activeMonth);
+
+  const type = editingExpense.type;
+  const id = editingExpense.id;
+
+  m.expenses[type] =
+    m.expenses[type].filter(
+      item=>item.id!==id
+    );
+
+  const key =
+    paidExpenseKey(
+      activeMonth,
+      type,
+      id
+    );
+
+  delete state.paidExpenses[key];
+
+  recalculateCarryovers();
+  save();
+
+  closeExpenseModal();
+  render();
+
+  showToast("Expense deleted");
+});
+
+/* =========================================================
+   CATEGORY SELECT
+   ========================================================= */
+
+function populateCategorySelect(){
+  $("expenseCategory").innerHTML =
+    catKeys.map(key=>`
+      <option value="${escapeHtml(key)}">
+        ${escapeHtml(CATEGORY_DEFINITIONS[key].label)}
+      </option>
+    `).join("");
+}
+
+/* =========================================================
+   MONTH MANAGEMENT
+   ========================================================= */
+
+$("addMonthBtn").addEventListener("click",()=>{
+  const months = sortedMonths();
+
+  let suggested = APP_START;
+
+  if(months.length){
+    suggested = nextMonth(months[months.length-1]);
+  }
+
+  $("newMonthInput").value = suggested;
+  $("newMonthIncome").value =
+    state.settings.defaultIncome;
+
+  $("monthModal").classList.add("show");
+});
+
+$("closeMonthModal").addEventListener(
+  "click",
+  closeMonthModal
+);
+
+$("cancelMonthBtn").addEventListener(
+  "click",
+  closeMonthModal
+);
+
+function closeMonthModal(){
+  $("monthModal").classList.remove("show");
+}
+
+$("saveMonthBtn").addEventListener("click",()=>{
+  const ym =
+    $("newMonthInput").value;
+
+  const income =
+    Number($("newMonthIncome").value)
+    || Number(state.settings.defaultIncome)
+    || DEFAULT_INCOME;
+
+  if(!ym){
+    showToast("Choose a month");
+    return;
+  }
+
+  if(state.months[ym]){
+    showToast("That month already exists");
+    return;
+  }
+
+  ensureMonth(ym,income);
+
+  activeMonth = ym;
+
+  recalculateCarryovers();
+  save();
+
+  closeMonthModal();
+  render();
+
+  showToast(`${monthLong(ym)} added`);
+});
+
+/* =========================================================
+   MONTH CLICK
+   ========================================================= */
+
+$("monthList").addEventListener("click",e=>{
+  const item =
+    e.target.closest("[data-month]");
+
+  if(!item) return;
+
+  activeMonth = item.dataset.month;
+
+  showScreen("budget");
+});
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+$("settingsBtn").addEventListener("click",()=>{
+  showScreen("settings");
+});
+
+$("saveSettingsBtn").addEventListener("click",()=>{
+  const income =
+    Number($("defaultIncomeInput").value)
+    || DEFAULT_INCOME;
+
+  const goalMonth =
+    $("goalMonthInput").value
+    || DEFAULT_GOAL_MONTH;
+
+  const goalName =
+    $("goalNameInput").value.trim()
+    || DEFAULT_GOAL_NAME;
+
+  state.settings.defaultIncome = income;
+  state.settings.goalMonth = goalMonth;
+  state.settings.goalName = goalName;
+
+  /*
+    Changing the default income does NOT overwrite
+    existing months. It is only used when creating
+    a new month.
+  */
+
+  recalculateCarryovers();
+  save();
+  render();
+
+  showToast("Settings saved");
+});
+
+/* =========================================================
+   EXPORT
+   ========================================================= */
+
+$("exportBtn").addEventListener("click",()=>{
+  const data = JSON.stringify(
+    state,
+    null,
+    2
+  );
+
+  const blob =
+    new Blob(
+      [data],
+      {type:"application/json"}
+    );
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
+
+  a.href = url;
+  a.download =
+    `gods-plan-backup-${new Date().toISOString().slice(0,10)}.json`;
+
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  URL.revokeObjectURL(url);
+
+  showToast("Backup exported");
+});
+
+/* =========================================================
+   IMPORT
+   ========================================================= */
+
+$("importBtn").addEventListener("click",()=>{
+  $("importFile").click();
+});
+
+$("importFile").addEventListener("change",e=>{
+  const file = e.target.files[0];
+
+  if(!file) return;
+
+  const reader =
+    new FileReader();
+
+  reader.onload = event=>{
+    try{
+      const imported =
+        JSON.parse(event.target.result);
+
+      if(
+        !imported ||
+        typeof imported !== "object" ||
+        !imported.months
+      ){
+        throw new Error("Invalid backup");
+      }
+
+      state = imported;
+
+      state.settings =
+        state.settings || {};
+
+      state.settings.defaultIncome =
+        Number(
+          state.settings.defaultIncome
+        ) || DEFAULT_INCOME;
+
+      state.settings.goalMonth =
+        state.settings.goalMonth ||
+        DEFAULT_GOAL_MONTH;
+
+      state.settings.goalName =
+        state.settings.goalName ||
+        DEFAULT_GOAL_NAME;
+
+      /*
+        Backwards compatibility:
+        older backups may not have paidExpenses.
+      */
+
+      state.paidExpenses =
+        state.paidExpenses || {};
+
+      activeMonth =
+        sortedMonths()[0] || APP_START;
+
+      initializeMonths();
+      save();
+      render();
+
+      showToast("Backup imported");
+
+    }catch(err){
+      console.error(err);
+      showToast("Invalid backup file");
+    }
+
+    e.target.value = "";
+  };
+
+  reader.readAsText(file);
+});
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+$("resetBtn").addEventListener("click",()=>{
+  const first =
+    confirm(
+      "Reset God's Plan? This will erase all saved budget data on this device."
+    );
+
+  if(!first) return;
+
+  const second =
+    confirm(
+      "Are you absolutely sure? This cannot be undone unless you have a backup."
+    );
+
+  if(!second) return;
+
+  localStorage.removeItem("godsPlanState");
+
+  state = {
+    months:{},
+    paidExpenses:{},
+    settings:{
+      defaultIncome:DEFAULT_INCOME,
+      goalMonth:DEFAULT_GOAL_MONTH,
+      goalName:DEFAULT_GOAL_NAME
+    }
+  };
+
+  activeMonth = APP_START;
+
+  initializeMonths();
+  save();
+  render();
+
+  showScreen("overview");
+
+  showToast("App reset");
+});
+
+/* =========================================================
+   EXTRA INCOME
+   ========================================================= */
+
+function addExtraIncomeControls(){
+  /*
+    Insert a simple extra-income control into the snapshot card.
+    This value belongs ONLY to the active month.
+  */
+
+  const existing =
+    document.getElementById("extraIncomeControl");
+
+  if(existing) return;
+
+  const card =
+    document.querySelector("#screen-overview .card");
+
+  if(!card) return;
+
+  const wrapper =
+    document.createElement("div");
+
+  wrapper.id =
+    "extraIncomeControl";
+
+  wrapper.className =
+    "card-pad";
+
+  wrapper.style.borderTop =
+    "1px solid var(--line)";
+
+  wrapper.innerHTML = `
+    <div style="display:flex;align-items:end;gap:10px">
+
+      <div class="form-field" style="flex:1">
+        <label>Extra Income This Month</label>
+        <input
+          id="extraIncomeInput"
+          type="number"
+          step="0.01"
+          placeholder="0"
+        />
+      </div>
+
+      <button
+        class="btn primary"
+        id="saveExtraIncomeBtn"
+        style="height:44px"
+      >
+        Save
+      </button>
+
+    </div>
+  `;
+
+  card.appendChild(wrapper);
+
+  $("saveExtraIncomeBtn").addEventListener(
+    "click",
+    ()=>{
+      const m =
+        monthData(activeMonth);
+
+      m.extraIncome =
+        Number(
+          $("extraIncomeInput").value
+        ) || 0;
+
+      recalculateCarryovers();
+      save();
+      render();
+
+      showToast("Extra income saved");
+    }
+  );
+}
+
+function updateExtraIncomeControl(){
+  const input =
+    document.getElementById("extraIncomeInput");
+
+  if(input){
+    input.value =
+      monthData(activeMonth).extraIncome || 0;
+  }
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+let toastTimer;
+
+function showToast(message){
+  const toast = $("toast");
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer =
+    setTimeout(()=>{
+      toast.classList.remove("show");
+    },1600);
+}
+
+/* =========================================================
+   OUTSIDE MODAL CLOSE
+   ========================================================= */
+
+$("expenseModal").addEventListener("click",e=>{
+  if(e.target === $("expenseModal")){
+    closeExpenseModal();
+  }
+});
+
+$("monthModal").addEventListener("click",e=>{
+  if(e.target === $("monthModal")){
+    closeMonthModal();
+  }
+});
+
+/* =========================================================
+   KEYBOARD
+   ========================================================= */
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
+    closeExpenseModal();
+    closeMonthModal();
+  }
+});
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+
+load();
+populateCategorySelect();
+addExtraIncomeControls();
 render();
+updateExtraIncomeControl();
+
+/*
+  Re-rendering the overview can replace values but the
+  extra-income input itself stays mounted.
+*/
+
+const originalRenderOverview =
+  renderOverview;
+
+renderOverview = function(){
+  originalRenderOverview();
+  updateExtraIncomeControl();
+};
+
+render();
+
+/* =========================================================
+   SERVICE WORKER
+   ========================================================= */
+
+if(
+  "serviceWorker" in navigator &&
+  location.protocol !== "file:"
+){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("./sw.js")
+      .catch(()=>{});
+  });
+}
+
 </script>
+
 </body>
 </html>
