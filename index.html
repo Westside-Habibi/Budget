@@ -8,7 +8,6 @@
 <meta name="apple-mobile-web-app-title" content="God's Plan">
 <meta name="theme-color" content="#000000">
 <title>God's Plan</title>
-
 <style>
 :root{
   --bg:#000;
@@ -27,12 +26,10 @@
   --radius:16px;
   --large-radius:22px;
 }
-
 *{
   box-sizing:border-box;
   -webkit-tap-highlight-color:transparent;
 }
-
 html,body{
   margin:0;
   padding:0;
@@ -42,34 +39,26 @@ html,body{
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,sans-serif;
   -webkit-font-smoothing:antialiased;
 }
-
 body{
   padding-bottom:calc(82px + env(safe-area-inset-bottom));
 }
-
-button,
-input{
+button,input{
   font-family:inherit;
 }
-
 button{
   border:0;
   background:none;
   color:inherit;
 }
-
 input{
   color:var(--text);
 }
-
 input:focus{
   outline:none;
 }
-
 ::-webkit-scrollbar{
   display:none;
 }
-
 .nav{
   position:sticky;
   top:0;
@@ -80,40 +69,34 @@ input:focus{
   border-bottom:.5px solid var(--line);
   padding-top:max(8px,env(safe-area-inset-top));
 }
-
 .nav-top{
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding:8px 16px 10px;
 }
-
 .title{
   font-size:34px;
   line-height:1;
   font-weight:750;
   letter-spacing:-.8px;
 }
-
 .subtitle{
   margin-top:5px;
   font-size:13px;
   color:var(--secondary);
 }
-
 .income-button{
   color:var(--blue);
   font-size:15px;
   font-weight:600;
 }
-
 .month-scroll{
   display:flex;
   gap:8px;
   overflow-x:auto;
   padding:0 16px 12px;
 }
-
 .month-chip{
   flex:none;
   border-radius:99px;
@@ -124,12 +107,10 @@ input:focus{
   font-weight:600;
   white-space:nowrap;
 }
-
 .month-chip.active{
   background:var(--blue);
   color:#fff;
 }
-
 .hero{
   margin:18px 16px 20px;
   padding:21px;
@@ -139,7 +120,6 @@ input:focus{
   overflow:hidden;
   position:relative;
 }
-
 .hero-glow{
   position:absolute;
   width:250px;
@@ -149,7 +129,6 @@ input:focus{
   background:radial-gradient(circle,rgba(48,209,88,.16),transparent 70%);
   pointer-events:none;
 }
-
 .eyebrow{
   color:var(--tertiary);
   text-transform:uppercase;
@@ -157,7 +136,6 @@ input:focus{
   font-size:11px;
   font-weight:700;
 }
-
 .hero-number{
   margin-top:5px;
   font-size:40px;
@@ -165,20 +143,17 @@ input:focus{
   letter-spacing:-1px;
   font-variant-numeric:tabular-nums;
 }
-
 .hero-caption{
   margin-top:3px;
   font-size:14px;
   color:var(--secondary);
 }
-
 .stats{
   display:flex;
   flex-wrap:wrap;
   gap:22px;
   margin-top:18px;
 }
-
 .stat-label{
   color:var(--tertiary);
   font-size:10px;
@@ -186,14 +161,12 @@ input:focus{
   text-transform:uppercase;
   letter-spacing:.4px;
 }
-
 .stat-value{
   margin-top:3px;
   font-size:17px;
   font-weight:700;
   font-variant-numeric:tabular-nums;
 }
-
 .progress{
   height:6px;
   margin-top:18px;
@@ -201,13 +174,11 @@ input:focus{
   border-radius:99px;
   overflow:hidden;
 }
-
 .progress-fill{
   height:100%;
   border-radius:99px;
   background:var(--green);
 }
-
 .progress-row{
   display:flex;
   justify-content:space-between;
@@ -215,11 +186,9 @@ input:focus{
   color:var(--tertiary);
   font-size:12px;
 }
-
 .section{
   margin:0 16px 30px;
 }
-
 .section-title{
   padding:0 4px 7px;
   margin-top:24px;
@@ -229,17 +198,14 @@ input:focus{
   text-transform:uppercase;
   letter-spacing:.5px;
 }
-
 .section-title:first-child{
   margin-top:0;
 }
-
 .group{
   overflow:hidden;
   border-radius:var(--radius);
   background:var(--card);
 }
-
 .row{
   min-height:45px;
   display:flex;
@@ -248,42 +214,35 @@ input:focus{
   padding:10px 16px;
   border-bottom:.5px solid var(--line);
 }
-
 .row:last-child{
   border-bottom:0;
 }
-
 .row-label{
   flex:1;
   min-width:0;
   font-size:16px;
 }
-
 .row-sub{
   margin-top:2px;
   color:var(--tertiary);
   font-size:12px;
 }
-
 .row-value{
   color:var(--secondary);
   font-size:16px;
   font-variant-numeric:tabular-nums;
   flex:none;
 }
-
 .chevron{
   color:var(--tertiary);
   font-size:19px;
 }
-
 .dot{
   width:9px;
   height:9px;
   border-radius:50%;
   flex:none;
 }
-
 .num-input{
   width:95px;
   border:0;
@@ -292,7 +251,6 @@ input:focus{
   font-size:16px;
   font-variant-numeric:tabular-nums;
 }
-
 .text-input{
   flex:1;
   min-width:0;
@@ -300,7 +258,6 @@ input:focus{
   background:transparent;
   font-size:16px;
 }
-
 .add-row{
   width:100%;
   min-height:45px;
@@ -311,22 +268,18 @@ input:focus{
   font-size:16px;
   text-align:left;
 }
-
 .footer-note{
   padding:7px 4px 0;
   color:var(--tertiary);
   font-size:12px;
   line-height:1.45;
 }
-
 .balance-positive{
   color:var(--green)!important;
 }
-
 .balance-negative{
   color:var(--red)!important;
 }
-
 .starting-card{
   margin:0 16px 14px;
   padding:15px 17px;
@@ -337,19 +290,16 @@ input:focus{
   justify-content:space-between;
   align-items:center;
 }
-
 .starting-label{
   color:var(--secondary);
   font-size:13px;
 }
-
 .starting-value{
   color:var(--blue);
   font-size:18px;
   font-weight:700;
   font-variant-numeric:tabular-nums;
 }
-
 .tabbar{
   position:fixed;
   left:0;
@@ -363,7 +313,6 @@ input:focus{
   -webkit-backdrop-filter:blur(22px);
   border-top:.5px solid var(--line);
 }
-
 .tab{
   flex:1;
   padding:8px 2px 7px;
@@ -373,21 +322,17 @@ input:focus{
   align-items:center;
   gap:3px;
 }
-
 .tab.active{
   color:var(--blue);
 }
-
 .tab-icon{
   font-size:21px;
   line-height:1;
 }
-
 .tab-label{
   font-size:10px;
   font-weight:600;
 }
-
 .fab{
   position:fixed;
   right:20px;
@@ -401,14 +346,12 @@ input:focus{
   font-size:29px;
   box-shadow:0 5px 20px rgba(10,132,255,.40);
 }
-
 .fab-bg{
   position:fixed;
   inset:0;
   z-index:299;
   background:rgba(0,0,0,.42);
 }
-
 .fab-menu{
   position:fixed;
   right:20px;
@@ -419,7 +362,6 @@ input:focus{
   align-items:flex-end;
   gap:8px;
 }
-
 .fab-option{
   display:flex;
   align-items:center;
@@ -432,7 +374,6 @@ input:focus{
   font-weight:600;
   box-shadow:0 5px 18px rgba(0,0,0,.35);
 }
-
 .sheet-bg{
   position:fixed;
   inset:0;
@@ -441,7 +382,6 @@ input:focus{
   display:flex;
   align-items:flex-end;
 }
-
 .sheet{
   width:100%;
   max-height:90vh;
@@ -450,7 +390,6 @@ input:focus{
   border-radius:21px 21px 0 0;
   padding-bottom:max(20px,env(safe-area-inset-bottom));
 }
-
 .handle{
   width:36px;
   height:5px;
@@ -458,7 +397,6 @@ input:focus{
   background:rgba(120,120,128,.36);
   margin:8px auto 3px;
 }
-
 .sheet-nav{
   min-height:51px;
   display:flex;
@@ -467,29 +405,23 @@ input:focus{
   padding:0 16px;
   border-bottom:.5px solid var(--line);
 }
-
 .sheet-title{
   font-size:17px;
   font-weight:650;
 }
-
 .sheet-btn{
   color:var(--blue);
   font-size:17px;
 }
-
 .sheet-btn.bold{
   font-weight:600;
 }
-
 .sheet-body{
   padding:20px 16px;
 }
-
 .field{
   margin-bottom:20px;
 }
-
 .field-label{
   margin-bottom:8px;
   color:var(--secondary);
@@ -498,27 +430,23 @@ input:focus{
   text-transform:uppercase;
   letter-spacing:.4px;
 }
-
 .field-box{
   padding:12px 14px;
   border-radius:11px;
   background:rgba(118,118,128,.15);
 }
-
 .field-box input{
   width:100%;
   border:0;
   background:transparent;
   font-size:16px;
 }
-
 .delete-button{
   width:100%;
   padding:14px;
   color:var(--red);
   font-size:17px;
 }
-
 .callout{
   padding:13px 14px;
   border-radius:12px;
@@ -527,20 +455,17 @@ input:focus{
   font-size:14px;
   line-height:1.45;
 }
-
 .color-grid{
   display:flex;
   flex-wrap:wrap;
   gap:13px;
 }
-
 .color-dot{
   width:32px;
   height:32px;
   border-radius:50%;
   position:relative;
 }
-
 .color-dot.selected:after{
   content:"";
   position:absolute;
@@ -548,7 +473,6 @@ input:focus{
   border:2px solid white;
   border-radius:50%;
 }
-
 .check{
   width:25px;
   height:25px;
@@ -560,28 +484,39 @@ input:focus{
   color:var(--green);
   flex:none;
 }
-
 .check.done{
   border-color:var(--green);
 }
-
 .strike{
   text-decoration:line-through;
   opacity:.48;
 }
+.month-delete{
+  color:var(--red);
+  font-size:22px;
+  padding:4px 0 4px 8px;
+}
+.month-add-box{
+  display:flex;
+  gap:10px;
+}
+.month-add-box input{
+  flex:1;
+}
+.month-add-box button{
+  color:var(--blue);
+  font-size:16px;
+  font-weight:600;
+}
 </style>
 </head>
-
 <body>
-
 <div id="app"></div>
 <div id="toast"></div>
-
 <script>
-const SAVE_KEY="godsplan_v2";
+const SAVE_KEY="godsplan_v3";
 const APP_START="2026-09";
 const DEFAULT_INCOME=5390;
-
 const COLORS=[
   "#0a84ff",
   "#30d158",
@@ -593,7 +528,6 @@ const COLORS=[
   "#ff375f",
   "#ffd60a"
 ];
-
 const DEFAULT_CATEGORIES={
   tesla:{
     label:"Tesla",
@@ -606,7 +540,6 @@ const DEFAULT_CATEGORIES={
       {id:"tesla_wind",label:"Windshield Protection",amount:16}
     ]
   },
-
   housing:{
     label:"Housing",
     color:"#0a84ff",
@@ -615,7 +548,6 @@ const DEFAULT_CATEGORIES={
       {id:"rent",label:"Rent",amount:525}
     ]
   },
-
   phone:{
     label:"Phone & Tech",
     color:"#64d2ff",
@@ -623,15 +555,10 @@ const DEFAULT_CATEGORIES={
     items:[
       {id:"tmobile",label:"T-Mobile",amount:250},
       {id:"apple_one",label:"Apple One",amount:39.99},
-      {
-        id:"applecare_daughter",
-        label:"AppleCare+ (Daughter's Phone)",
-        amount:19.99
-      },
+      {id:"applecare_daughter",label:"AppleCare+ (Daughter's Phone)",amount:19.99},
       {id:"amazon_prime",label:"Amazon Prime",amount:7.53}
     ]
   },
-
   streaming:{
     label:"Streaming",
     color:"#bf5af2",
@@ -642,7 +569,6 @@ const DEFAULT_CATEGORIES={
       {id:"disney",label:"Disney+",amount:10}
     ]
   },
-
   transportation:{
     label:"Transportation",
     color:"#ff9f0a",
@@ -651,7 +577,6 @@ const DEFAULT_CATEGORIES={
       {id:"supercharging",label:"Tesla Supercharging",amount:60}
     ]
   },
-
   misc:{
     label:"Misc / Personal",
     color:"#5e5ce6",
@@ -659,7 +584,6 @@ const DEFAULT_CATEGORIES={
     items:[]
   }
 };
-
 const DEFAULT_INVESTING={
   investing:{
     label:"Investing",
@@ -673,7 +597,6 @@ const DEFAULT_INVESTING={
     ]
   }
 };
-
 const DEFAULT_GOALS=[
   {id:"bedroom",label:"Bedroom Furniture (Master)",amount:800,estimate:""},
   {id:"kidsrooms",label:"Kids Rooms (2–3 beds)",amount:1200,estimate:""},
@@ -683,7 +606,6 @@ const DEFAULT_GOALS=[
   {id:"miscgoal",label:"Misc / Lamps / Rugs",amount:400,estimate:""},
   {id:"buffer",label:"Living Buffer",amount:2100,estimate:""}
 ];
-
 const DEFAULT_CHECKLIST=[
   {id:"check_savings",label:"Open dedicated savings account",done:false},
   {id:"check_transfer",label:"Set up auto-transfer on the 1st",done:false},
@@ -693,25 +615,32 @@ const DEFAULT_CHECKLIST=[
   {id:"check_wayfair",label:"Browse Wayfair / FB Marketplace",done:false},
   {id:"check_lease",label:"Confirm townhouse lease signed",done:false}
 ];
-
+const DEFAULT_MONTHS=[
+  "2026-09",
+  "2026-10",
+  "2026-11",
+  "2026-12",
+  "2027-01"
+];
 const DEFAULT_STATE={
   tab:"overview",
   activeMonth:"2026-09",
   goalMonth:"2027-01",
   goalLabel:"Move Day",
+  /*
+    THIS IS NOW THE SOURCE OF TRUTH
+    FOR WHICH MONTHS EXIST.
+  */
+  months:[...DEFAULT_MONTHS],
   income:DEFAULT_INCOME,
   miscBudget:1000,
   furnitureGoal:6500,
-
   categories:JSON.parse(JSON.stringify({
     ...DEFAULT_CATEGORIES,
     ...DEFAULT_INVESTING
   })),
-
   monthBudgets:{},
-
   goalExpenses:JSON.parse(JSON.stringify(DEFAULT_GOALS)),
-
   oneTimeExpenses:[
     {
       id:"ot_car_repairs",
@@ -744,7 +673,6 @@ const DEFAULT_STATE={
       month:"2026-09"
     }
   ],
-
   monthOverrides:{
     "2026-09":{
       extraIncome:[
@@ -756,33 +684,25 @@ const DEFAULT_STATE={
       ]
     }
   },
-
   checklist:JSON.parse(JSON.stringify(DEFAULT_CHECKLIST))
 };
-
 let S;
 let sheet=null;
 let fabOpen=false;
 let saveTimer=null;
-
-
-/* -----------------------------
+/* =============================
    HELPERS
------------------------------ */
-
+============================= */
 function clone(x){
   return JSON.parse(JSON.stringify(x));
 }
-
 function uid(){
   return "id_"+Math.random().toString(36).slice(2)+Date.now().toString(36);
 }
-
 function n(v){
   const x=parseFloat(v);
   return Number.isFinite(x)?x:0;
 }
-
 function money(v){
   return n(v).toLocaleString("en-US",{
     style:"currency",
@@ -790,7 +710,6 @@ function money(v){
     minimumFractionDigits:2
   });
 }
-
 function esc(v){
   return String(v??"")
     .replace(/&/g,"&amp;")
@@ -799,16 +718,13 @@ function esc(v){
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
 }
-
 function monthKey(date){
   return date.getFullYear()+"-"+String(date.getMonth()+1).padStart(2,"0");
 }
-
 function shiftMonth(ym,delta){
   const [y,m]=ym.split("-").map(Number);
   return monthKey(new Date(y,m-1+delta,1));
 }
-
 function monthLabel(ym){
   const [y,m]=ym.split("-").map(Number);
   return new Date(y,m-1,1).toLocaleDateString("en-US",{
@@ -816,7 +732,6 @@ function monthLabel(ym){
     year:"numeric"
   });
 }
-
 function shortMonth(ym){
   const [y,m]=ym.split("-").map(Number);
   return new Date(y,m-1,1).toLocaleDateString("en-US",{
@@ -824,28 +739,11 @@ function shortMonth(ym){
     year:"numeric"
   });
 }
-
-function allMonths(){
-  const set=new Set([APP_START]);
-
-  Object.keys(S.monthBudgets||{}).forEach(m=>set.add(m));
-  Object.keys(S.monthOverrides||{}).forEach(m=>set.add(m));
-
-  (S.oneTimeExpenses||[]).forEach(e=>{
-    if(e.month)set.add(e.month);
-  });
-
-  set.add(S.goalMonth);
-
-  return [...set].sort();
-}
-
 function showToast(text){
   const el=document.getElementById("toast");
-
   el.textContent=text;
-
   Object.assign(el.style,{
+    display:"block",
     position:"fixed",
     left:"50%",
     bottom:"calc(94px + env(safe-area-inset-bottom))",
@@ -858,140 +756,173 @@ function showToast(text){
     fontWeight:"600",
     zIndex:"2000"
   });
-
   clearTimeout(showToast.timer);
-
   showToast.timer=setTimeout(()=>{
     el.style.display="none";
   },1400);
 }
-
-
-/* -----------------------------
-   MONTH BUDGET ARCHITECTURE
------------------------------ */
-
+/* =============================
+   MONTH SYSTEM
+============================= */
 /*
-  IMPORTANT:
-
-  Every month has its OWN copy of the budget.
-
+  S.months is now the ONLY source of truth.
+  This fixes the old problem where the app
+  only displayed September and January.
   Example:
-
-  S.monthBudgets["2026-09"]
-  S.monthBudgets["2026-10"]
-  S.monthBudgets["2026-11"]
-
-  Once October is created, changing October
-  does not change September or November.
-
-  New months are initialized by copying the
-  previous month exactly once.
+  [
+    "2026-09",
+    "2026-10",
+    "2026-11",
+    "2026-12",
+    "2027-01"
+  ]
 */
-
+function allMonths(){
+  if(!Array.isArray(S.months)){
+    S.months=[...DEFAULT_MONTHS];
+  }
+  return [...new Set(S.months)].sort();
+}
+function addMonthKey(ym){
+  if(!S.months.includes(ym)){
+    S.months.push(ym);
+  }
+  S.months.sort();
+  ensureMonth(ym);
+}
+function removeMonthKey(ym){
+  /*
+    September is the starting month and cannot
+    be deleted because there would be no
+    beginning to the carry-over chain.
+  */
+  if(ym===APP_START){
+    showToast("September cannot be removed");
+    return false;
+  }
+  if(S.months.length<=1){
+    showToast("Keep at least one month");
+    return false;
+  }
+  S.months=
+    S.months.filter(m=>m!==ym);
+  /*
+    If the deleted month was active,
+    move to the closest remaining month.
+  */
+  if(S.activeMonth===ym){
+    const months=allMonths();
+    const previous=
+      months.filter(m=>m<ym).pop();
+    const next=
+      months.find(m=>m>ym);
+    S.activeMonth=
+      previous ||
+      next ||
+      APP_START;
+  }
+  /*
+    If the deleted month was the goal month,
+    move the goal to the last remaining month.
+  */
+  if(S.goalMonth===ym){
+    const months=allMonths();
+    S.goalMonth=
+      months[months.length-1];
+  }
+  return true;
+}
 function normalizeBudget(budget){
   const defaults=clone({
     ...DEFAULT_CATEGORIES,
     ...DEFAULT_INVESTING
   });
-
   const result={};
-
   Object.keys(defaults).forEach(key=>{
-    const source=budget?.[key] || defaults[key];
-
+    const source=
+      budget?.[key] ||
+      defaults[key];
     result[key]={
       label:source.label,
       color:source.color,
       icon:source.icon,
       items:Array.isArray(source.items)
-        ? source.items.map(item=>({
+        ?source.items.map(item=>({
             id:item.id||uid(),
             label:item.label||"Item",
             amount:n(item.amount)
           }))
-        : []
+        :[]
     };
   });
-
   Object.keys(budget||{}).forEach(key=>{
     if(!result[key]){
       const source=budget[key];
-
       result[key]={
         label:source.label||key,
         color:source.color||"#0a84ff",
         icon:source.icon||"📁",
         items:Array.isArray(source.items)
-          ? source.items.map(item=>({
+          ?source.items.map(item=>({
               id:item.id||uid(),
               label:item.label||"Item",
               amount:n(item.amount)
             }))
-          : []
+          :[]
       };
     }
   });
-
   return result;
 }
-
+function ensureMonth(ym){
+  if(!S.monthBudgets){
+    S.monthBudgets={};
+  }
+  if(S.monthBudgets[ym]){
+    return;
+  }
+  const months=allMonths();
+  const index=months.indexOf(ym);
+  /*
+    Find the immediately preceding EXISTING
+    month in the actual month list.
+  */
+  const previous=
+    index>0
+      ?months[index-1]
+      :null;
+  if(
+    previous &&
+    S.monthBudgets[previous]
+  ){
+    S.monthBudgets[ym]=
+      clone(S.monthBudgets[previous]);
+  }else{
+    S.monthBudgets[ym]=
+      normalizeBudget(
+        S.categories
+      );
+  }
+}
+function ensureAllMonths(){
+  const months=allMonths();
+  months.forEach(ym=>{
+    ensureMonth(ym);
+  });
+}
 function categoryBudget(ym){
   ensureMonth(ym);
   return S.monthBudgets[ym];
 }
-
-function ensureMonth(ym){
-  if(!S.monthBudgets)S.monthBudgets={};
-
-  if(S.monthBudgets[ym])return;
-
-  const months=allMonths().filter(m=>m<ym);
-  const previous=months.length
-    ? months[months.length-1]
-    : null;
-
-  if(previous && S.monthBudgets[previous]){
-    S.monthBudgets[ym]=clone(
-      S.monthBudgets[previous]
-    );
-  }else{
-    S.monthBudgets[ym]=normalizeBudget(
-      S.categories
-    );
-  }
-}
-
-function ensureAllMonths(){
-  const months=allMonths();
-
-  let previous=null;
-
-  months.forEach(ym=>{
-    if(!S.monthBudgets[ym]){
-      if(previous && S.monthBudgets[previous]){
-        S.monthBudgets[ym]=clone(
-          S.monthBudgets[previous]
-        );
-      }else{
-        S.monthBudgets[ym]=normalizeBudget(
-          S.categories
-        );
-      }
-    }
-
-    previous=ym;
-  });
-}
-
 function categoryTotal(ym,category){
   return (category?.items||[])
-    .reduce((sum,item)=>sum+n(item.amount),0);
+    .reduce(
+      (sum,item)=>sum+n(item.amount),
+      0
+    );
 }
-
 function recurringSpending(ym){
   const budget=categoryBudget(ym);
-
   return Object.entries(budget)
     .filter(([key])=>key!=="investing")
     .reduce(
@@ -1000,17 +931,15 @@ function recurringSpending(ym){
       0
     );
 }
-
 function investmentSpending(ym){
   return categoryTotal(
     ym,
     categoryBudget(ym).investing
   );
 }
-
 function getMiscBudget(ym){
-  const ov=S.monthOverrides?.[ym];
-
+  const ov=
+    S.monthOverrides?.[ym];
   if(
     ov &&
     Object.prototype.hasOwnProperty.call(
@@ -1020,19 +949,19 @@ function getMiscBudget(ym){
   ){
     return n(ov.miscBudget);
   }
-
   return n(S.miscBudget);
 }
-
 function oneTimeTotal(ym){
   return (S.oneTimeExpenses||[])
     .filter(e=>e.month===ym)
-    .reduce((sum,e)=>sum+n(e.amount),0);
+    .reduce(
+      (sum,e)=>sum+n(e.amount),
+      0
+    );
 }
-
 function baseIncome(ym){
-  const ov=S.monthOverrides?.[ym];
-
+  const ov=
+    S.monthOverrides?.[ym];
   if(
     ov &&
     Object.prototype.hasOwnProperty.call(
@@ -1042,67 +971,81 @@ function baseIncome(ym){
   ){
     return n(ov.income);
   }
-
   return n(S.income);
 }
-
 function extraIncome(ym){
-  return (S.monthOverrides?.[ym]?.extraIncome||[])
-    .reduce((sum,e)=>sum+n(e.amount),0);
+  return (
+    S.monthOverrides?.[ym]?.extraIncome||[]
+  )
+  .reduce(
+    (sum,e)=>sum+n(e.amount),
+    0
+  );
 }
-
 function totalIncome(ym){
   return baseIncome(ym)+extraIncome(ym);
 }
-
 function totalSpending(ym){
   return recurringSpending(ym)+
     getMiscBudget(ym)+
     investmentSpending(ym)+
     oneTimeTotal(ym);
 }
-
 function monthlyNet(ym){
   return totalIncome(ym)-totalSpending(ym);
 }
-
+/*
+  IMPORTANT:
+  Starting balance is calculated from the
+  previous MONTH THAT ACTUALLY EXISTS.
+  If you have:
+  Sep
+  Oct
+  Nov
+  Dec
+  Jan
+  Jan starts from December's ending balance.
+  If you delete November:
+  Sep
+  Oct
+  Dec
+  Jan
+  December starts from October's ending balance.
+  Nothing is permanently linked between budgets.
+*/
 function startingBalance(ym){
   const months=allMonths();
   const index=months.indexOf(ym);
-
-  if(index<=0)return 0;
-
-  const previous=months[index-1];
-
+  if(index<=0){
+    return 0;
+  }
+  const previous=
+    months[index-1];
   return endingBalance(previous);
 }
-
 function endingBalance(ym){
-  return startingBalance(ym)+monthlyNet(ym);
+  return startingBalance(ym)+
+    monthlyNet(ym);
 }
-
 function goalTotal(){
   return (S.goalExpenses||[])
-    .reduce((sum,e)=>sum+n(e.amount),0);
+    .reduce(
+      (sum,e)=>sum+n(e.amount),
+      0
+    );
 }
-
 function projectedGoalBalance(){
   let balance=0;
-
   allMonths().forEach(ym=>{
     if(ym<=S.goalMonth){
       balance=endingBalance(ym);
     }
   });
-
   return Math.max(0,balance);
 }
-
 function goalPercent(){
   const target=goalTotal();
-
   if(!target)return 0;
-
   return Math.min(
     100,
     Math.max(
@@ -1113,68 +1056,94 @@ function goalPercent(){
     )
   );
 }
-
-
-/* -----------------------------
+/* =============================
    MIGRATION
------------------------------ */
-
+============================= */
 function migrateState(state){
-
   /*
-    First create the new monthBudgets system
-    from the user's old global categories.
+    Upgrade old data to the explicit
+    months architecture.
+    If the old version only had September
+    and January, we intentionally create:
+    September
+    October
+    November
+    December
+    January
   */
-
+  if(!Array.isArray(state.months)){
+    state.months=
+      [...DEFAULT_MONTHS];
+  }else{
+    /*
+      Always make sure the initial five
+      months exist after the upgrade.
+    */
+    DEFAULT_MONTHS.forEach(ym=>{
+      if(!state.months.includes(ym)){
+        state.months.push(ym);
+      }
+    });
+    state.months.sort();
+  }
   if(!state.monthBudgets){
     state.monthBudgets={};
-
-    const oldCategories =
-      state.categories ||
-      clone({
-        ...DEFAULT_CATEGORIES,
-        ...DEFAULT_INVESTING
-      });
-
-    state.monthBudgets[APP_START]=
-      normalizeBudget(oldCategories);
   }
-
   ensureStateCategories(state);
-
   /*
-    Preserve September's existing numbers.
+    Preserve September from the previous app.
   */
-
   state.monthBudgets[APP_START]=
     normalizeBudget(
       state.monthBudgets[APP_START] ||
       state.categories
     );
-
   /*
-    September migration from previous version.
+    Build October through January from
+    the immediately previous month.
+    Existing month budgets are preserved.
   */
-
+  const months=
+    [...state.months].sort();
+  months.forEach((ym,index)=>{
+    if(
+      !state.monthBudgets[ym]
+    ){
+      const previous=
+        index>0
+          ?months[index-1]
+          :null;
+      if(
+        previous &&
+        state.monthBudgets[previous]
+      ){
+        state.monthBudgets[ym]=
+          clone(
+            state.monthBudgets[previous]
+          );
+      }else{
+        state.monthBudgets[ym]=
+          normalizeBudget(
+            state.categories
+          );
+      }
+    }
+  });
   state.monthOverrides=
-    state.monthOverrides || {};
-
+    state.monthOverrides||{};
   state.monthOverrides["2026-09"]=
-    state.monthOverrides["2026-09"] || {};
-
+    state.monthOverrides["2026-09"]||{};
   const sep=
     state.monthOverrides["2026-09"];
-
   sep.extraIncome=
     Array.isArray(sep.extraIncome)
-      ? sep.extraIncome
-      : [];
-
+      ?sep.extraIncome
+      :[];
   let deal=
     sep.extraIncome.find(
-      e=>e.label==="Deal / Contract Payment"
+      e=>
+        e.label==="Deal / Contract Payment"
     );
-
   if(deal){
     deal.amount=4500;
   }else{
@@ -1184,47 +1153,46 @@ function migrateState(state){
       amount:4500
     });
   }
-
   state.oneTimeExpenses=
     Array.isArray(state.oneTimeExpenses)
-      ? state.oneTimeExpenses
-      : [];
-
-  function upsertOneTime(label,amount,month){
-
+      ?state.oneTimeExpenses
+      :[];
+  function upsertOneTime(
+    label,
+    amount,
+    month
+  ){
     const existing=
       state.oneTimeExpenses.find(
         e=>
           e.label===label &&
           e.month===month
       );
-
     if(existing){
       existing.amount=amount;
     }else{
       state.oneTimeExpenses.push({
-        id:"ot_"+label
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g,"_"),
+        id:
+          "ot_"+
+          label
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g,"_"),
         label,
         amount,
         month
       });
     }
   }
-
   upsertOneTime(
     "Car Repairs",
     1780,
     "2026-09"
   );
-
   upsertOneTime(
     "September Rent (deferred, paid early)",
     525,
     "2026-09"
   );
-
   state.oneTimeExpenses=
     state.oneTimeExpenses.filter(
       e=>
@@ -1233,50 +1201,37 @@ function migrateState(state){
           e.month==="2026-09"
         )
     );
-
   upsertOneTime(
     "Overdraft Payoff",
     728.67,
     "2026-09"
   );
-
   upsertOneTime(
     "Debt Payment",
     1000,
     "2026-09"
   );
-
   upsertOneTime(
     "Xbox Series S (promised to son)",
     538.74,
     "2026-09"
   );
-
-  /*
-    Apple One / AppleCare migration.
-  */
-
   const phone=
     state.monthBudgets["2026-09"]?.phone;
-
   if(phone){
-
     const items=
       Array.isArray(phone.items)
-        ? phone.items
-        : (phone.items=[]);
-
+        ?phone.items
+        :(phone.items=[]);
     const appleOne=
       items.find(
         i=>
           i.id==="apple_one" ||
           i.label==="Apple One"
       );
-
     if(appleOne){
       appleOne.amount=39.99;
     }
-
     let appleCare=
       items.find(
         i=>
@@ -1286,9 +1241,9 @@ function migrateState(state){
             i.label.includes("AppleCare+")
           )
       );
-
     if(appleCare){
-      appleCare.id="applecare_daughter";
+      appleCare.id=
+        "applecare_daughter";
       appleCare.label=
         "AppleCare+ (Daughter's Phone)";
       appleCare.amount=19.99;
@@ -1300,58 +1255,34 @@ function migrateState(state){
       });
     }
   }
-
-  /*
-    Remove obsolete September misc override.
-  */
-
-  if(sep.miscBudget===2362.08){
+  if(
+    sep.miscBudget===2362.08
+  ){
     delete sep.miscBudget;
   }
-
   /*
-    Create missing months by carrying the previous
-    month's budget forward ONCE.
+    Make sure goal month exists.
   */
-
-  const months=Object.keys(
-    state.monthBudgets
-  ).sort();
-
-  let previous=null;
-
-  months.forEach(ym=>{
-    if(
-      !state.monthBudgets[ym] &&
-      previous &&
-      state.monthBudgets[previous]
-    ){
-      state.monthBudgets[ym]=
-        clone(state.monthBudgets[previous]);
-    }
-
-    previous=ym;
-  });
-
+  if(
+    !state.months.includes(
+      state.goalMonth
+    )
+  ){
+    state.months.push(
+      state.goalMonth
+    );
+    state.months.sort();
+  }
   return state;
 }
-
 function ensureStateCategories(state){
-
   const defaults={
     ...clone(DEFAULT_CATEGORIES),
     ...clone(DEFAULT_INVESTING)
   };
-
   state.categories=
-    state.categories ||
+    state.categories||
     clone(defaults);
-
-  /*
-    If old state has incomplete categories,
-    restore missing ones.
-  */
-
   Object.keys(defaults).forEach(key=>{
     if(!state.categories[key]){
       state.categories[key]=
@@ -1359,249 +1290,183 @@ function ensureStateCategories(state){
     }
   });
 }
-
 function loadState(){
-
   try{
-
     const raw=
       localStorage.getItem(SAVE_KEY);
-
     if(raw){
-
       const parsed=
         JSON.parse(raw);
-
       const defaults=
         clone(DEFAULT_STATE);
-
       S={
         ...defaults,
         ...parsed,
-
+        months:
+          Array.isArray(parsed.months)
+            ?parsed.months
+            :undefined,
         categories:
-          parsed.categories ||
+          parsed.categories||
           defaults.categories,
-
         monthBudgets:
-          parsed.monthBudgets ||
+          parsed.monthBudgets||
           {},
-
         goalExpenses:
-          parsed.goalExpenses ||
+          parsed.goalExpenses||
           defaults.goalExpenses,
-
         oneTimeExpenses:
-          parsed.oneTimeExpenses ||
+          parsed.oneTimeExpenses||
           [],
-
         monthOverrides:
-          parsed.monthOverrides ||
+          parsed.monthOverrides||
           {},
-
         checklist:
-          parsed.checklist ||
+          parsed.checklist||
           defaults.checklist
       };
-
       migrateState(S);
-
       ensureAllMonths();
-
       localStorage.setItem(
         SAVE_KEY,
         JSON.stringify(S)
       );
-
       return;
     }
-
   }catch(err){
-
     console.error(
       "God's Plan load error:",
       err
     );
   }
-
-  S=clone(DEFAULT_STATE);
-
+  S=
+    clone(DEFAULT_STATE);
   migrateState(S);
-
   ensureAllMonths();
-
   localStorage.setItem(
     SAVE_KEY,
     JSON.stringify(S)
   );
 }
-
 function save(){
-
   clearTimeout(saveTimer);
-
   saveTimer=setTimeout(()=>{
-
     try{
-
       localStorage.setItem(
         SAVE_KEY,
         JSON.stringify(S)
       );
-
       showToast("✓ Saved");
-
     }catch(err){
-
       console.error(err);
-
       showToast("Could not save");
     }
-
   },250);
 }
-
-
-/* -----------------------------
+/* =============================
    RENDER
------------------------------ */
-
+============================= */
 function render(){
-
   ensureAllMonths();
-
   let content="";
-
   if(S.tab==="overview"){
     content=renderOverview();
   }
-
   if(S.tab==="budget"){
     content=renderBudget();
   }
-
   if(S.tab==="goal"){
     content=renderGoal();
   }
-
   if(S.tab==="investing"){
     content=renderInvesting();
   }
-
   if(S.tab==="more"){
     content=renderMore();
   }
-
   document.getElementById("app").innerHTML=
     renderNav()+
     content+
     renderTabs()+
     renderFab()+
     renderSheet();
-
   bindEvents();
 }
-
-
-/* -----------------------------
+/* =============================
    NAV
------------------------------ */
-
+============================= */
 function renderNav(){
-
   return `
     <div class="nav">
-
       <div class="nav-top">
-
         <div>
-          <div class="title">God's Plan</div>
-
+          <div class="title">
+            God's Plan
+          </div>
           <div class="subtitle">
             ${esc(monthLabel(S.activeMonth))}
           </div>
         </div>
-
         <button
           class="income-button"
           data-income
         >
           Income
         </button>
-
       </div>
-
       <div class="month-scroll">
-
         ${allMonths().map(m=>`
-
           <button
             class="month-chip ${
               m===S.activeMonth
-              ?"active"
-              :""
+                ?"active"
+                :""
             }"
-            data-month="${m}"
+            data-month="${esc(m)}"
           >
             ${esc(shortMonth(m))}
           </button>
-
         `).join("")}
-
       </div>
-
     </div>
   `;
 }
-
-
-/* -----------------------------
+/* =============================
    HERO
------------------------------ */
-
+============================= */
 function renderHero(){
-
   const income=
     totalIncome(S.activeMonth);
-
   const spending=
     totalSpending(S.activeMonth);
-
   const net=
     monthlyNet(S.activeMonth);
-
   const rate=
     income>0
-      ? Math.round(net/income*100)
-      : 0;
-
+      ?Math.round(net/income*100)
+      :0;
   const projected=
     projectedGoalBalance();
-
   const target=
     goalTotal();
-
   const pct=
     target>0
-      ? Math.min(
+      ?Math.min(
           100,
           Math.max(
             0,
-            Math.round(projected/target*100)
+            Math.round(
+              projected/target*100
+            )
           )
         )
-      : 0;
-
+      :0;
   return `
-
     <div class="hero">
-
       <div class="hero-glow"></div>
-
       <div class="eyebrow">
         ${esc(monthLabel(S.activeMonth))}
       </div>
-
       <div class="hero-number ${
         net<0
           ?"balance-negative"
@@ -1609,109 +1474,96 @@ function renderHero(){
       }">
         ${money(net)}
       </div>
-
       <div class="hero-caption">
         monthly net
       </div>
-
       <div class="stats">
-
         <div>
-          <div class="stat-label">Income</div>
-          <div class="stat-value">${money(income)}</div>
+          <div class="stat-label">
+            Income
+          </div>
+          <div class="stat-value">
+            ${money(income)}
+          </div>
         </div>
-
         <div>
-          <div class="stat-label">Expenses</div>
-          <div class="stat-value">${money(spending)}</div>
+          <div class="stat-label">
+            Expenses
+          </div>
+          <div class="stat-value">
+            ${money(spending)}
+          </div>
         </div>
-
         <div>
-          <div class="stat-label">Savings Rate</div>
-          <div class="stat-value">${rate}%</div>
+          <div class="stat-label">
+            Savings Rate
+          </div>
+          <div class="stat-value">
+            ${rate}%
+          </div>
         </div>
-
         <div>
-          <div class="stat-label">Ending Balance</div>
+          <div class="stat-label">
+            Ending Balance
+          </div>
           <div class="stat-value ${
             endingBalance(S.activeMonth)<0
               ?"balance-negative"
               :"balance-positive"
           }">
-            ${money(endingBalance(S.activeMonth))}
+            ${money(
+              endingBalance(
+                S.activeMonth
+              )
+            )}
           </div>
         </div>
-
       </div>
-
       <div class="progress">
-
         <div
           class="progress-fill"
           style="width:${pct}%"
         ></div>
-
       </div>
-
       <div class="progress-row">
-
         <span>
           ${esc(S.goalLabel)}
         </span>
-
         <span>
-          ${money(projected)} / ${money(target)}
+          ${money(projected)} /
+          ${money(target)}
         </span>
-
       </div>
-
     </div>
   `;
 }
-
-
-/* -----------------------------
+/* =============================
    OVERVIEW
------------------------------ */
-
+============================= */
 function renderOverview(){
-
   const ym=S.activeMonth;
-
   const extras=
-    S.monthOverrides?.[ym]?.extraIncome || [];
-
+    S.monthOverrides?.[ym]?.extraIncome||[];
   const oneTimes=
     (S.oneTimeExpenses||[])
       .filter(e=>e.month===ym);
-
   const start=
     startingBalance(ym);
-
   return `
-
     ${renderHero()}
-
     <div class="starting-card">
-
       <div class="starting-label">
         Starting balance from previous month
       </div>
-
       <div class="starting-value">
         ${money(start)}
       </div>
-
     </div>
-
     <div class="section">
-
       <div class="section-title">
         Income
       </div>
-
       <div class="group">
-
         <div
           class="row"
           data-income
@@ -1719,28 +1571,22 @@ function renderOverview(){
           <div class="row-label">
             Base Income
           </div>
-
           <div class="row-value">
             ${money(baseIncome(ym))}
           </div>
-
-          <div class="chevron">›</div>
+          <div class="chevron">
+            ›
+          </div>
         </div>
-
         <div class="row">
-
           <div class="row-label">
             Extra Income
           </div>
-
           <div class="row-value">
             ${money(extraIncome(ym))}
           </div>
-
         </div>
-
       </div>
-
       ${
         extras.length
         ?`
@@ -1752,70 +1598,57 @@ function renderOverview(){
         `
         :""
       }
-
-
       <div class="section-title">
         Expenses
       </div>
-
       <div class="group">
-
         ${Object.entries(
           categoryBudget(ym)
         )
         .filter(([key])=>key!=="investing")
         .map(([key,c])=>`
-
           <div
             class="row"
             data-category="${esc(key)}"
           >
-
             <span
               class="dot"
               style="background:${c.color}"
             ></span>
-
             <div class="row-label">
               ${esc(c.label)}
             </div>
-
             <div class="row-value">
-              ${money(categoryTotal(ym,c))}
+              ${money(
+                categoryTotal(ym,c)
+              )}
             </div>
-
-            <div class="chevron">›</div>
-
+            <div class="chevron">
+              ›
+            </div>
           </div>
-
         `).join("")}
-
         <div class="row">
-
           <div class="row-label">
             Misc / Personal Buffer
           </div>
-
           <div class="row-value">
-            ${money(getMiscBudget(ym))}
+            ${money(
+              getMiscBudget(ym)
+            )}
           </div>
-
         </div>
-
         <div class="row">
-
           <div class="row-label">
             One-Time Expenses
           </div>
-
           <div class="row-value">
-            ${money(oneTimeTotal(ym))}
+            ${money(
+              oneTimeTotal(ym)
+            )}
           </div>
-
         </div>
-
       </div>
-
       ${
         oneTimes.length
         ?`
@@ -1827,108 +1660,82 @@ function renderOverview(){
         `
         :""
       }
-
-
       <div class="section-title">
         Carry Over
       </div>
-
       <div class="group">
-
         <div class="row">
-
           <div class="row-label">
             Starting Balance
           </div>
-
           <div class="row-value">
             ${money(start)}
           </div>
-
         </div>
-
         <div class="row">
-
           <div class="row-label">
             This Month
           </div>
-
           <div class="row-value ${
             monthlyNet(ym)<0
               ?"balance-negative"
               :"balance-positive"
           }">
-            ${money(monthlyNet(ym))}
+            ${money(
+              monthlyNet(ym)
+            )}
           </div>
-
         </div>
-
         <div class="row">
-
           <div class="row-label">
             Ending Balance
           </div>
-
           <div class="row-value ${
             endingBalance(ym)<0
               ?"balance-negative"
               :"balance-positive"
           }">
-            ${money(endingBalance(ym))}
+            ${money(
+              endingBalance(ym)
+            )}
           </div>
-
         </div>
-
       </div>
-
     </div>
   `;
 }
-
-
-/* -----------------------------
+/* =============================
    BUDGET
------------------------------ */
-
+============================= */
 function renderBudget(){
-
   const ym=S.activeMonth;
   const budget=categoryBudget(ym);
-
   return `
-
     <div style="height:20px"></div>
-
     <div class="section">
-
       <div class="section-title">
         ${esc(monthLabel(ym))} Budget
       </div>
-
-      <div class="callout" style="margin-bottom:18px">
+      <div
+        class="callout"
+        style="margin-bottom:18px"
+      >
         This month's expenses are independent.
         Changes here only affect
         <strong>${esc(shortMonth(ym))}</strong>.
         Other months keep their own budgets.
       </div>
-
       ${Object.entries(budget)
         .map(([key,c])=>`
-
           <div class="section-title">
             ${esc(c.label)}
           </div>
-
           <div class="group">
-
             ${(c.items||[]).map(item=>`
-
               <div class="row">
-
                 <div class="row-label">
                   ${esc(item.label)}
                 </div>
-
                 <input
                   class="num-input"
                   type="number"
@@ -1937,35 +1744,24 @@ function renderBudget(){
                   data-amount="${esc(key)}"
                   data-item="${esc(item.id)}"
                 >
-
               </div>
-
             `).join("")}
-
             <button
               class="add-row"
               data-edit-category="${esc(key)}"
             >
               Edit ${esc(c.label)}
             </button>
-
           </div>
-
         `).join("")}
-
-
       <div class="section-title">
         Misc / Personal Buffer
       </div>
-
       <div class="group">
-
         <div class="row">
-
           <div class="row-label">
             Monthly Buffer
           </div>
-
           <input
             class="num-input"
             type="number"
@@ -1973,124 +1769,94 @@ function renderBudget(){
             value="${getMiscBudget(ym).toFixed(2)}"
             data-misc
           >
-
         </div>
-
       </div>
-
-
       <div class="section-title">
         One-Time Expenses
       </div>
-
       <div class="group">
-
         ${(S.oneTimeExpenses||[])
           .filter(e=>e.month===ym)
           .map(e=>`
-
             <div
               class="row"
               data-edit-one="${esc(e.id)}"
             >
-
               <div class="row-label">
                 ${esc(e.label)}
               </div>
-
               <div class="row-value">
                 ${money(e.amount)}
               </div>
-
-              <div class="chevron">›</div>
-
+              <div class="chevron">
+                ›
+              </div>
             </div>
-
           `).join("")}
-
         <button
           class="add-row"
           data-add-one
         >
           ＋ Add One-Time Expense
         </button>
-
       </div>
-
     </div>
   `;
 }
-
-
-/* -----------------------------
+/* =============================
    GOAL
------------------------------ */
-
+============================= */
 function renderGoal(){
-
   const target=goalTotal();
   const projected=projectedGoalBalance();
   const pct=goalPercent();
-
   return `
-
     <div style="height:20px"></div>
-
     <div class="hero">
-
       <div class="eyebrow">
         ${esc(S.goalLabel)}
       </div>
-
       <div class="hero-number">
         ${money(projected)}
       </div>
-
       <div class="hero-caption">
         projected balance by
         ${esc(monthLabel(S.goalMonth))}
       </div>
-
       <div class="progress">
-
         <div
           class="progress-fill"
           style="width:${pct}%"
         ></div>
-
       </div>
-
       <div class="progress-row">
-
-        <span>${pct}%</span>
-
+        <span>
+          ${pct}%
+        </span>
         <span>
           ${money(target)}
         </span>
-
       </div>
-
     </div>
-
     <div class="section">
-
       <div class="section-title">
         Goal Settings
       </div>
-
       <div class="group">
-
         <div
           class="row"
           data-goal-setting="name"
         >
-          <div class="row-label">Goal</div>
+          <div class="row-label">
+            Goal
+          </div>
           <div class="row-value">
             ${esc(S.goalLabel)}
           </div>
-          <div class="chevron">›</div>
+          <div class="chevron">
+            ›
+          </div>
         </div>
-
         <div
           class="row"
           data-goal-setting="month"
@@ -2099,11 +1865,16 @@ function renderGoal(){
             Target Month
           </div>
           <div class="row-value">
-            ${esc(monthLabel(S.goalMonth))}
+            ${esc(
+              monthLabel(
+                S.goalMonth
+              )
+            )}
           </div>
-          <div class="chevron">›</div>
+          <div class="chevron">
+            ›
+          </div>
         </div>
-
         <div
           class="row"
           data-goal-setting="amount"
@@ -2114,30 +1885,23 @@ function renderGoal(){
           <div class="row-value">
             ${money(target)}
           </div>
-          <div class="chevron">›</div>
+          <div class="chevron">
+            ›
+          </div>
         </div>
-
       </div>
-
-
       <div class="section-title">
         Goal Expenses
       </div>
-
       <div class="group">
-
         ${(S.goalExpenses||[])
           .map(e=>`
-
             <div
               class="row"
               data-goal-item="${esc(e.id)}"
             >
-
               <div class="row-label">
-
                 ${esc(e.label)}
-
                 ${
                   e.estimate
                   ?`
@@ -2147,85 +1911,66 @@ function renderGoal(){
                   `
                   :""
                 }
-
               </div>
-
               <div class="row-value">
                 ${money(e.amount)}
               </div>
-
-              <div class="chevron">›</div>
-
+              <div class="chevron">
+                ›
+              </div>
             </div>
-
           `).join("")}
-
         <button
           class="add-row"
           data-add-goal
         >
           ＋ Add Goal Item
         </button>
-
       </div>
-
     </div>
   `;
 }
-
-
-/* -----------------------------
+/* =============================
    INVESTING
------------------------------ */
-
+============================= */
 function renderInvesting(){
-
   const ym=S.activeMonth;
-  const c=categoryBudget(ym).investing;
-
+  const c=
+    categoryBudget(ym).investing;
   return `
-
     <div style="height:20px"></div>
-
     <div class="hero">
-
       <div class="eyebrow">
         ${esc(monthLabel(ym))}
       </div>
-
       <div class="hero-number">
-        ${money(investmentSpending(ym))}
+        ${money(
+          investmentSpending(ym)
+        )}
       </div>
-
       <div class="hero-caption">
         monthly planned investing
       </div>
-
     </div>
-
     <div class="section">
-
-      <div class="callout" style="margin-bottom:18px">
+      <div
+        class="callout"
+        style="margin-bottom:18px"
+      >
         Investment amounts are also
         <strong>month-specific</strong>.
-        Changing October will not change
-        September or November.
+        Changing one month will not change
+        another month.
       </div>
-
       <div class="section-title">
         Investment Budget
       </div>
-
       <div class="group">
-
         ${(c.items||[]).map(item=>`
-
           <div class="row">
-
             <div class="row-label">
               ${esc(item.label)}
             </div>
-
             <input
               class="num-input"
               type="number"
@@ -2234,36 +1979,23 @@ function renderInvesting(){
               data-amount="investing"
               data-item="${esc(item.id)}"
             >
-
           </div>
-
         `).join("")}
-
       </div>
-
     </div>
   `;
 }
-
-
-/* -----------------------------
+/* =============================
    MORE
------------------------------ */
-
+============================= */
 function renderMore(){
-
   return `
-
     <div style="height:20px"></div>
-
     <div class="section">
-
       <div class="section-title">
         Plan
       </div>
-
       <div class="group">
-
         <div
           class="row"
           data-open-months
@@ -2271,9 +2003,13 @@ function renderMore(){
           <div class="row-label">
             Months
           </div>
-          <div class="chevron">›</div>
+          <div class="row-value">
+            ${allMonths().length}
+          </div>
+          <div class="chevron">
+            ›
+          </div>
         </div>
-
         <div
           class="row"
           data-open-checklist
@@ -2281,9 +2017,10 @@ function renderMore(){
           <div class="row-label">
             Checklist
           </div>
-          <div class="chevron">›</div>
+          <div class="chevron">
+            ›
+          </div>
         </div>
-
         <div
           class="row"
           data-open-settings
@@ -2291,100 +2028,80 @@ function renderMore(){
           <div class="row-label">
             Settings
           </div>
-          <div class="chevron">›</div>
+          <div class="chevron">
+            ›
+          </div>
         </div>
-
       </div>
-
-
       <div class="section-title">
         Carry Over
       </div>
-
       <div class="group">
-
         ${allMonths().map(ym=>`
-
           <div
             class="row"
-            data-month-summary="${ym}"
+            data-month-summary="${esc(ym)}"
           >
-
             <div class="row-label">
-
               ${esc(monthLabel(ym))}
-
               <div class="row-sub">
-
                 Start
-                ${money(startingBalance(ym))}
+                ${money(
+                  startingBalance(ym)
+                )}
+                · Net
+                ${money(
+                  monthlyNet(ym)
+                )}
                 · End
-                ${money(endingBalance(ym))}
-
+                ${money(
+                  endingBalance(ym)
+                )}
               </div>
-
             </div>
-
             <div class="row-value ${
               endingBalance(ym)<0
                 ?"balance-negative"
                 :"balance-positive"
             }">
-              ${money(endingBalance(ym))}
+              ${money(
+                endingBalance(ym)
+              )}
             </div>
-
-            <div class="chevron">›</div>
-
+            <div class="chevron">
+              ›
+            </div>
           </div>
-
         `).join("")}
-
       </div>
-
-
       <div class="section-title">
         Account
       </div>
-
       <div class="group">
-
         <div class="row">
-
           <div class="row-label">
             Default Monthly Income
           </div>
-
           <div class="row-value">
             ${money(S.income)}
           </div>
-
         </div>
-
         <div class="row">
-
           <div class="row-label">
             Default Misc Buffer
           </div>
-
           <div class="row-value">
             ${money(S.miscBudget)}
           </div>
-
         </div>
-
       </div>
-
     </div>
   `;
 }
-
-
-/* -----------------------------
+/* =============================
    TABS
------------------------------ */
-
+============================= */
 function renderTabs(){
-
   const tabs=[
     ["overview","⌂","Overview"],
     ["budget","▤","Budget"],
@@ -2392,13 +2109,9 @@ function renderTabs(){
     ["investing","↗","Invest"],
     ["more","•••","More"]
   ];
-
   return `
-
     <div class="tabbar">
-
       ${tabs.map(([id,icon,label])=>`
-
         <button
           class="tab ${
             S.tab===id
@@ -2407,32 +2120,22 @@ function renderTabs(){
           }"
           data-tab="${id}"
         >
-
           <div class="tab-icon">
             ${icon}
           </div>
-
           <div class="tab-label">
             ${label}
           </div>
-
         </button>
-
       `).join("")}
-
     </div>
   `;
 }
-
-
-/* -----------------------------
+/* =============================
    FAB
------------------------------ */
-
+============================= */
 function renderFab(){
-
   if(!fabOpen){
-
     return `
       <button
         class="fab"
@@ -2442,53 +2145,43 @@ function renderFab(){
       </button>
     `;
   }
-
   return `
-
     <div
       class="fab-bg"
       data-close-fab
     ></div>
-
     <div class="fab-menu">
-
       <button
         class="fab-option"
         data-fab="extra"
       >
         ＋ Extra Income
       </button>
-
       <button
         class="fab-option"
         data-fab="expense"
       >
         − Expense
       </button>
-
       <button
         class="fab-option"
         data-fab="investment"
       >
         ↗ Investment
       </button>
-
       <button
         class="fab-option"
         data-fab="goal"
       >
         ◎ Goal Item
       </button>
-
       <button
         class="fab-option"
         data-fab="check"
       >
         ✓ Checklist
       </button>
-
     </div>
-
     <button
       class="fab"
       data-fab-toggle
@@ -2498,156 +2191,117 @@ function renderFab(){
     </button>
   `;
 }
-
-
-/* -----------------------------
-   SHEETS
------------------------------ */
-
-function sheetShell(title,body,saveLabel="Done",danger=""){
-
+/* =============================
+   SHEET SHELL
+============================= */
+function sheetShell(
+  title,
+  body,
+  saveLabel="Done",
+  danger=""
+){
   return `
-
     <div
       class="sheet-bg"
       id="sheet-bg"
     >
-
       <div class="sheet">
-
         <div class="handle"></div>
-
         <div class="sheet-nav">
-
           <button
             class="sheet-btn"
             data-sheet-cancel
           >
             Cancel
           </button>
-
           <div class="sheet-title">
             ${esc(title)}
           </div>
-
           <button
             class="sheet-btn bold"
             data-sheet-save
           >
             ${esc(saveLabel)}
           </button>
-
         </div>
-
         <div class="sheet-body">
-
           ${body}
-
           ${danger}
-
         </div>
-
       </div>
-
     </div>
   `;
 }
-
+/* =============================
+   SHEETS
+============================= */
 function renderSheet(){
-
   if(!sheet)return "";
-
   if(sheet.type==="income"){
-
     const ym=sheet.month;
     const extras=
       S.monthOverrides?.[ym]?.extraIncome||[];
-
     return sheetShell(
       monthLabel(ym),
       `
-
         <div class="field">
-
           <div class="field-label">
             Base Monthly Income
           </div>
-
           <div class="field-box">
-
             <input
               id="income-input"
               type="number"
               step="0.01"
               value="${baseIncome(ym).toFixed(2)}"
             >
-
           </div>
-
         </div>
-
         <div class="field">
-
           <div class="field-label">
             Extra Income
           </div>
-
           <div class="group">
-
             ${extras.map(e=>`
-
               <div
                 class="row"
                 data-edit-extra="${esc(e.id)}"
               >
-
                 <div class="row-label">
                   ${esc(e.label)}
                 </div>
-
                 <div class="row-value">
                   ${money(e.amount)}
                 </div>
-
-                <div class="chevron">›</div>
-
+                <div class="chevron">
+                  ›
+                </div>
               </div>
-
             `).join("")}
-
             <button
               class="add-row"
               data-add-extra
             >
               ＋ Add Extra Income
             </button>
-
           </div>
-
         </div>
-
         <div class="callout">
-          Income is also independent by month.
+          Income is independent by month.
           Changing ${esc(shortMonth(ym))}
           will not change another month.
         </div>
-
       `
     );
   }
-
-
   if(sheet.type==="extra"){
-
     const ym=sheet.month;
-
     const e=
       sheet.id
       ?(
         S.monthOverrides?.[ym]?.extraIncome||[]
       ).find(x=>x.id===sheet.id)
       :null;
-
     const danger=sheet.id
       ?`
         <button
@@ -2658,116 +2312,79 @@ function renderSheet(){
         </button>
       `
       :"";
-
     return sheetShell(
       sheet.id
         ?"Edit Extra Income"
         :"Extra Income",
-
       `
-
         <div class="field">
-
           <div class="field-label">
             Description
           </div>
-
           <div class="field-box">
-
             <input
               id="extra-label"
               type="text"
               value="${esc(e?.label||"")}"
               placeholder="Income source"
             >
-
           </div>
-
         </div>
-
         <div class="field">
-
           <div class="field-label">
             Amount
           </div>
-
           <div class="field-box">
-
             <input
               id="extra-amount"
               type="number"
               step="0.01"
               value="${n(e?.amount||0).toFixed(2)}"
             >
-
           </div>
-
         </div>
-
       `,
       "Done",
       danger
     );
   }
-
-
   if(sheet.type==="category"){
-
     const ym=sheet.month;
     const key=sheet.key;
     const c=categoryBudget(ym)[key];
-
     return sheetShell(
       c.label,
-
       `
-
         <div class="field">
-
           <div class="field-label">
             Category Name
           </div>
-
           <div class="field-box">
-
             <input
               id="cat-name"
               type="text"
               value="${esc(c.label)}"
             >
-
           </div>
-
         </div>
-
         <div class="field">
-
           <div class="field-label">
             Icon
           </div>
-
           <div class="field-box">
-
             <input
               id="cat-icon"
               type="text"
               value="${esc(c.icon||"")}"
             >
-
           </div>
-
         </div>
-
         <div class="field">
-
           <div class="field-label">
             Color
           </div>
-
           <div class="color-grid">
-
             ${COLORS.map(color=>`
-
               <button
                 class="color-dot ${
                   c.color===color
@@ -2777,31 +2394,21 @@ function renderSheet(){
                 style="background:${color}"
                 data-color="${color}"
               ></button>
-
             `).join("")}
-
           </div>
-
         </div>
-
         <div class="field">
-
           <div class="field-label">
             Items
           </div>
-
           <div class="group">
-
             ${(c.items||[]).map(item=>`
-
               <div class="row">
-
                 <input
                   class="text-input"
                   value="${esc(item.label)}"
                   data-item-label="${esc(item.id)}"
                 >
-
                 <button
                   style="
                     color:var(--red);
@@ -2811,19 +2418,14 @@ function renderSheet(){
                 >
                   ×
                 </button>
-
               </div>
-
             `).join("")}
-
             <div class="row">
-
               <input
                 id="new-item"
                 class="text-input"
                 placeholder="New item"
               >
-
               <button
                 style="
                   color:var(--blue);
@@ -2833,34 +2435,25 @@ function renderSheet(){
               >
                 Add
               </button>
-
             </div>
-
           </div>
-
         </div>
-
         <div class="callout">
           These values belong only to
           <strong>${esc(shortMonth(ym))}</strong>.
           Other months have their own copy.
         </div>
-
       `,
       "Done"
     );
   }
-
-
   if(sheet.type==="one"){
-
     const e=
       sheet.id
       ?S.oneTimeExpenses.find(
         x=>x.id===sheet.id
       )
       :null;
-
     const danger=sheet.id
       ?`
         <button
@@ -2871,95 +2464,71 @@ function renderSheet(){
         </button>
       `
       :"";
-
     return sheetShell(
       sheet.id
         ?"Edit Expense"
         :"One-Time Expense",
-
       `
-
         <div class="field">
-
           <div class="field-label">
             Description
           </div>
-
           <div class="field-box">
-
             <input
               id="one-label"
               type="text"
               value="${esc(e?.label||"")}"
               placeholder="Expense"
             >
-
           </div>
-
         </div>
-
         <div class="field">
-
           <div class="field-label">
             Amount
           </div>
-
           <div class="field-box">
-
             <input
               id="one-amount"
               type="number"
               step="0.01"
               value="${n(e?.amount||0).toFixed(2)}"
             >
-
           </div>
-
         </div>
-
         <div class="field">
-
           <div class="field-label">
             Month
           </div>
-
-          <div class="month-scroll" style="padding:0">
-
+          <div
+            class="month-scroll"
+            style="padding:0"
+          >
             ${allMonths().map(m=>`
-
               <button
                 class="month-chip ${
                   (sheet.month||S.activeMonth)===m
                     ?"active"
                     :""
                 }"
-                data-one-month="${m}"
+                data-one-month="${esc(m)}"
               >
                 ${esc(shortMonth(m))}
               </button>
-
             `).join("")}
-
           </div>
-
         </div>
-
       `,
       "Done",
       danger
     );
   }
-
-
   if(sheet.type==="goalItem"){
-
     const e=
       sheet.id
       ?S.goalExpenses.find(
         x=>x.id===sheet.id
       )
       :null;
-
     const danger=sheet.id
       ?`
         <button
@@ -2970,306 +2539,279 @@ function renderSheet(){
         </button>
       `
       :"";
-
     return sheetShell(
       sheet.id
         ?"Edit Goal Item"
         :"Goal Item",
-
       `
-
         <div class="field">
-
           <div class="field-label">
             Name
           </div>
-
           <div class="field-box">
-
             <input
               id="goal-item-label"
               type="text"
               value="${esc(e?.label||"")}"
               placeholder="Goal expense"
             >
-
           </div>
-
         </div>
-
         <div class="field">
-
           <div class="field-label">
             Amount
           </div>
-
           <div class="field-box">
-
             <input
               id="goal-item-amount"
               type="number"
               step="0.01"
               value="${n(e?.amount||0).toFixed(2)}"
             >
-
           </div>
-
         </div>
-
         <div class="field">
-
           <div class="field-label">
             Note
           </div>
-
           <div class="field-box">
-
             <input
               id="goal-item-note"
               type="text"
               value="${esc(e?.estimate||"")}"
               placeholder="Optional"
             >
-
           </div>
-
         </div>
-
       `,
       "Done",
       danger
     );
   }
-
-
   if(sheet.type==="goalName"){
-
     return sheetShell(
       "Goal Name",
-
       `
-
         <div class="field">
-
           <div class="field-label">
             Name
           </div>
-
           <div class="field-box">
-
             <input
               id="goal-name"
               type="text"
               value="${esc(S.goalLabel)}"
             >
-
           </div>
-
         </div>
-
       `
     );
   }
-
-
   if(sheet.type==="goalMonth"){
-
     return sheetShell(
       "Target Month",
-
       `
-
         <div class="field">
-
-          <div class="month-scroll" style="padding:0">
-
+          <div
+            class="month-scroll"
+            style="padding:0"
+          >
             ${allMonths().map(m=>`
-
               <button
                 class="month-chip ${
                   m===S.goalMonth
                     ?"active"
                     :""
                 }"
-                data-goal-month="${m}"
+                data-goal-month="${esc(m)}"
               >
                 ${esc(shortMonth(m))}
               </button>
-
             `).join("")}
-
           </div>
-
         </div>
-
       `
     );
   }
-
-
   if(sheet.type==="goalAmount"){
-
     return sheetShell(
       "Target Amount",
-
       `
-
         <div class="field">
-
           <div class="field-label">
             Goal Target
           </div>
-
           <div class="field-box">
-
             <input
               id="goal-amount"
               type="number"
               step="0.01"
               value="${goalTotal().toFixed(2)}"
             >
-
           </div>
-
         </div>
-
         <div class="callout">
           This changes the total goal target
           while keeping your individual goal
           items intact as much as possible.
         </div>
-
       `
     );
   }
-
-
+  /*
+    NEW MONTH MANAGER
+  */
   if(sheet.type==="months"){
-
+    const months=allMonths();
     return sheetShell(
       "Months",
-
       `
-
-        <div class="callout" style="margin-bottom:18px">
+        <div
+          class="callout"
+          style="margin-bottom:18px"
+        >
+          Your plan currently has
+          <strong>${months.length} months</strong>.
           Each month has its own budget.
-          A new month starts by copying the
-          previous month's budget once.
-          After that, the months are independent.
+          Adding a month copies the previous
+          month's budget once. After that,
+          the months are completely independent.
         </div>
-
         <div class="group">
-
-          ${allMonths().map(ym=>`
-
+          ${months.map((ym,index)=>`
             <div
               class="row"
-              data-select-month="${ym}"
+              data-select-month="${esc(ym)}"
             >
-
               <div class="row-label">
-
                 ${esc(monthLabel(ym))}
-
                 <div class="row-sub">
-
                   Start
-                  ${money(startingBalance(ym))}
+                  ${money(
+                    startingBalance(ym)
+                  )}
                   · Net
-                  ${money(monthlyNet(ym))}
+                  ${money(
+                    monthlyNet(ym)
+                  )}
                   · End
-                  ${money(endingBalance(ym))}
-
+                  ${money(
+                    endingBalance(ym)
+                  )}
                 </div>
-
               </div>
-
               <div class="row-value ${
                 endingBalance(ym)<0
                   ?"balance-negative"
                   :"balance-positive"
               }">
-                ${money(endingBalance(ym))}
+                ${money(
+                  endingBalance(ym)
+                )}
               </div>
-
-              <div class="chevron">›</div>
-
+              ${
+                ym!==APP_START
+                ?`
+                  <button
+                    class="month-delete"
+                    data-delete-month="${esc(ym)}"
+                  >
+                    ×
+                  </button>
+                `
+                :""
+              }
             </div>
-
           `).join("")}
-
-          <button
-            class="add-row"
-            data-add-month
-          >
-            ＋ Add Next Month
-          </button>
-
         </div>
-
+        <div class="section-title">
+          Add Month
+        </div>
+        <div class="group">
+          <div class="row">
+            <div class="row-label">
+              Add Next Month
+              <div class="row-sub">
+                Copies the last month's budget once
+              </div>
+            </div>
+            <button
+              style="
+                color:var(--blue);
+                font-size:16px;
+                font-weight:600;
+              "
+              data-add-month
+            >
+              ＋ Add
+            </button>
+          </div>
+          <div class="row">
+            <div class="row-label">
+              Add Custom Month
+              <div class="row-sub">
+                Example: February 2027
+              </div>
+            </div>
+            <button
+              style="
+                color:var(--blue);
+                font-size:16px;
+                font-weight:600;
+              "
+              data-add-custom-month
+            >
+              ＋ Add
+            </button>
+          </div>
+        </div>
+        <div
+          class="callout"
+          style="margin-top:18px"
+        >
+          <strong>September is protected</strong>
+          as the starting month.
+          You can add or remove every month
+          after September.
+        </div>
       `
     );
   }
-
-
-  if(sheet.type==="addMonth"){
-
-    const next=sheet.next;
-
+  if(sheet.type==="addCustomMonth"){
     return sheetShell(
       "Add Month",
-
       `
-
-        <div class="callout" style="margin-bottom:20px">
-          ${esc(monthLabel(next))}
-          will start with a copy of
-          ${esc(monthLabel(shiftMonth(next,-1)))}.
-          After creation, you can change this
-          month's expenses without changing
-          the previous month.
-        </div>
-
         <div class="field">
-
           <div class="field-label">
-            Base Income
+            Month
           </div>
-
           <div class="field-box">
-
             <input
-              id="new-month-income"
-              type="number"
-              step="0.01"
-              value="${baseIncome(shiftMonth(next,-1)).toFixed(2)}"
+              id="custom-month"
+              type="month"
             >
-
           </div>
-
         </div>
-
-      `
+        <div class="callout">
+          The new month will start with a copy
+          of the closest previous existing
+          month's budget.
+          After creation, it is independent.
+        </div>
+      `,
+      "Add"
     );
   }
-
-
   if(sheet.type==="checklist"){
-
     return sheetShell(
       "Checklist",
-
       `
-
         <div class="group">
-
           ${(S.checklist||[]).map(item=>`
-
             <div
               class="row"
               data-toggle-check="${esc(item.id)}"
             >
-
               <div
                 class="check ${
                   item.done
@@ -3279,7 +2821,6 @@ function renderSheet(){
               >
                 ${item.done?"✓":""}
               </div>
-
               <div
                 class="row-label ${
                   item.done
@@ -3289,7 +2830,6 @@ function renderSheet(){
               >
                 ${esc(item.label)}
               </div>
-
               <button
                 style="
                   color:var(--red);
@@ -3299,19 +2839,14 @@ function renderSheet(){
               >
                 ×
               </button>
-
             </div>
-
           `).join("")}
-
           <div class="row">
-
             <input
               id="new-check"
               class="text-input"
               placeholder="Add checklist item"
             >
-
             <button
               style="
                 color:var(--blue);
@@ -3321,82 +2856,56 @@ function renderSheet(){
             >
               Add
             </button>
-
           </div>
-
         </div>
-
       `
     );
   }
-
-
   if(sheet.type==="settings"){
-
     return sheetShell(
       "Settings",
-
       `
-
         <div class="field">
-
           <div class="field-label">
             Default Monthly Income
           </div>
-
           <div class="field-box">
-
             <input
               id="settings-income"
               type="number"
               step="0.01"
               value="${n(S.income).toFixed(2)}"
             >
-
           </div>
-
         </div>
-
         <div class="field">
-
           <div class="field-label">
             Default Misc Buffer
           </div>
-
           <div class="field-box">
-
             <input
               id="settings-misc"
               type="number"
               step="0.01"
               value="${n(S.miscBudget).toFixed(2)}"
             >
-
           </div>
-
         </div>
-
         <div class="callout">
           These are defaults for future months.
           Existing months keep their own
           saved values.
         </div>
-
       `,
       "Save"
     );
   }
-
   return "";
 }
-
-
-/* -----------------------------
+/* =============================
    EVENTS
------------------------------ */
-
+============================= */
 function bindEvents(){
-
   document.querySelectorAll("[data-tab]")
     .forEach(btn=>{
       btn.onclick=()=>{
@@ -3407,40 +2916,37 @@ function bindEvents(){
         render();
       };
     });
-
-
   document.querySelectorAll(
     ".nav [data-month]"
   ).forEach(btn=>{
     btn.onclick=()=>{
-      S.activeMonth=btn.dataset.month;
+      S.activeMonth=
+        btn.dataset.month;
       fabOpen=false;
       sheet=null;
-      ensureMonth(S.activeMonth);
+      ensureMonth(
+        S.activeMonth
+      );
       save();
       render();
     };
   });
-
-
-  document.querySelectorAll("[data-category]")
-    .forEach(btn=>{
-      btn.onclick=()=>{
-        sheet={
-          type:"category",
-          month:S.activeMonth,
-          key:btn.dataset.category,
-          color:
-            categoryBudget(S.activeMonth)
-              [btn.dataset.category]
-              .color
-        };
-
-        render();
+  document.querySelectorAll(
+    "[data-category]"
+  ).forEach(btn=>{
+    btn.onclick=()=>{
+      sheet={
+        type:"category",
+        month:S.activeMonth,
+        key:btn.dataset.category,
+        color:
+          categoryBudget(
+            S.activeMonth
+          )[btn.dataset.category].color
       };
-    });
-
-
+      render();
+    };
+  });
   document.querySelectorAll(
     "[data-edit-category]"
   ).forEach(btn=>{
@@ -3450,60 +2956,56 @@ function bindEvents(){
         month:S.activeMonth,
         key:btn.dataset.editCategory,
         color:
-          categoryBudget(S.activeMonth)
-            [btn.dataset.editCategory]
-            .color
+          categoryBudget(
+            S.activeMonth
+          )[btn.dataset.editCategory].color
       };
-
       render();
     };
   });
-
-
-  document.querySelectorAll("[data-amount]")
-    .forEach(input=>{
-      input.onchange=()=>{
-
-        const ym=S.activeMonth;
-        const key=input.dataset.amount;
-        const id=input.dataset.item;
-
-        const item=
-          categoryBudget(ym)
-            [key]
-            ?.items
-            ?.find(x=>x.id===id);
-
-        if(item){
-
-          item.amount=n(input.value);
-
-          save();
-          render();
-        }
-      };
-    });
-
-
+  document.querySelectorAll(
+    "[data-amount]"
+  ).forEach(input=>{
+    input.onchange=()=>{
+      const ym=S.activeMonth;
+      const key=input.dataset.amount;
+      const id=input.dataset.item;
+      const item=
+        categoryBudget(ym)
+          [key]
+          ?.items
+          ?.find(
+            x=>x.id===id
+          );
+      if(item){
+        item.amount=
+          n(input.value);
+        save();
+        render();
+      }
+    };
+  });
   const misc=
-    document.querySelector("[data-misc]");
-
+    document.querySelector(
+      "[data-misc]"
+    );
   if(misc){
-
     misc.onchange=()=>{
-
       const ov=
-        S.monthOverrides[S.activeMonth] ||
-        (S.monthOverrides[S.activeMonth]={});
-
-      ov.miscBudget=n(misc.value);
-
+        S.monthOverrides[
+          S.activeMonth
+        ]||
+        (
+          S.monthOverrides[
+            S.activeMonth
+          ]={}
+        );
+      ov.miscBudget=
+        n(misc.value);
       save();
       render();
     };
   }
-
-
   document.querySelectorAll(
     "[data-edit-one]"
   ).forEach(btn=>{
@@ -3512,36 +3014,28 @@ function bindEvents(){
         S.oneTimeExpenses.find(
           x=>x.id===btn.dataset.editOne
         );
-
       if(!e)return;
-
       sheet={
         type:"one",
         id:e.id,
         month:e.month
       };
-
       render();
     };
   });
-
-
   const addOne=
-    document.querySelector("[data-add-one]");
-
+    document.querySelector(
+      "[data-add-one]"
+    );
   if(addOne){
-
     addOne.onclick=()=>{
       sheet={
         type:"one",
         month:S.activeMonth
       };
-
       render();
     };
   }
-
-
   document.querySelectorAll(
     "[data-goal-item]"
   ).forEach(btn=>{
@@ -3550,798 +3044,734 @@ function bindEvents(){
         type:"goalItem",
         id:btn.dataset.goalItem
       };
-
       render();
     };
   });
-
-
   const addGoal=
-    document.querySelector("[data-add-goal]");
-
+    document.querySelector(
+      "[data-add-goal]"
+    );
   if(addGoal){
-
     addGoal.onclick=()=>{
-      sheet={type:"goalItem"};
+      sheet={
+        type:"goalItem"
+      };
       render();
     };
   }
-
-
   document.querySelectorAll(
     "[data-goal-setting]"
   ).forEach(btn=>{
-
     btn.onclick=()=>{
-
       const type=
         btn.dataset.goalSetting;
-
       if(type==="name"){
-        sheet={type:"goalName"};
+        sheet={
+          type:"goalName"
+        };
       }
-
       if(type==="month"){
-        sheet={type:"goalMonth"};
+        sheet={
+          type:"goalMonth"
+        };
       }
-
       if(type==="amount"){
-        sheet={type:"goalAmount"};
+        sheet={
+          type:"goalAmount"
+        };
       }
-
       render();
     };
-
   });
-
-
-  document.querySelectorAll("[data-income]")
-    .forEach(btn=>{
-      btn.onclick=()=>{
-        sheet={
-          type:"income",
-          month:S.activeMonth
-        };
-
-        render();
+  document.querySelectorAll(
+    "[data-income]"
+  ).forEach(btn=>{
+    btn.onclick=()=>{
+      sheet={
+        type:"income",
+        month:S.activeMonth
       };
-    });
-
-
+      render();
+    };
+  });
   const openMonths=
-    document.querySelector("[data-open-months]");
-
+    document.querySelector(
+      "[data-open-months]"
+    );
   if(openMonths){
     openMonths.onclick=()=>{
-      sheet={type:"months"};
+      sheet={
+        type:"months"
+      };
       render();
     };
   }
-
-
   const openChecklist=
-    document.querySelector("[data-open-checklist]");
-
+    document.querySelector(
+      "[data-open-checklist]"
+    );
   if(openChecklist){
     openChecklist.onclick=()=>{
-      sheet={type:"checklist"};
+      sheet={
+        type:"checklist"
+      };
       render();
     };
   }
-
-
   const openSettings=
-    document.querySelector("[data-open-settings]");
-
+    document.querySelector(
+      "[data-open-settings]"
+    );
   if(openSettings){
     openSettings.onclick=()=>{
-      sheet={type:"settings"};
+      sheet={
+        type:"settings"
+      };
       render();
     };
   }
-
-
   document.querySelectorAll(
     "[data-month-summary]"
   ).forEach(btn=>{
     btn.onclick=()=>{
       S.activeMonth=
         btn.dataset.monthSummary;
-
       save();
       render();
     };
   });
-
-
   const fabToggle=
-    document.querySelector("[data-fab-toggle]");
-
+    document.querySelector(
+      "[data-fab-toggle]"
+    );
   if(fabToggle){
-
     fabToggle.onclick=()=>{
       fabOpen=!fabOpen;
       render();
     };
   }
-
-
   const closeFab=
-    document.querySelector("[data-close-fab]");
-
+    document.querySelector(
+      "[data-close-fab]"
+    );
   if(closeFab){
-
     closeFab.onclick=()=>{
       fabOpen=false;
       render();
     };
   }
-
-
-  document.querySelectorAll("[data-fab]")
-    .forEach(btn=>{
-
-      btn.onclick=()=>{
-
-        const type=btn.dataset.fab;
-
-        fabOpen=false;
-
-        if(type==="extra"){
-
-          sheet={
-            type:"extra",
-            month:S.activeMonth
-          };
-
-        }
-
-        if(type==="expense"){
-
-          sheet={
-            type:"one",
-            month:S.activeMonth
-          };
-
-        }
-
-        if(type==="investment"){
-
-          S.tab="investing";
-          save();
-          render();
-          return;
-
-        }
-
-        if(type==="goal"){
-
-          sheet={
-            type:"goalItem"
-          };
-
-        }
-
-        if(type==="check"){
-
-          sheet={
-            type:"checklist"
-          };
-
-        }
-
+  document.querySelectorAll(
+    "[data-fab]"
+  ).forEach(btn=>{
+    btn.onclick=()=>{
+      const type=
+        btn.dataset.fab;
+      fabOpen=false;
+      if(type==="extra"){
+        sheet={
+          type:"extra",
+          month:S.activeMonth
+        };
+      }
+      if(type==="expense"){
+        sheet={
+          type:"one",
+          month:S.activeMonth
+        };
+      }
+      if(type==="investment"){
+        S.tab="investing";
+        save();
         render();
-      };
-
-    });
-
-
+        return;
+      }
+      if(type==="goal"){
+        sheet={
+          type:"goalItem"
+        };
+      }
+      if(type==="check"){
+        sheet={
+          type:"checklist"
+        };
+      }
+      render();
+    };
+  });
   bindSheetEvents();
 }
-
-
-/* -----------------------------
+/* =============================
    SHEET EVENTS
------------------------------ */
-
+============================= */
 function bindSheetEvents(){
-
   const cancel=
-    document.querySelector("[data-sheet-cancel]");
-
+    document.querySelector(
+      "[data-sheet-cancel]"
+    );
   if(cancel){
-
     cancel.onclick=()=>{
       sheet=null;
       render();
     };
   }
-
-
   const bg=
-    document.getElementById("sheet-bg");
-
+    document.getElementById(
+      "sheet-bg"
+    );
   if(bg){
-
     bg.onclick=e=>{
-
       if(e.target===bg){
-
         sheet=null;
         render();
       }
     };
   }
-
-
   const saveBtn=
-    document.querySelector("[data-sheet-save]");
-
+    document.querySelector(
+      "[data-sheet-save]"
+    );
   if(saveBtn){
-
-    saveBtn.onclick=saveSheet;
+    saveBtn.onclick=
+      saveSheet;
   }
-
-
   /*
     Income
   */
-
   if(sheet?.type==="income"){
-
     const addExtra=
-      document.querySelector("[data-add-extra]");
-
+      document.querySelector(
+        "[data-add-extra]"
+      );
     if(addExtra){
-
       addExtra.onclick=()=>{
-
         sheet={
           type:"extra",
           month:sheet.month
         };
-
         render();
       };
     }
-
     document.querySelectorAll(
       "[data-edit-extra]"
     ).forEach(btn=>{
-
       btn.onclick=()=>{
-
         sheet={
           type:"extra",
           id:btn.dataset.editExtra,
           month:sheet.month
         };
-
         render();
       };
     });
   }
-
-
   /*
     Extra income
   */
-
   if(sheet?.type==="extra"){
-
     const del=
-      document.querySelector("[data-delete-extra]");
-
+      document.querySelector(
+        "[data-delete-extra]"
+      );
     if(del){
-
       del.onclick=()=>{
-
         const list=
-          S.monthOverrides?.[sheet.month]
-            ?.extraIncome || [];
-
-        S.monthOverrides[sheet.month]
-          .extraIncome=
+          S.monthOverrides?.[
+            sheet.month
+          ]?.extraIncome||[];
+        S.monthOverrides[
+          sheet.month
+        ].extraIncome=
           list.filter(
             e=>e.id!==sheet.id
           );
-
         save();
-
         sheet={
           type:"income",
           month:sheet.month
         };
-
         render();
       };
     }
   }
-
-
   /*
     Category editor
   */
-
   if(sheet?.type==="category"){
-
     document.querySelectorAll(
       "[data-color]"
     ).forEach(btn=>{
-
       btn.onclick=()=>{
-
         sheet.color=
           btn.dataset.color;
-
         document.querySelectorAll(
           "[data-color]"
         ).forEach(x=>{
           x.classList.toggle(
             "selected",
-            x.dataset.color===sheet.color
+            x.dataset.color===
+              sheet.color
           );
         });
       };
     });
-
-
     document.querySelectorAll(
       "[data-delete-item]"
     ).forEach(btn=>{
-
       btn.onclick=()=>{
-
         const c=
-          categoryBudget(sheet.month)
-            [sheet.key];
-
+          categoryBudget(
+            sheet.month
+          )[sheet.key];
         c.items=
           c.items.filter(
-            i=>i.id!==btn.dataset.deleteItem
+            i=>
+              i.id!==btn.dataset.deleteItem
           );
-
         save();
         render();
       };
     });
-
-
     const add=
-      document.querySelector("[data-add-item]");
-
+      document.querySelector(
+        "[data-add-item]"
+      );
     if(add){
-
       add.onclick=()=>{
-
         const input=
-          document.getElementById("new-item");
-
+          document.getElementById(
+            "new-item"
+          );
         const value=
           input?.value?.trim();
-
         if(!value)return;
-
-        categoryBudget(sheet.month)
-          [sheet.key]
+        categoryBudget(
+          sheet.month
+        )[sheet.key]
           .items
           .push({
             id:uid(),
             label:value,
             amount:0
           });
-
         save();
         render();
       };
     }
   }
-
-
   /*
     One-time expense
   */
-
   if(sheet?.type==="one"){
-
     document.querySelectorAll(
       "[data-one-month]"
     ).forEach(btn=>{
-
       btn.onclick=()=>{
-
         sheet.month=
           btn.dataset.oneMonth;
-
         document.querySelectorAll(
           "[data-one-month]"
         ).forEach(x=>{
           x.classList.toggle(
             "active",
-            x.dataset.oneMonth===sheet.month
+            x.dataset.oneMonth===
+              sheet.month
           );
         });
       };
     });
-
-
     const del=
-      document.querySelector("[data-delete-one]");
-
+      document.querySelector(
+        "[data-delete-one]"
+      );
     if(del){
-
       del.onclick=()=>{
-
         S.oneTimeExpenses=
           S.oneTimeExpenses.filter(
             e=>e.id!==sheet.id
           );
-
         save();
-
         sheet=null;
         render();
       };
     }
   }
-
-
   /*
     Goal item
   */
-
   if(sheet?.type==="goalItem"){
-
     const del=
-      document.querySelector("[data-delete-goal]");
-
+      document.querySelector(
+        "[data-delete-goal]"
+      );
     if(del){
-
       del.onclick=()=>{
-
         S.goalExpenses=
           S.goalExpenses.filter(
             e=>e.id!==sheet.id
           );
-
         save();
-
         sheet=null;
         render();
       };
     }
   }
-
-
   /*
     Goal month
   */
-
   if(sheet?.type==="goalMonth"){
-
     document.querySelectorAll(
       "[data-goal-month]"
     ).forEach(btn=>{
-
       btn.onclick=()=>{
-
         S.goalMonth=
           btn.dataset.goalMonth;
-
-        ensureAllMonths();
-
         save();
-
         sheet=null;
         render();
       };
     });
   }
-
-
   /*
-    Months
+    MONTH MANAGER
   */
-
   if(sheet?.type==="months"){
-
+    /*
+      Select month
+    */
     document.querySelectorAll(
       "[data-select-month]"
     ).forEach(btn=>{
-
-      btn.onclick=()=>{
-
+      btn.onclick=e=>{
+        /*
+          Don't select the month when
+          the delete button itself was tapped.
+        */
+        if(
+          e.target.closest(
+            "[data-delete-month]"
+          )
+        ){
+          return;
+        }
         S.activeMonth=
           btn.dataset.selectMonth;
-
-        ensureMonth(S.activeMonth);
-
+        ensureMonth(
+          S.activeMonth
+        );
         save();
-
         sheet=null;
         render();
       };
     });
-
-
+    /*
+      Delete month
+    */
+    document.querySelectorAll(
+      "[data-delete-month]"
+    ).forEach(btn=>{
+      btn.onclick=e=>{
+        e.stopPropagation();
+        const ym=
+          btn.dataset.deleteMonth;
+        const ok=
+          confirm(
+            `Remove ${monthLabel(ym)} from your plan?`
+          );
+        if(!ok)return;
+        if(
+          removeMonthKey(ym)
+        ){
+          save();
+          showToast(
+            `${shortMonth(ym)} removed`
+          );
+          render();
+        }
+      };
+    });
+    /*
+      Add next month
+    */
     const add=
-      document.querySelector("[data-add-month]");
-
+      document.querySelector(
+        "[data-add-month]"
+      );
     if(add){
-
       add.onclick=()=>{
-
-        const months=allMonths();
-
-        const last=months[months.length-1];
-
+        const months=
+          allMonths();
+        const last=
+          months[months.length-1];
+        const next=
+          shiftMonth(last,1);
+        /*
+          Create it immediately.
+        */
+        const previousBudget=
+          S.monthBudgets[last]
+            ?clone(
+              S.monthBudgets[last]
+            )
+            :normalizeBudget(
+              S.categories
+            );
+        addMonthKey(next);
+        /*
+          Copy previous budget ONLY
+          during creation.
+        */
+        S.monthBudgets[next]=
+          clone(previousBudget);
+        /*
+          Copy previous month's income
+          as the initial value.
+        */
+        S.monthOverrides[next]=
+          S.monthOverrides[next]||{};
+        S.monthOverrides[next].income=
+          baseIncome(last);
+        S.activeMonth=next;
+        save();
+        sheet=null;
+        render();
+      };
+    }
+    /*
+      Add custom month
+    */
+    const custom=
+      document.querySelector(
+        "[data-add-custom-month]"
+      );
+    if(custom){
+      custom.onclick=()=>{
         sheet={
-          type:"addMonth",
-          next:shiftMonth(last,1)
+          type:"addCustomMonth"
         };
-
         render();
       };
     }
   }
-
-
   /*
     Checklist
   */
-
   if(sheet?.type==="checklist"){
-
     document.querySelectorAll(
       "[data-toggle-check]"
     ).forEach(row=>{
-
       row.onclick=e=>{
-
         if(
           e.target.closest(
             "[data-delete-check]"
           )
-        )return;
-
+        ){
+          return;
+        }
         const item=
           S.checklist.find(
-            x=>x.id===row.dataset.toggleCheck
+            x=>
+              x.id===
+              row.dataset.toggleCheck
           );
-
         if(item){
-
           item.done=!item.done;
-
           save();
           render();
         }
       };
     });
-
-
     document.querySelectorAll(
       "[data-delete-check]"
     ).forEach(btn=>{
-
       btn.onclick=e=>{
-
         e.stopPropagation();
-
         S.checklist=
           S.checklist.filter(
-            x=>x.id!==btn.dataset.deleteCheck
+            x=>
+              x.id!==
+              btn.dataset.deleteCheck
           );
-
         save();
         render();
       };
     });
-
-
     const add=
-      document.querySelector("[data-add-check]");
-
+      document.querySelector(
+        "[data-add-check]"
+      );
     if(add){
-
       add.onclick=()=>{
-
         const input=
-          document.getElementById("new-check");
-
+          document.getElementById(
+            "new-check"
+          );
         const value=
           input?.value?.trim();
-
         if(!value)return;
-
         S.checklist.push({
           id:uid(),
           label:value,
           done:false
         });
-
         save();
         render();
       };
     }
   }
 }
-
-
-/* -----------------------------
+/* =============================
    SAVE SHEET
------------------------------ */
-
+============================= */
 function saveSheet(){
-
   if(!sheet)return;
-
-
+  /*
+    Income
+  */
   if(sheet.type==="income"){
-
     const value=
       document.getElementById(
         "income-input"
       )?.value;
-
-    S.monthOverrides[sheet.month]=
-      S.monthOverrides[sheet.month]||{};
-
-    S.monthOverrides[sheet.month].income=
+    S.monthOverrides[
+      sheet.month
+    ]=
+      S.monthOverrides[
+        sheet.month
+      ]||{};
+    S.monthOverrides[
+      sheet.month
+    ].income=
       n(value);
-
     save();
-
     sheet=null;
     render();
-
     return;
   }
-
-
+  /*
+    Extra income
+  */
   if(sheet.type==="extra"){
-
     const label=
       document.getElementById(
         "extra-label"
       )?.value?.trim();
-
     const amount=
       n(
         document.getElementById(
           "extra-amount"
         )?.value
       );
-
     if(!label)return;
-
-    S.monthOverrides[sheet.month]=
-      S.monthOverrides[sheet.month]||{};
-
-    S.monthOverrides[sheet.month].extraIncome=
-      S.monthOverrides[sheet.month].extraIncome||[];
-
+    S.monthOverrides[
+      sheet.month
+    ]=
+      S.monthOverrides[
+        sheet.month
+      ]||{};
+    S.monthOverrides[
+      sheet.month
+    ].extraIncome=
+      S.monthOverrides[
+        sheet.month
+      ].extraIncome||[];
     const list=
-      S.monthOverrides[sheet.month].extraIncome;
-
+      S.monthOverrides[
+        sheet.month
+      ].extraIncome;
     if(sheet.id){
-
       const e=
-        list.find(x=>x.id===sheet.id);
-
+        list.find(
+          x=>x.id===sheet.id
+        );
       if(e){
-
         e.label=label;
         e.amount=amount;
       }
-
     }else{
-
       list.push({
         id:uid(),
         label,
         amount
       });
     }
-
     save();
-
     sheet={
       type:"income",
       month:sheet.month
     };
-
     render();
-
     return;
   }
-
-
+  /*
+    Category
+  */
   if(sheet.type==="category"){
-
     const c=
-      categoryBudget(sheet.month)
-        [sheet.key];
-
+      categoryBudget(
+        sheet.month
+      )[sheet.key];
     const name=
       document.getElementById(
         "cat-name"
       )?.value?.trim();
-
     const icon=
       document.getElementById(
         "cat-icon"
       )?.value?.trim();
-
     if(name)c.label=name;
     if(icon)c.icon=icon;
-
     if(sheet.color){
       c.color=sheet.color;
     }
-
     document.querySelectorAll(
       "[data-item-label]"
     ).forEach(input=>{
-
       const item=
         c.items.find(
-          x=>x.id===input.dataset.itemLabel
+          x=>
+            x.id===
+            input.dataset.itemLabel
         );
-
       if(item){
-
         const value=
           input.value.trim();
-
         if(value){
           item.label=value;
         }
       }
     });
-
     save();
-
     sheet=null;
     render();
-
     return;
   }
-
-
+  /*
+    One-time
+  */
   if(sheet.type==="one"){
-
     const label=
       document.getElementById(
         "one-label"
       )?.value?.trim();
-
     const amount=
       n(
         document.getElementById(
           "one-amount"
         )?.value
       );
-
     if(!label)return;
-
     if(sheet.id){
-
       const e=
         S.oneTimeExpenses.find(
           x=>x.id===sheet.id
         );
-
       if(e){
-
         e.label=label;
         e.amount=amount;
         e.month=
           sheet.month||e.month;
       }
-
     }else{
-
       S.oneTimeExpenses.push({
         id:uid(),
         label,
@@ -4351,53 +3781,41 @@ function saveSheet(){
           S.activeMonth
       });
     }
-
     save();
-
     sheet=null;
     render();
-
     return;
   }
-
-
+  /*
+    Goal item
+  */
   if(sheet.type==="goalItem"){
-
     const label=
       document.getElementById(
         "goal-item-label"
       )?.value?.trim();
-
     const amount=
       n(
         document.getElementById(
           "goal-item-amount"
         )?.value
       );
-
     const note=
       document.getElementById(
         "goal-item-note"
       )?.value?.trim()||"";
-
     if(!label)return;
-
     if(sheet.id){
-
       const e=
         S.goalExpenses.find(
           x=>x.id===sheet.id
         );
-
       if(e){
-
         e.label=label;
         e.amount=amount;
         e.estimate=note;
       }
-
     }else{
-
       S.goalExpenses.push({
         id:uid(),
         label,
@@ -4405,65 +3823,52 @@ function saveSheet(){
         estimate:note
       });
     }
-
     save();
-
     sheet=null;
     render();
-
     return;
   }
-
-
+  /*
+    Goal name
+  */
   if(sheet.type==="goalName"){
-
     const value=
       document.getElementById(
         "goal-name"
       )?.value?.trim();
-
     if(value){
       S.goalLabel=value;
     }
-
     save();
-
     sheet=null;
     render();
-
     return;
   }
-
-
+  /*
+    Goal amount
+  */
   if(sheet.type==="goalAmount"){
-
     const target=
       n(
         document.getElementById(
           "goal-amount"
         )?.value
       );
-
     const current=
       goalTotal();
-
     const difference=
       target-current;
-
     if(S.goalExpenses.length){
-
       const last=
         S.goalExpenses[
           S.goalExpenses.length-1
         ];
-
       last.amount=
         Math.max(
           0,
           n(last.amount)+difference
         );
     }else{
-
       S.goalExpenses.push({
         id:uid(),
         label:"Move Day Goal",
@@ -4471,126 +3876,111 @@ function saveSheet(){
         estimate:""
       });
     }
-
     save();
-
     sheet=null;
     render();
-
     return;
   }
-
-
-  if(sheet.type==="addMonth"){
-
-    const next=sheet.next;
-
-    const previous=
-      shiftMonth(next,-1);
-
+  /*
+    Custom month
+  */
+  if(sheet.type==="addCustomMonth"){
+    const input=
+      document.getElementById(
+        "custom-month"
+      );
+    const ym=
+      input?.value;
+    if(!ym){
+      showToast("Choose a month");
+      return;
+    }
+    if(S.months.includes(ym)){
+      showToast("Month already exists");
+      return;
+    }
     /*
-      THIS IS THE KEY BEHAVIOR.
-
-      Copy previous month's budget only when
-      the new month is first created.
-
-      From this point forward the two months
-      are completely independent.
+      Find closest previous existing month.
     */
-
-    if(!S.monthBudgets[next]){
-
+    const previous=
+      allMonths()
+        .filter(m=>m<ym)
+        .pop();
+    /*
+      If there is a previous month,
+      copy its budget once.
+    */
+    if(previous){
       ensureMonth(previous);
-
-      S.monthBudgets[next]=
+      S.monthBudgets[ym]=
         clone(
           S.monthBudgets[previous]
         );
+      S.monthOverrides[ym]=
+        S.monthOverrides[ym]||{};
+      S.monthOverrides[ym].income=
+        baseIncome(previous);
+    }else{
+      S.monthBudgets[ym]=
+        normalizeBudget(
+          S.categories
+        );
     }
-
-    const income=
-      n(
-        document.getElementById(
-          "new-month-income"
-        )?.value
-      );
-
-    S.monthOverrides[next]=
-      S.monthOverrides[next]||{};
-
-    S.monthOverrides[next].income=
-      income;
-
-    S.activeMonth=next;
-
+    addMonthKey(ym);
+    S.activeMonth=ym;
     save();
-
     sheet=null;
     render();
-
     return;
   }
-
-
+  /*
+    Months sheet
+  */
+  if(sheet.type==="months"){
+    sheet=null;
+    render();
+    return;
+  }
+  /*
+    Checklist
+  */
+  if(sheet.type==="checklist"){
+    sheet=null;
+    render();
+    return;
+  }
+  /*
+    Settings
+  */
   if(sheet.type==="settings"){
-
     const income=
       n(
         document.getElementById(
           "settings-income"
         )?.value
       );
-
     const misc=
       n(
         document.getElementById(
           "settings-misc"
         )?.value
       );
-
     S.income=income;
     S.miscBudget=misc;
-
     save();
-
     sheet=null;
     render();
-
     return;
   }
-
-
-  if(sheet.type==="months"){
-
-    sheet=null;
-    render();
-
-    return;
-  }
-
-
-  if(sheet.type==="checklist"){
-
-    sheet=null;
-    render();
-
-    return;
-  }
-
-
   sheet=null;
   render();
 }
-
-
-/* -----------------------------
+/* =============================
    START
------------------------------ */
-
+============================= */
 loadState();
 ensureAllMonths();
 render();
-
 </script>
 </body>
 </html>
