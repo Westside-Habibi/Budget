@@ -2,25 +2,30 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f5f5f7">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="God's Plan">
+<meta name="theme-color" content="#000000">
 <title>God's Plan</title>
 
 <style>
 :root{
-  --bg:#f5f5f7;
-  --card:rgba(255,255,255,.82);
-  --card-solid:#fff;
-  --text:#111113;
-  --muted:#73737a;
-  --line:rgba(0,0,0,.08);
-  --blue:#007aff;
-  --green:#34c759;
-  --red:#ff3b30;
-  --orange:#ff9500;
-  --purple:#af52de;
-  --shadow:0 10px 35px rgba(0,0,0,.07);
-  --radius:22px;
+  --bg:#000;
+  --card:#1c1c1e;
+  --card2:#121214;
+  --line:rgba(84,84,88,.36);
+  --text:#fff;
+  --secondary:rgba(235,235,245,.60);
+  --tertiary:rgba(235,235,245,.30);
+  --blue:#0a84ff;
+  --green:#30d158;
+  --red:#ff453a;
+  --orange:#ff9f0a;
+  --purple:#bf5af2;
+  --cyan:#64d2ff;
+  --radius:16px;
+  --large-radius:22px;
 }
 
 *{
@@ -28,1317 +33,2020 @@
   -webkit-tap-highlight-color:transparent;
 }
 
-html{
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
   background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
 }
 
 body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,Arial,sans-serif;
-  background:
-    radial-gradient(circle at 50% -10%,rgba(255,255,255,.95),transparent 38%),
-    var(--bg);
-  color:var(--text);
-  min-height:100vh;
-  padding-bottom:100px;
+  padding-bottom:calc(82px + env(safe-area-inset-bottom));
 }
 
-button,input,select,textarea{
-  font:inherit;
+button,input{
+  font-family:inherit;
 }
 
 button{
-  cursor:pointer;
-}
-
-.app{
-  width:min(1100px,100%);
-  margin:0 auto;
-  padding:env(safe-area-inset-top) 16px 40px;
-}
-
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  padding:18px 4px 12px;
-  position:sticky;
-  top:0;
-  z-index:20;
-  background:rgba(245,245,247,.82);
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:11px;
-}
-
-.logo{
-  width:42px;
-  height:42px;
-  border-radius:13px;
-  display:grid;
-  place-items:center;
-  background:#111;
-  color:#fff;
-  font-size:20px;
-  box-shadow:0 5px 18px rgba(0,0,0,.14);
-}
-
-.brand h1{
-  margin:0;
-  font-size:20px;
-  letter-spacing:-.5px;
-}
-
-.brand small{
-  display:block;
-  color:var(--muted);
-  font-size:11px;
-  margin-top:2px;
-}
-
-.icon-btn{
-  width:42px;
-  height:42px;
   border:0;
-  border-radius:50%;
-  background:rgba(255,255,255,.8);
-  box-shadow:0 4px 16px rgba(0,0,0,.06);
-  font-size:20px;
+  background:none;
+  color:inherit;
 }
 
-.tabs{
-  display:flex;
-  gap:6px;
-  background:rgba(0,0,0,.055);
-  border-radius:15px;
-  padding:4px;
-  margin:10px 0 18px;
+input{
+  color:var(--text);
 }
 
-.tab{
-  flex:1;
-  border:0;
-  background:transparent;
-  padding:10px 8px;
-  border-radius:12px;
-  color:var(--muted);
-  font-weight:600;
-  font-size:14px;
+input:focus{
+  outline:none;
 }
 
-.tab.active{
-  background:#fff;
-  color:#111;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(12,1fr);
-  gap:14px;
-}
-
-.span-12{grid-column:span 12}
-.span-8{grid-column:span 8}
-.span-6{grid-column:span 6}
-.span-4{grid-column:span 4}
-
-.card{
-  background:var(--card);
-  border:1px solid rgba(255,255,255,.8);
-  border-radius:var(--radius);
-  padding:18px;
-  box-shadow:var(--shadow);
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
-}
-
-.card h2{
-  font-size:17px;
-  margin:0 0 4px;
-  letter-spacing:-.35px;
-}
-
-.card h3{
-  font-size:14px;
-  margin:0;
-}
-
-.muted{
-  color:var(--muted);
-}
-
-.money{
-  font-variant-numeric:tabular-nums;
-  letter-spacing:-.5px;
-}
-
-.hero{
-  padding:22px;
-}
-
-.hero-top{
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  align-items:flex-start;
-}
-
-.hero-label{
-  color:var(--muted);
-  font-size:13px;
-  font-weight:600;
-}
-
-.hero-value{
-  font-size:42px;
-  font-weight:750;
-  letter-spacing:-2px;
-  margin:3px 0 2px;
-}
-
-.hero-sub{
-  font-size:13px;
-  color:var(--muted);
-}
-
-.goal{
-  margin-top:18px;
-  padding:15px;
-  border-radius:17px;
-  background:rgba(0,122,255,.07);
-}
-
-.goal-row{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:9px;
-}
-
-.progress{
-  height:8px;
-  background:rgba(0,0,0,.08);
-  border-radius:999px;
-  overflow:hidden;
-}
-
-.progress>span{
-  display:block;
-  height:100%;
-  width:0;
-  background:var(--blue);
-  border-radius:inherit;
-  transition:width .25s ease;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-}
-
-.stat{
-  padding:14px;
-  background:rgba(0,0,0,.035);
-  border-radius:17px;
-}
-
-.stat .label{
-  font-size:11px;
-  color:var(--muted);
-  margin-bottom:4px;
-}
-
-.stat .value{
-  font-size:18px;
-  font-weight:700;
-}
-
-.monthbar{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  overflow-x:auto;
-  padding:2px 1px 8px;
-  scrollbar-width:none;
-}
-
-.monthbar::-webkit-scrollbar{
+::-webkit-scrollbar{
   display:none;
 }
 
-.month-pill{
-  flex:0 0 auto;
-  border:0;
-  border-radius:14px;
-  padding:10px 14px;
-  background:rgba(0,0,0,.055);
-  color:var(--muted);
-  font-weight:650;
+/* NAV */
+
+.nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(0,0,0,.88);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border-bottom:.5px solid var(--line);
+  padding-top:max(8px,env(safe-area-inset-top));
+}
+
+.nav-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px 16px 10px;
+}
+
+.title{
+  font-size:34px;
+  line-height:1;
+  font-weight:750;
+  letter-spacing:-.8px;
+}
+
+.subtitle{
+  margin-top:5px;
   font-size:13px;
+  color:var(--secondary);
 }
 
-.month-pill.active{
-  background:#111;
+/* PROMINENT MONTH HEADER */
+
+.month-header{
+  margin:2px 16px 12px;
+  padding:12px 4px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.month-arrow{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#1c1c1e;
   color:#fff;
+  font-size:28px;
+  line-height:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.month-pill.add{
-  background:#fff;
-  color:var(--blue);
-  border:1px solid var(--line);
+.month-arrow:active{
+  transform:scale(.94);
+  background:#2c2c2e;
 }
 
-.month-actions{
+.month-title-wrap{
+  text-align:center;
+  flex:1;
+}
+
+.month-title{
+  font-size:24px;
+  font-weight:750;
+  letter-spacing:-.4px;
+}
+
+.month-caption{
+  margin-top:3px;
+  color:var(--secondary);
+  font-size:12px;
+}
+
+.month-scroll{
   display:flex;
   gap:8px;
-  flex-wrap:wrap;
+  overflow-x:auto;
+  padding:0 16px 12px;
 }
 
-.btn{
-  border:0;
-  border-radius:13px;
-  padding:10px 14px;
-  font-weight:650;
-  font-size:13px;
+.month-chip{
+  flex:none;
+  border-radius:99px;
+  background:#242426;
+  color:var(--secondary);
+  padding:8px 15px;
+  font-size:14px;
+  font-weight:600;
+  white-space:nowrap;
 }
 
-.btn.primary{
-  background:#111;
-  color:#fff;
-}
-
-.btn.blue{
+.month-chip.active{
   background:var(--blue);
   color:#fff;
 }
 
-.btn.soft{
-  background:rgba(0,0,0,.055);
-  color:#111;
+.income-button{
+  color:var(--blue);
+  font-size:15px;
+  font-weight:600;
 }
 
-.btn.danger{
-  background:rgba(255,59,48,.1);
-  color:var(--red);
+/* HERO */
+
+.hero{
+  margin:18px 16px 20px;
+  padding:21px;
+  border-radius:var(--large-radius);
+  background:linear-gradient(145deg,#1d1d20,#0d0d0f);
+  border:.5px solid var(--line);
+  overflow:hidden;
+  position:relative;
 }
 
-.btn.green{
-  background:rgba(52,199,89,.12);
-  color:#168b38;
+.hero-glow{
+  position:absolute;
+  width:250px;
+  height:250px;
+  right:-100px;
+  top:-100px;
+  background:radial-gradient(circle,rgba(48,209,88,.16),transparent 70%);
+  pointer-events:none;
 }
 
-.section-head{
+.eyebrow{
+  color:var(--tertiary);
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  font-size:11px;
+  font-weight:700;
+}
+
+.hero-number{
+  margin-top:5px;
+  font-size:40px;
+  font-weight:750;
+  letter-spacing:-1px;
+  font-variant-numeric:tabular-nums;
+}
+
+.hero-caption{
+  margin-top:3px;
+  font-size:14px;
+  color:var(--secondary);
+}
+
+.stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:22px;
+  margin-top:18px;
+}
+
+.stat-label{
+  color:var(--tertiary);
+  font-size:10px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+}
+
+.stat-value{
+  margin-top:3px;
+  font-size:17px;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+}
+
+.progress{
+  height:6px;
+  margin-top:18px;
+  background:rgba(118,118,128,.24);
+  border-radius:99px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  height:100%;
+  border-radius:99px;
+  background:var(--green);
+  transition:width .25s ease;
+}
+
+.progress-row{
   display:flex;
   justify-content:space-between;
+  margin-top:7px;
+  color:var(--tertiary);
+  font-size:12px;
+}
+
+/* SECTIONS */
+
+.section{
+  margin:0 16px 30px;
+}
+
+.section-title{
+  padding:0 4px 7px;
+  margin-top:24px;
+  color:var(--secondary);
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+
+.section-title:first-child{
+  margin-top:0;
+}
+
+.group{
+  overflow:hidden;
+  border-radius:var(--radius);
+  background:var(--card);
+}
+
+.row{
+  min-height:45px;
+  display:flex;
   align-items:center;
   gap:10px;
-  margin-bottom:13px;
+  padding:10px 16px;
+  border-bottom:.5px solid var(--line);
 }
 
-.section-head .actions{
-  display:flex;
-  gap:6px;
+.row:last-child{
+  border-bottom:0;
 }
 
-.income-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+.row-label{
+  flex:1;
+  min-width:0;
+  font-size:16px;
 }
 
-.field{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
+.row-sub{
+  margin-top:2px;
+  color:var(--tertiary);
+  font-size:12px;
+  line-height:1.4;
 }
 
-.field label{
-  font-size:11px;
-  color:var(--muted);
-  font-weight:650;
+.row-value{
+  color:var(--secondary);
+  font-size:16px;
+  font-variant-numeric:tabular-nums;
+  flex:none;
 }
 
-.input,
-.select{
+.chevron{
+  color:var(--tertiary);
+  font-size:19px;
+}
+
+.dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  flex:none;
+}
+
+.num-input{
+  width:100px;
+  border:0;
+  background:transparent;
+  text-align:right;
+  font-size:16px;
+  font-variant-numeric:tabular-nums;
+}
+
+.text-input{
+  flex:1;
+  min-width:0;
+  border:0;
+  background:transparent;
+  font-size:16px;
+}
+
+.add-row{
   width:100%;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.85);
-  border-radius:13px;
-  padding:11px 12px;
-  outline:none;
-  color:#111;
+  min-height:45px;
+  display:flex;
+  align-items:center;
+  padding:10px 16px;
+  color:var(--blue);
+  font-size:16px;
+  text-align:left;
 }
 
-.input:focus,
-.select:focus{
-  border-color:rgba(0,122,255,.45);
-  box-shadow:0 0 0 3px rgba(0,122,255,.1);
+.footer-note{
+  padding:7px 4px 0;
+  color:var(--tertiary);
+  font-size:12px;
+  line-height:1.45;
 }
 
-.category{
-  margin-top:16px;
+.balance-positive{
+  color:var(--green)!important;
 }
 
-.category-head{
+.balance-negative{
+  color:var(--red)!important;
+}
+
+.starting-card{
+  margin:0 16px 14px;
+  padding:15px 17px;
+  border-radius:15px;
+  background:rgba(10,132,255,.10);
+  border:.5px solid rgba(10,132,255,.20);
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:8px;
 }
 
-.category-name{
-  font-weight:750;
-  font-size:14px;
-}
-
-.category-total{
+.starting-label{
+  color:var(--secondary);
   font-size:13px;
-  color:var(--muted);
 }
 
-.expense-list{
+.starting-value{
+  color:var(--blue);
+  font-size:18px;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+}
+
+/* PAID */
+
+.paid-summary{
+  margin-top:10px;
+  padding:13px 14px;
+  border-radius:13px;
+  background:rgba(48,209,88,.08);
+  border:.5px solid rgba(48,209,88,.15);
+}
+
+.paid-summary-top{
   display:flex;
-  flex-direction:column;
-  gap:7px;
-}
-
-.expense{
-  display:grid;
-  grid-template-columns:32px minmax(0,1fr) auto auto;
-  gap:9px;
+  justify-content:space-between;
   align-items:center;
-  padding:10px 11px;
-  border-radius:15px;
-  background:rgba(0,0,0,.035);
 }
 
-.expense.paid{
-  opacity:.62;
+.paid-summary-title{
+  font-size:13px;
+  color:var(--secondary);
+}
+
+.paid-summary-value{
+  font-size:15px;
+  font-weight:700;
+}
+
+.paid-progress{
+  height:5px;
+  margin-top:9px;
+  background:rgba(118,118,128,.24);
+  border-radius:99px;
+  overflow:hidden;
+}
+
+.paid-progress-fill{
+  height:100%;
+  background:var(--green);
+  border-radius:99px;
+}
+
+.paid-meta{
+  margin-top:6px;
+  color:var(--tertiary);
+  font-size:11px;
 }
 
 .check{
   width:25px;
   height:25px;
   border-radius:50%;
-  border:1.5px solid rgba(0,0,0,.18);
-  background:#fff;
-  display:grid;
-  place-items:center;
-  padding:0;
-  color:#fff;
-  font-size:13px;
+  border:2px solid rgba(235,235,245,.3);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:var(--green);
+  flex:none;
+  font-size:14px;
+  font-weight:800;
 }
 
-.check.checked{
-  background:var(--green);
+.check.done{
   border-color:var(--green);
+  background:rgba(48,209,88,.12);
 }
 
-.expense-main{
-  min-width:0;
+.strike{
+  text-decoration:line-through;
+  opacity:.48;
 }
 
-.expense-label{
-  font-size:13px;
+.payment-button{
+  flex:none;
+  min-width:25px;
+}
+
+/* TAB BAR */
+
+.tabbar{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:200;
+  display:flex;
+  padding-bottom:env(safe-area-inset-bottom);
+  background:rgba(28,28,30,.88);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  border-top:.5px solid var(--line);
+}
+
+.tab{
+  flex:1;
+  padding:8px 2px 7px;
+  color:var(--tertiary);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+}
+
+.tab.active{
+  color:var(--blue);
+}
+
+.tab-icon{
+  font-size:21px;
+  line-height:1;
+}
+
+.tab-label{
+  font-size:10px;
   font-weight:600;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
 }
 
-.expense-meta{
+/* FAB */
+
+.fab{
+  position:fixed;
+  right:20px;
+  bottom:calc(78px + env(safe-area-inset-bottom));
+  z-index:300;
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:var(--blue);
+  color:#fff;
+  font-size:29px;
+  box-shadow:0 5px 20px rgba(10,132,255,.40);
+}
+
+.fab-bg{
+  position:fixed;
+  inset:0;
+  z-index:299;
+  background:rgba(0,0,0,.42);
+}
+
+.fab-menu{
+  position:fixed;
+  right:20px;
+  bottom:calc(142px + env(safe-area-inset-bottom));
+  z-index:301;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:8px;
+}
+
+.fab-option{
   display:flex;
   align-items:center;
-  gap:6px;
-  font-size:10px;
-  color:var(--muted);
-  margin-top:2px;
+  gap:10px;
+  padding:10px 17px 10px 13px;
+  background:var(--card);
+  border:.5px solid var(--line);
+  border-radius:99px;
+  font-size:15px;
+  font-weight:600;
+  box-shadow:0 5px 18px rgba(0,0,0,.35);
 }
 
-.paid-tag{
-  color:#168b38;
+/* SHEETS */
+
+.sheet-bg{
+  position:fixed;
+  inset:0;
+  z-index:900;
+  background:rgba(0,0,0,.48);
+  display:flex;
+  align-items:flex-end;
+}
+
+.sheet{
+  width:100%;
+  max-height:90vh;
+  overflow-y:auto;
+  background:#1c1c1e;
+  border-radius:21px 21px 0 0;
+  padding-bottom:max(20px,env(safe-area-inset-bottom));
+}
+
+.handle{
+  width:36px;
+  height:5px;
+  border-radius:99px;
+  background:rgba(120,120,128,.36);
+  margin:8px auto 3px;
+}
+
+.sheet-nav{
+  min-height:51px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 16px;
+  border-bottom:.5px solid var(--line);
+}
+
+.sheet-title{
+  font-size:17px;
+  font-weight:650;
+}
+
+.sheet-btn{
+  color:var(--blue);
+  font-size:17px;
+}
+
+.sheet-btn.bold{
+  font-weight:600;
+}
+
+.sheet-body{
+  padding:20px 16px;
+}
+
+.field{
+  margin-bottom:20px;
+}
+
+.field-label{
+  margin-bottom:8px;
+  color:var(--secondary);
+  font-size:12px;
   font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.4px;
 }
 
-.expense-amount{
-  font-size:13px;
-  font-weight:700;
-  white-space:nowrap;
+.field-box{
+  padding:12px 14px;
+  border-radius:11px;
+  background:rgba(118,118,128,.15);
 }
 
-.delete-expense{
+.field-box input{
+  width:100%;
   border:0;
   background:transparent;
-  color:#aaa;
-  width:25px;
-  height:25px;
+  font-size:16px;
+}
+
+.delete-button{
+  width:100%;
+  padding:14px;
+  color:var(--red);
+  font-size:17px;
+}
+
+.callout{
+  padding:13px 14px;
+  border-radius:12px;
+  background:rgba(10,132,255,.10);
+  color:var(--secondary);
+  font-size:14px;
+  line-height:1.45;
+}
+
+.color-grid{
+  display:flex;
+  flex-wrap:wrap;
+  gap:13px;
+}
+
+.color-dot{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  position:relative;
+}
+
+.color-dot.selected:after{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border:2px solid white;
   border-radius:50%;
 }
 
-.delete-expense:hover{
-  background:rgba(255,59,48,.1);
-  color:var(--red);
+.danger-callout{
+  margin-top:15px;
+  padding:13px 14px;
+  border-radius:12px;
+  background:rgba(255,69,58,.10);
+  color:var(--secondary);
+  font-size:13px;
+  line-height:1.4;
 }
 
-.add-row{
-  margin-top:8px;
+.month-management-row{
   display:flex;
-  gap:7px;
+  align-items:center;
+  gap:10px;
 }
 
-.add-row .input{
+.month-management-row .row-label{
   flex:1;
 }
 
-.totals-card{
-  position:sticky;
-  top:77px;
-}
-
-.balance{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  gap:10px;
-  padding-bottom:15px;
-  border-bottom:1px solid var(--line);
-}
-
-.balance .big{
-  font-size:30px;
-  font-weight:750;
-  letter-spacing:-1.2px;
-}
-
-.balance.negative .big{
+.remove-month{
   color:var(--red);
+  font-size:15px;
+  font-weight:600;
 }
 
-.total-line{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  padding:9px 0;
-  font-size:13px;
-}
+/* TOAST */
 
-.total-line strong{
-  font-weight:700;
-}
-
-.paid-summary{
-  margin-top:12px;
-  padding:13px;
-  border-radius:16px;
-  background:rgba(52,199,89,.08);
-}
-
-.paid-summary-top{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.paid-summary strong{
-  color:#168b38;
-}
-
-.checklist{
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-}
-
-.check-item{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:11px 12px;
-  border-radius:14px;
-  background:rgba(0,0,0,.035);
-}
-
-.check-item input{
-  width:19px;
-  height:19px;
-  accent-color:var(--blue);
-}
-
-.check-item.done span{
-  text-decoration:line-through;
-  color:var(--muted);
-}
-
-.overview-month{
-  padding:15px;
-  border-radius:17px;
-  background:rgba(0,0,0,.035);
-  margin-bottom:10px;
-}
-
-.overview-month:last-child{
-  margin-bottom:0;
-}
-
-.overview-title{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:8px;
-}
-
-.overview-stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:7px;
-}
-
-.overview-stat{
-  background:rgba(255,255,255,.75);
-  border-radius:12px;
-  padding:9px;
-}
-
-.overview-stat small{
-  display:block;
-  color:var(--muted);
-  font-size:9px;
-  margin-bottom:3px;
-}
-
-.overview-stat strong{
-  font-size:12px;
-}
-
-.modal-backdrop{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  background:rgba(0,0,0,.38);
+#toast{
   display:none;
-  align-items:flex-end;
-  justify-content:center;
-  padding:15px;
-  backdrop-filter:blur(7px);
-}
-
-.modal-backdrop.show{
-  display:flex;
-}
-
-.modal{
-  width:min(520px,100%);
-  max-height:90vh;
-  overflow:auto;
-  background:#fff;
-  border-radius:25px;
-  padding:20px;
-  box-shadow:0 25px 70px rgba(0,0,0,.25);
-}
-
-.modal-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-bottom:15px;
-}
-
-.modal-head h2{
-  margin:0;
-  font-size:19px;
-}
-
-.close{
-  border:0;
-  width:34px;
-  height:34px;
-  border-radius:50%;
-  background:rgba(0,0,0,.06);
-}
-
-.form-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:11px;
-}
-
-.form-grid .full{
-  grid-column:1/-1;
-}
-
-.modal-footer{
-  display:flex;
-  justify-content:flex-end;
-  gap:8px;
-  margin-top:16px;
-}
-
-.empty{
-  padding:28px 12px;
-  text-align:center;
-  color:var(--muted);
-}
-
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:25px;
-  transform:translate(-50%,120px);
-  z-index:200;
-  background:#111;
-  color:#fff;
-  padding:11px 17px;
-  border-radius:999px;
-  font-size:13px;
-  font-weight:650;
-  transition:transform .25s ease;
-  box-shadow:0 10px 30px rgba(0,0,0,.2);
-}
-
-.toast.show{
-  transform:translate(-50%,0);
-}
-
-@media(max-width:760px){
-  .span-8,
-  .span-6,
-  .span-4{
-    grid-column:span 12;
-  }
-
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .overview-stats{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .totals-card{
-    position:static;
-  }
-
-  .hero-value{
-    font-size:36px;
-  }
-}
-
-@media(max-width:480px){
-  .app{
-    padding-left:12px;
-    padding-right:12px;
-  }
-
-  .card{
-    padding:15px;
-    border-radius:19px;
-  }
-
-  .income-grid,
-  .form-grid{
-    grid-template-columns:1fr;
-  }
-
-  .form-grid .full{
-    grid-column:auto;
-  }
-
-  .expense{
-    grid-template-columns:30px minmax(0,1fr) auto 22px;
-  }
-
-  .expense-amount{
-    font-size:12px;
-  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
-
-  <header class="topbar">
-    <div class="brand">
-      <div class="logo">✦</div>
-      <div>
-        <h1>God's Plan</h1>
-        <small>Budget • Move Day • Wealth</small>
-      </div>
-    </div>
-    <button class="icon-btn" id="settingsBtn" aria-label="Settings">⚙︎</button>
-  </header>
-
-  <div class="tabs">
-    <button class="tab active" data-tab="budget">Budget</button>
-    <button class="tab" data-tab="overview">Overview</button>
-    <button class="tab" data-tab="checklist">Checklist</button>
-  </div>
-
-  <main id="budgetTab">
-
-    <div class="monthbar" id="monthBar"></div>
-
-    <div class="grid">
-
-      <section class="card hero span-8">
-        <div class="hero-top">
-          <div>
-            <div class="hero-label" id="monthLabel">September 2026</div>
-            <div class="hero-value money" id="remainingHero">$0.00</div>
-            <div class="hero-sub">available after planned expenses</div>
-          </div>
-          <div class="month-actions">
-            <button class="btn soft" id="editMonthBtn">Edit Month</button>
-            <button class="btn primary" id="addMonthBtn">＋ Month</button>
-          </div>
-        </div>
-
-        <div class="goal">
-          <div class="goal-row">
-            <div>
-              <strong id="goalName">Move Day</strong>
-              <div class="muted" style="font-size:11px" id="goalMonth">November 2026</div>
-            </div>
-            <strong class="money" id="goalAmount">$0</strong>
-          </div>
-          <div class="progress">
-            <span id="goalProgress"></span>
-          </div>
-          <div class="muted" style="font-size:10px;margin-top:6px" id="goalText"></div>
-        </div>
-      </section>
-
-      <section class="card span-4 totals-card">
-        <div class="balance" id="balanceBox">
-          <div>
-            <div class="muted" style="font-size:11px">Final Balance</div>
-            <div class="big money" id="finalBalance">$0.00</div>
-          </div>
-          <div style="text-align:right">
-            <div class="muted" style="font-size:10px">Carryover</div>
-            <strong class="money" id="carryoverValue">$0.00</strong>
-          </div>
-        </div>
-
-        <div class="total-line">
-          <span>Income</span>
-          <strong class="money" id="totalIncome">$0.00</strong>
-        </div>
-
-        <div class="total-line">
-          <span>Extra income</span>
-          <strong class="money" id="totalExtra">$0.00</strong>
-        </div>
-
-        <div class="total-line">
-          <span>Planned expenses</span>
-          <strong class="money" id="totalExpenses">$0.00</strong>
-        </div>
-
-        <div class="total-line">
-          <span>Paid</span>
-          <strong class="money" id="totalPaid">$0.00</strong>
-        </div>
-
-        <div class="total-line">
-          <span>Outstanding</span>
-          <strong class="money" id="totalOutstanding">$0.00</strong>
-        </div>
-
-        <div class="paid-summary">
-          <div class="paid-summary-top">
-            <span style="font-size:12px">Payment progress</span>
-            <strong id="paidCount">0 / 0</strong>
-          </div>
-          <div class="progress" style="margin-top:8px">
-            <span id="paidProgress"></span>
-          </div>
-          <div style="font-size:10px;color:var(--muted);margin-top:6px" id="paidSummaryText"></div>
-        </div>
-      </section>
-
-      <section class="card span-8">
-        <div class="section-head">
-          <div>
-            <h2>Monthly Setup</h2>
-            <div class="muted" style="font-size:11px">Only this month changes when you edit these values</div>
-          </div>
-        </div>
-
-        <div class="income-grid">
-          <div class="field">
-            <label>BASE INCOME</label>
-            <input class="input money-input" id="incomeInput" type="number" step="0.01" inputmode="decimal">
-          </div>
-
-          <div class="field">
-            <label>EXTRA INCOME</label>
-            <input class="input money-input" id="extraIncomeInput" type="number" step="0.01" inputmode="decimal">
-          </div>
-        </div>
-      </section>
-
-      <section class="card span-4">
-        <div class="section-head">
-          <div>
-            <h2>Month Controls</h2>
-            <div class="muted" style="font-size:11px">Add or remove months anytime</div>
-          </div>
-        </div>
-
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <button class="btn primary" id="addMonthBtn2">＋ Add Month</button>
-          <button class="btn danger" id="removeMonthBtn">Remove Current Month</button>
-        </div>
-      </section>
-
-      <section class="card span-8">
-        <div class="section-head">
-          <div>
-            <h2>Expenses</h2>
-            <div class="muted" style="font-size:11px">Tap the circle when an expense is paid</div>
-          </div>
-          <button class="btn blue" id="addExpenseBtn">＋ Expense</button>
-        </div>
-
-        <div id="expenseContainer"></div>
-      </section>
-
-      <section class="card span-4">
-        <div class="section-head">
-          <div>
-            <h2>Month Summary</h2>
-            <div class="muted" style="font-size:11px">Paid vs unpaid</div>
-          </div>
-        </div>
-
-        <div id="monthSummary"></div>
-      </section>
-
-    </div>
-
-  </main>
-
-  <main id="overviewTab" style="display:none">
-    <div class="card">
-      <div class="section-head">
-        <div>
-          <h2>All Months</h2>
-          <div class="muted" style="font-size:11px">Your full plan from month to month</div>
-        </div>
-        <button class="btn primary" id="overviewAddMonth">＋ Month</button>
-      </div>
-      <div id="overviewContainer"></div>
-    </div>
-  </main>
-
-  <main id="checklistTab" style="display:none">
-    <div class="card">
-      <div class="section-head">
-        <div>
-          <h2>Move Checklist</h2>
-          <div class="muted" style="font-size:11px">Keep the plan moving forward</div>
-        </div>
-        <button class="btn blue" id="addChecklistBtn">＋ Add</button>
-      </div>
-
-      <div class="checklist" id="checklistContainer"></div>
-    </div>
-  </main>
-
-</div>
-
-<!-- ADD EXPENSE MODAL -->
-<div class="modal-backdrop" id="expenseModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h2>Add Expense</h2>
-      <button class="close" data-close="expenseModal">×</button>
-    </div>
-
-    <div class="form-grid">
-      <div class="field full">
-        <label>NAME</label>
-        <input class="input" id="newExpenseLabel" placeholder="e.g. Groceries">
-      </div>
-
-      <div class="field">
-        <label>AMOUNT</label>
-        <input class="input" id="newExpenseAmount" type="number" step="0.01" inputmode="decimal" placeholder="0.00">
-      </div>
-
-      <div class="field">
-        <label>CATEGORY</label>
-        <select class="select" id="newExpenseCategory"></select>
-      </div>
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn soft" data-close="expenseModal">Cancel</button>
-      <button class="btn primary" id="saveExpenseBtn">Add Expense</button>
-    </div>
-  </div>
-</div>
-
-<!-- MONTH MODAL -->
-<div class="modal-backdrop" id="monthModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h2 id="monthModalTitle">Add Month</h2>
-      <button class="close" data-close="monthModal">×</button>
-    </div>
-
-    <div class="form-grid">
-      <div class="field">
-        <label>MONTH</label>
-        <input class="input" id="newMonthInput" type="month">
-      </div>
-
-      <div class="field">
-        <label>STARTING INCOME</label>
-        <input class="input" id="newMonthIncome" type="number" step="0.01" inputmode="decimal">
-      </div>
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn soft" data-close="monthModal">Cancel</button>
-      <button class="btn primary" id="saveMonthBtn">Save Month</button>
-    </div>
-  </div>
-</div>
-
-<!-- EDIT MONTH MODAL -->
-<div class="modal-backdrop" id="editMonthModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h2>Edit Month</h2>
-      <button class="close" data-close="editMonthModal">×</button>
-    </div>
-
-    <div class="form-grid">
-      <div class="field">
-        <label>MONTH</label>
-        <input class="input" id="editMonthInput" type="month">
-      </div>
-
-      <div class="field">
-        <label>INCOME</label>
-        <input class="input" id="editMonthIncome" type="number" step="0.01" inputmode="decimal">
-      </div>
-
-      <div class="field">
-        <label>EXTRA INCOME</label>
-        <input class="input" id="editMonthExtra" type="number" step="0.01" inputmode="decimal">
-      </div>
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn soft" data-close="editMonthModal">Cancel</button>
-      <button class="btn primary" id="saveEditMonthBtn">Save Changes</button>
-    </div>
-  </div>
-</div>
-
-<!-- CHECKLIST MODAL -->
-<div class="modal-backdrop" id="checklistModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h2>Add Checklist Item</h2>
-      <button class="close" data-close="checklistModal">×</button>
-    </div>
-
-    <div class="field">
-      <label>ITEM</label>
-      <input class="input" id="newChecklistItem" placeholder="What needs to get done?">
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn soft" data-close="checklistModal">Cancel</button>
-      <button class="btn primary" id="saveChecklistBtn">Add Item</button>
-    </div>
-  </div>
-</div>
-
-<!-- SETTINGS MODAL -->
-<div class="modal-backdrop" id="settingsModal">
-  <div class="modal">
-    <div class="modal-head">
-      <h2>Settings</h2>
-      <button class="close" data-close="settingsModal">×</button>
-    </div>
-
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <button class="btn soft" id="resetChecklistBtn">Reset Checklist</button>
-      <button class="btn soft" id="resetBudgetBtn">Reset Budget Data</button>
-      <button class="btn danger" id="clearAllBtn">Clear Everything</button>
-    </div>
-
-    <div class="muted" style="font-size:10px;line-height:1.5;margin-top:15px">
-      Your data is stored locally on this device/browser.
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
+<div id="app"></div>
+<div id="toast"></div>
 
 <script>
-const SAVE_KEY = "godsplan_v3";
-const LEGACY_SAVE_KEYS = ["godsplan_v2"];
+const SAVE_KEY="godsplan_v3";
+const LEGACY_SAVE_KEYS=["godsplan_v2"];
+const APP_START="2026-09";
+const DEFAULT_INCOME=5390;
+const DEFAULT_GOAL_MONTH="2026-11";
+const DEFAULT_GOAL_NAME="Move Day";
 
-const APP_START = "2026-09";
-const DEFAULT_INCOME = 5390;
-const DEFAULT_GOAL_MONTH = "2026-11";
-const DEFAULT_GOAL_NAME = "Move Day";
+/*
+  Migration version.
 
-const MIGRATION_VERSION = 5;
+  Version 4 specifically cleans duplicate legacy expenses
+  that were created by earlier versions of the migration.
+*/
+const MIGRATION_VERSION=5;
 
-const DEFAULT_CATEGORIES = {
-  housing: "Housing",
-  utilities: "Utilities",
-  transportation: "Transportation",
-  food: "Food",
-  subscriptions: "Subscriptions",
-  personal: "Personal",
-  other: "Other",
-  investing: "Investing"
-};
-
-const DEFAULT_RECURRING = {
-  housing: [
-    ["Rent",525]
-  ],
-
-  utilities: [
-    ["T-Mobile",250]
-  ],
-
-  transportation: [
-    ["Tesla Insurance",198.78],
-    ["Tesla FSD",106.67],
-    ["Rim & Tire Protection",16],
-    ["Windshield Protection",16],
-    ["Tesla Supercharging",60]
-  ],
-
-  food: [],
-
-  subscriptions: [
-    ["Apple One",39.99],
-    ["Starz",11.99],
-    ["Paramount+",8],
-    ["Disney+",10],
-    ["Amazon Prime",7.53],
-    ["AppleCare+ (Daughter's Phone)",19.99]
-  ],
-
-  personal: [],
-
-  other: [],
-
-  investing: [
-    ["Stocks/ETFs",0],
-    ["Crypto",0],
-    ["Retirement",0],
-    ["Options/Trading",0]
-  ]
-};
-
-const SEPTEMBER_ONE_TIME = [
-  ["Car Repairs",1780,"other"],
-  ["September Rent (deferred, paid early)",525,"housing"],
-  ["Overdraft Payoff",728.67,"other"],
-  ["Debt Payment",1000,"other"],
-  ["Xbox Series S (promised to son)",538.74,"other"]
+const COLORS=[
+  "#0a84ff",
+  "#30d158",
+  "#ff9f0a",
+  "#ff453a",
+  "#bf5af2",
+  "#64d2ff",
+  "#5e5ce6",
+  "#ff375f",
+  "#ffd60a"
 ];
 
-const GOAL_EXPENSES = [
-  ["Move / Deposit",800],
-  ["Furniture",1200],
-  ["Moving Truck",1200],
-  ["Utilities / Setup",500],
-  ["Household",300],
-  ["Emergency Buffer",400],
-  ["Misc Move Costs",2100]
-];
+/* -------------------------------------------------
+   DEFAULT CATEGORIES
+------------------------------------------------- */
 
-const DEFAULT_CHECKLIST = [
-  "Open dedicated savings account",
-  "Set up auto-transfer on the 1st",
-  "Rotate streaming — pick one",
-  "Get 3 moving truck quotes",
-  "Find free supercharger spots",
-  "Browse Wayfair / FB Marketplace",
-  "Confirm townhouse lease signed"
-];
-
-let S = {
-  months: [],
-  monthBudgets: {},
-  monthOverrides: {},
-  paidExpenses: {},
-  checklist: [],
-  goal: {
-    month: DEFAULT_GOAL_MONTH,
-    name: DEFAULT_GOAL_NAME
+const DEFAULT_CATEGORIES={
+  housing:{
+    label:"Housing",
+    color:"#0a84ff",
+    icon:"🏠",
+    items:[
+      {
+        id:"legacy_rent",
+        label:"Rent",
+        amount:525
+      }
+    ]
   },
-  miscBudget: 1000,
-  migrationVersion: MIGRATION_VERSION
+
+  utilities:{
+    label:"Utilities",
+    color:"#64d2ff",
+    icon:"💡",
+    items:[
+      {
+        id:"legacy_tmobile",
+        label:"T-Mobile",
+        amount:250
+      }
+    ]
+  },
+
+  transportation:{
+    label:"Transportation",
+    color:"#ff9f0a",
+    icon:"🚗",
+    items:[
+      {
+        id:"legacy_tesla_ins",
+        label:"Tesla Insurance",
+        amount:198.78
+      },
+      {
+        id:"legacy_tesla_fsd",
+        label:"Tesla FSD",
+        amount:106.67
+      },
+      {
+        id:"legacy_tesla_rim",
+        label:"Rim & Tire Protection",
+        amount:16
+      },
+      {
+        id:"legacy_tesla_wind",
+        label:"Windshield Protection",
+        amount:16
+      },
+      {
+        id:"legacy_supercharging",
+        label:"Tesla Supercharging",
+        amount:60
+      }
+    ]
+  },
+
+  food:{
+    label:"Food",
+    color:"#30d158",
+    icon:"🍴",
+    items:[]
+  },
+
+  subscriptions:{
+    label:"Subscriptions",
+    color:"#bf5af2",
+    icon:"▶️",
+    items:[
+      {
+        id:"legacy_apple_one",
+        label:"Apple One",
+        amount:39.99
+      },
+      {
+        id:"legacy_starz",
+        label:"Starz",
+        amount:11.99
+      },
+      {
+        id:"legacy_paramount",
+        label:"Paramount+",
+        amount:8
+      },
+      {
+        id:"legacy_disney",
+        label:"Disney+",
+        amount:10
+      },
+      {
+        id:"legacy_prime",
+        label:"Amazon Prime",
+        amount:7.53
+      },
+      {
+        id:"legacy_applecare",
+        label:"AppleCare+ (Daughter's Phone)",
+        amount:19.99
+      }
+    ]
+  },
+
+  personal:{
+    label:"Personal",
+    color:"#5e5ce6",
+    icon:"✨",
+    items:[]
+  },
+
+  other:{
+    label:"Other",
+    color:"#ff375f",
+    icon:"📦",
+    items:[]
+  },
+
+  investing:{
+    label:"Investing",
+    color:"#30d158",
+    icon:"📈",
+    items:[
+      {
+        id:"legacy_stocks",
+        label:"Stocks / ETFs",
+        amount:0
+      },
+      {
+        id:"legacy_crypto",
+        label:"Crypto",
+        amount:0
+      },
+      {
+        id:"legacy_retirement",
+        label:"Retirement",
+        amount:0
+      },
+      {
+        id:"legacy_trading",
+        label:"Options / Trading",
+        amount:0
+      }
+    ]
+  }
 };
 
-let currentMonth = APP_START;
-let activeTab = "budget";
+const DEFAULT_GOALS=[
+  {
+    id:"bedroom",
+    label:"Bedroom Furniture (Master)",
+    amount:800,
+    estimate:""
+  },
+  {
+    id:"kidsrooms",
+    label:"Kids Rooms (2–3 beds)",
+    amount:1200,
+    estimate:""
+  },
+  {
+    id:"livingroom",
+    label:"Living Room",
+    amount:1200,
+    estimate:""
+  },
+  {
+    id:"dining",
+    label:"Dining Table & Chairs",
+    amount:500,
+    estimate:""
+  },
+  {
+    id:"movingtruck",
+    label:"Moving Truck",
+    amount:300,
+    estimate:""
+  },
+  {
+    id:"miscgoal",
+    label:"Misc / Lamps / Rugs",
+    amount:400,
+    estimate:""
+  },
+  {
+    id:"buffer",
+    label:"Living Buffer",
+    amount:2100,
+    estimate:""
+  }
+];
 
-function uid(prefix="id"){
-  return prefix + "_" + Math.random().toString(36).slice(2,10) + "_" + Date.now().toString(36);
+const DEFAULT_CHECKLIST=[
+  {
+    id:"check_savings",
+    label:"Open dedicated savings account",
+    done:false
+  },
+  {
+    id:"check_transfer",
+    label:"Set up auto-transfer on the 1st",
+    done:false
+  },
+  {
+    id:"check_streaming",
+    label:"Rotate streaming — pick one",
+    done:false
+  },
+  {
+    id:"check_truck",
+    label:"Get 3 moving truck quotes",
+    done:false
+  },
+  {
+    id:"check_charge",
+    label:"Find free supercharger spots",
+    done:false
+  },
+  {
+    id:"check_wayfair",
+    label:"Browse Wayfair / FB Marketplace",
+    done:false
+  },
+  {
+    id:"check_lease",
+    label:"Confirm townhouse lease signed",
+    done:false
+  }
+];
+
+const INITIAL_MONTHS=[
+  "2026-09",
+  "2026-10",
+  "2026-11",
+  "2026-12",
+  "2027-01"
+];
+
+/* -------------------------------------------------
+   KNOWN LEGACY RECURRING EXPENSES
+-------------------------------------------------
+
+   These are the only recurring expenses that the
+   migration is allowed to automatically deduplicate.
+
+   This prevents legitimate custom expenses from
+   accidentally being deleted.
+------------------------------------------------- */
+
+const LEGACY_RECURRING=[
+  {
+    category:"housing",
+    id:"legacy_rent",
+    label:"Rent",
+    amount:525
+  },
+  {
+    category:"utilities",
+    id:"legacy_tmobile",
+    label:"T-Mobile",
+    amount:250
+  },
+  {
+    category:"transportation",
+    id:"legacy_tesla_ins",
+    label:"Tesla Insurance",
+    amount:198.78
+  },
+  {
+    category:"transportation",
+    id:"legacy_tesla_fsd",
+    label:"Tesla FSD",
+    amount:106.67
+  },
+  {
+    category:"transportation",
+    id:"legacy_tesla_rim",
+    label:"Rim & Tire Protection",
+    amount:16
+  },
+  {
+    category:"transportation",
+    id:"legacy_tesla_wind",
+    label:"Windshield Protection",
+    amount:16
+  },
+  {
+    category:"transportation",
+    id:"legacy_supercharging",
+    label:"Tesla Supercharging",
+    amount:60
+  },
+  {
+    category:"subscriptions",
+    id:"legacy_apple_one",
+    label:"Apple One",
+    amount:39.99
+  },
+  {
+    category:"subscriptions",
+    id:"legacy_starz",
+    label:"Starz",
+    amount:11.99
+  },
+  {
+    category:"subscriptions",
+    id:"legacy_paramount",
+    label:"Paramount+",
+    amount:8
+  },
+  {
+    category:"subscriptions",
+    id:"legacy_disney",
+    label:"Disney+",
+    amount:10
+  },
+  {
+    category:"subscriptions",
+    id:"legacy_prime",
+    label:"Amazon Prime",
+    amount:7.53
+  },
+  {
+    category:"subscriptions",
+    id:"legacy_applecare",
+    label:"AppleCare+ (Daughter's Phone)",
+    amount:19.99
+  }
+];
+
+/* September one-time expenses from original setup */
+
+const LEGACY_ONE_TIME=[
+  {
+    id:"ot_car_repairs",
+    label:"Car Repairs",
+    amount:1780,
+    month:"2026-09"
+  },
+  {
+    id:"ot_sep_rent",
+    label:"September Rent (deferred, paid early)",
+    amount:525,
+    month:"2026-09"
+  },
+  {
+    id:"ot_overdraft",
+    label:"Overdraft Payoff",
+    amount:728.67,
+    month:"2026-09"
+  },
+  {
+    id:"ot_debt",
+    label:"Debt Payment",
+    amount:1000,
+    month:"2026-09"
+  },
+  {
+    id:"ot_xbox",
+    label:"Xbox Series S (promised to son)",
+    amount:538.74,
+    month:"2026-09"
+  }
+];
+
+/* -------------------------------------------------
+   STATE
+------------------------------------------------- */
+
+const DEFAULT_STATE={
+  tab:"overview",
+
+  activeMonth:"2026-09",
+
+  goalMonth:DEFAULT_GOAL_MONTH,
+
+  goalLabel:DEFAULT_GOAL_NAME,
+
+  income:DEFAULT_INCOME,
+
+  miscBudget:1000,
+
+  furnitureGoal:6500,
+
+  categories:clone(DEFAULT_CATEGORIES),
+
+  monthBudgets:{},
+
+  monthOverrides:{
+    "2026-09":{
+      extraIncome:[
+        {
+          id:"ei_deal_2026_09",
+          label:"Deal / Contract Payment",
+          amount:4500
+        }
+      ]
+    }
+  },
+
+  oneTimeExpenses:clone(LEGACY_ONE_TIME),
+
+  goalExpenses:clone(DEFAULT_GOALS),
+
+  checklist:clone(DEFAULT_CHECKLIST),
+
+  paidExpenses:{},
+
+  meta:{
+    seededLegacyData:true,
+    migrationVersion:MIGRATION_VERSION
+  }
+};
+
+let S=null;
+let sheet=null;
+let fabOpen=false;
+let saveTimer=null;
+
+/* -------------------------------------------------
+   HELPERS
+------------------------------------------------- */
+
+function clone(x){
+  return JSON.parse(JSON.stringify(x));
 }
 
-function money(n){
-  n = Number(n) || 0;
-  return n.toLocaleString("en-US",{
+function uid(){
+  return "id_"+Math.random().toString(36).slice(2)+Date.now().toString(36);
+}
+
+function n(v){
+  const x=parseFloat(v);
+  return Number.isFinite(x)?x:0;
+}
+
+function money(v){
+  return n(v).toLocaleString("en-US",{
     style:"currency",
     currency:"USD",
     minimumFractionDigits:2
   });
 }
 
-function money0(n){
-  n = Number(n) || 0;
-  return n.toLocaleString("en-US",{
-    style:"currency",
-    currency:"USD",
-    maximumFractionDigits:0
-  });
+function esc(v){
+  return String(v??"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
-function monthDate(ym){
-  const [y,m] = ym.split("-").map(Number);
-  return new Date(y,m-1,1);
+function monthKey(date){
+  return date.getFullYear()+"-"+String(date.getMonth()+1).padStart(2,"0");
+}
+
+function shiftMonth(ym,delta){
+  const [y,m]=ym.split("-").map(Number);
+  return monthKey(new Date(y,m-1+delta,1));
 }
 
 function monthLabel(ym){
-  return monthDate(ym).toLocaleDateString("en-US",{
+  const [y,m]=ym.split("-").map(Number);
+  return new Date(y,m-1,1).toLocaleDateString("en-US",{
     month:"long",
     year:"numeric"
   });
 }
 
-function monthShort(ym){
-  return monthDate(ym).toLocaleDateString("en-US",{
+function shortMonth(ym){
+  const [y,m]=ym.split("-").map(Number);
+  return new Date(y,m-1,1).toLocaleDateString("en-US",{
     month:"short",
     year:"numeric"
   });
 }
 
-function sortMonths(a,b){
-  return a.localeCompare(b);
-}
+function showToast(text){
+  const el=document.getElementById("toast");
 
-function allMonthsRaw(){
-  const set = new Set();
+  el.textContent=text;
 
-  (S.months || []).forEach(m=>set.add(m));
-  Object.keys(S.monthBudgets || {}).forEach(m=>set.add(m));
-  Object.keys(S.monthOverrides || {}).forEach(m=>set.add(m));
-
-  if(!set.size)set.add(APP_START);
-
-  return [...set].sort(sortMonths);
-}
-
-function defaultBudget(){
-  const out = {};
-
-  Object.keys(DEFAULT_RECURRING).forEach(key=>{
-    out[key] = DEFAULT_RECURRING[key].map(([label,amount])=>({
-      id:uid("exp"),
-      label,
-      amount:Number(amount)||0,
-      recurring:true
-    }));
+  Object.assign(el.style,{
+    display:"block",
+    position:"fixed",
+    left:"50%",
+    bottom:"calc(94px + env(safe-area-inset-bottom))",
+    transform:"translateX(-50%)",
+    background:"rgba(50,50,52,.97)",
+    color:"#fff",
+    padding:"9px 16px",
+    borderRadius:"99px",
+    fontSize:"14px",
+    fontWeight:"600",
+    zIndex:"2000"
   });
 
-  return out;
+  clearTimeout(showToast.timer);
+
+  showToast.timer=setTimeout(()=>{
+    el.style.display="none";
+  },1400);
 }
 
-function normalizeExpense(item){
-  if(!item)return null;
-
-  if(typeof item === "object" && !Array.isArray(item)){
-    return {
-      id:item.id || uid("exp"),
-      label:String(item.label ?? item.name ?? "Expense"),
-      amount:Number(item.amount ?? item.value ?? 0)||0,
-      recurring:!!item.recurring
-    };
-  }
-
-  if(Array.isArray(item)){
-    return {
-      id:uid("exp"),
-      label:String(item[0] ?? "Expense"),
-      amount:Number(item[1] ?? 0)||0,
-      recurring:!!item[2]
-    };
-  }
-
-  return null;
-}
+/* -------------------------------------------------
+   MONTH ARCHITECTURE
+------------------------------------------------- */
 
 function normalizeBudget(budget){
-  const defaults = defaultBudget();
-  const result = {};
+
+  const defaults=clone(DEFAULT_CATEGORIES);
+
+  const result={};
 
   Object.keys(defaults).forEach(key=>{
-    const source = budget?.[key];
 
-    if(Array.isArray(source)){
-      result[key] = source.map(normalizeExpense).filter(Boolean);
-    }else{
-      result[key] = defaults[key];
-    }
+    const source=budget?.[key]||defaults[key];
+
+    result[key]={
+      label:source.label||defaults[key].label,
+      color:source.color||defaults[key].color,
+      icon:source.icon||defaults[key].icon,
+
+      items:Array.isArray(source.items)
+        ?source.items.map(item=>({
+            id:item.id||uid(),
+            label:item.label||"Item",
+            amount:n(item.amount)
+          }))
+        :[]
+    };
   });
 
-  Object.keys(budget || {}).forEach(key=>{
-    if(!(key in result)){
-      const value = budget[key];
+  /*
+    Preserve custom categories.
+  */
 
-      if(Array.isArray(value)){
-        result[key] = value.map(normalizeExpense).filter(Boolean);
-      }
-    }
+  Object.keys(budget||{}).forEach(key=>{
+
+    if(result[key])return;
+
+    const source=budget[key];
+
+    result[key]={
+      label:source.label||key,
+      color:source.color||"#0a84ff",
+      icon:source.icon||"📁",
+
+      items:Array.isArray(source.items)
+        ?source.items.map(item=>({
+            id:item.id||uid(),
+            label:item.label||"Item",
+            amount:n(item.amount)
+          }))
+        :[]
+    };
   });
 
   return result;
 }
 
+function ensureMonth(ym){
+
+  if(!S.monthBudgets){
+    S.monthBudgets={};
+  }
+
+  if(S.monthBudgets[ym]){
+    return;
+  }
+
+  const existing=allMonthsRaw()
+    .filter(m=>m<ym)
+    .sort();
+
+  const previous=
+    existing.length
+      ?existing[existing.length-1]
+      :null;
+
+  if(previous && S.monthBudgets[previous]){
+
+    /*
+      Copy previous budget ONLY when the new
+      month is first created.
+    */
+
+    S.monthBudgets[ym]=
+      clone(S.monthBudgets[previous]);
+
+  }else{
+
+    S.monthBudgets[ym]=
+      normalizeBudget(S.categories);
+  }
+}
+
+function ensureAllMonths(){
+
+  const months=allMonthsRaw().sort();
+
+  let previous=null;
+
+  months.forEach(ym=>{
+
+    if(!S.monthBudgets[ym]){
+
+      if(previous && S.monthBudgets[previous]){
+
+        S.monthBudgets[ym]=
+          clone(S.monthBudgets[previous]);
+
+      }else{
+
+        S.monthBudgets[ym]=
+          normalizeBudget(S.categories);
+      }
+    }
+
+    previous=ym;
+  });
+}
+
+function allMonthsRaw(){
+
+  const set=new Set(INITIAL_MONTHS);
+
+  Object.keys(S?.monthBudgets||{})
+    .forEach(m=>set.add(m));
+
+  Object.keys(S?.monthOverrides||{})
+    .forEach(m=>set.add(m));
+
+  (S?.oneTimeExpenses||[])
+    .forEach(e=>{
+      if(e.month)set.add(e.month);
+    });
+
+  if(S?.goalMonth){
+    set.add(S.goalMonth);
+  }
+
+  return [...set];
+}
+
+function allMonths(){
+  return allMonthsRaw().sort();
+}
+
+function categoryBudget(ym){
+  ensureMonth(ym);
+  return S.monthBudgets[ym];
+}
+
+/* -------------------------------------------------
+   CALCULATIONS
+------------------------------------------------- */
+
+function categoryTotal(ym,category){
+
+  return (category?.items||[])
+    .reduce(
+      (sum,item)=>sum+n(item.amount),
+      0
+    );
+}
+
+function recurringSpending(ym){
+
+  const budget=categoryBudget(ym);
+
+  return Object.entries(budget)
+    .filter(([key])=>key!=="investing")
+    .reduce(
+      (sum,[,category])=>
+        sum+categoryTotal(ym,category),
+      0
+    );
+}
+
+function investmentSpending(ym){
+
+  return categoryTotal(
+    ym,
+    categoryBudget(ym).investing
+  );
+}
+
+function getMiscBudget(ym){
+
+  const ov=S.monthOverrides?.[ym];
+
+  if(
+    ov &&
+    Object.prototype.hasOwnProperty.call(
+      ov,
+      "miscBudget"
+    )
+  ){
+    return n(ov.miscBudget);
+  }
+
+  return n(S.miscBudget);
+}
+
+function oneTimeTotal(ym){
+
+  return (S.oneTimeExpenses||[])
+    .filter(e=>e.month===ym)
+    .reduce(
+      (sum,e)=>sum+n(e.amount),
+      0
+    );
+}
+
+function baseIncome(ym){
+
+  const ov=S.monthOverrides?.[ym];
+
+  if(
+    ov &&
+    Object.prototype.hasOwnProperty.call(
+      ov,
+      "income"
+    )
+  ){
+    return n(ov.income);
+  }
+
+  return n(S.income);
+}
+
+function extraIncome(ym){
+
+  return (
+    S.monthOverrides?.[ym]?.extraIncome||[]
+  ).reduce(
+    (sum,e)=>sum+n(e.amount),
+    0
+  );
+}
+
+function totalIncome(ym){
+  return baseIncome(ym)+extraIncome(ym);
+}
+
+function totalSpending(ym){
+
+  return recurringSpending(ym)
+    +getMiscBudget(ym)
+    +investmentSpending(ym)
+    +oneTimeTotal(ym);
+}
+
+function monthlyNet(ym){
+  return totalIncome(ym)-totalSpending(ym);
+}
+
+function startingBalance(ym){
+
+  const months=allMonths();
+  const index=months.indexOf(ym);
+
+  if(index<=0)return 0;
+
+  return endingBalance(months[index-1]);
+}
+
+function endingBalance(ym){
+
+  return startingBalance(ym)+monthlyNet(ym);
+}
+
+/* -------------------------------------------------
+   GOALS
+------------------------------------------------- */
+
+function goalTotal(){
+
+  return (S.goalExpenses||[])
+    .reduce(
+      (sum,e)=>sum+n(e.amount),
+      0
+    );
+}
+
+function projectedGoalBalance(){
+
+  let balance=0;
+
+  allMonths().forEach(ym=>{
+
+    if(ym<=S.goalMonth){
+
+      balance=endingBalance(ym);
+    }
+  });
+
+  return Math.max(0,balance);
+}
+
+function goalPercent(){
+
+  const target=goalTotal();
+
+  if(!target)return 0;
+
+  return Math.min(
+    100,
+    Math.max(
+      0,
+      Math.round(
+        projectedGoalBalance()/target*100
+      )
+    )
+  );
+}
+
+/* -------------------------------------------------
+   PAID TRACKING
+------------------------------------------------- */
+
+function paidKey(ym,type,id){
+  return ym+"__"+type+"__"+id;
+}
+
+function isPaid(ym,type,id){
+  return !!S.paidExpenses?.[paidKey(ym,type,id)];
+}
+
+function togglePaid(ym,type,id){
+
+  if(!S.paidExpenses){
+    S.paidExpenses={};
+  }
+
+  const key=paidKey(ym,type,id);
+
+  S.paidExpenses[key]=
+    !S.paidExpenses[key];
+
+  save();
+  render();
+}
+
+function getMonthPaymentStats(ym){
+
+  let total=0;
+  let paid=0;
+  let count=0;
+  let paidCount=0;
+
+  const budget=categoryBudget(ym);
+
+  Object.entries(budget).forEach(([key,c])=>{
+
+    if(key==="investing")return;
+
+    (c.items||[]).forEach(item=>{
+
+      const amount=n(item.amount);
+
+      if(amount<=0)return;
+
+      total+=amount;
+      count++;
+
+      if(isPaid(ym,"recurring",key+"__"+item.id)){
+
+        paid+=amount;
+        paidCount++;
+      }
+    });
+  });
+
+  const misc=getMiscBudget(ym);
+
+  if(misc>0){
+
+    total+=misc;
+    count++;
+
+    if(isPaid(ym,"misc","misc")){
+      paid+=misc;
+      paidCount++;
+    }
+  }
+
+  (S.oneTimeExpenses||[])
+    .filter(e=>e.month===ym)
+    .forEach(e=>{
+
+      const amount=n(e.amount);
+
+      if(amount<=0)return;
+
+      total+=amount;
+      count++;
+
+      if(isPaid(ym,"one",e.id)){
+
+        paid+=amount;
+        paidCount++;
+      }
+    });
+
+  const pct=
+    total>0
+      ?Math.round(paid/total*100)
+      :0;
+
+  return {
+    total,
+    paid,
+    outstanding:Math.max(0,total-paid),
+    count,
+    paidCount,
+    unpaidCount:Math.max(0,count-paidCount),
+    pct
+  };
+}
+
+/* -------------------------------------------------
+   STORAGE
+------------------------------------------------- */
+
+function findStoredState(){
+
+  try{
+
+    const current=
+      localStorage.getItem(SAVE_KEY);
+
+    if(current){
+      return JSON.parse(current);
+    }
+
+    for(const key of LEGACY_SAVE_KEYS){
+
+      const raw=
+        localStorage.getItem(key);
+
+      if(raw){
+
+        return JSON.parse(raw);
+      }
+    }
+
+  }catch(err){
+
+    console.error(
+      "Storage read error",
+      err
+    );
+  }
+
+  return null;
+}
+
+/* -------------------------------------------------
+   MIGRATION HELPERS
+------------------------------------------------- */
+
 /*
-  IMPORTANT DUPLICATION FIX
-
-  Older versions used these legacy buckets:
-    tesla
-    phone
-    streaming
-
-  Those were migrated into the newer canonical categories but the
-  old buckets were accidentally left behind.
-
-  normalizeBudget() intentionally preserves unknown/custom categories,
-  so those old buckets continued rendering and made the expenses
-  appear twice.
-
-  This cleanup permanently removes those obsolete buckets from every
-  stored month while leaving the canonical categories intact.
+  Normalize a label so old versions that changed
+  capitalization/spacing can still be recognized.
 */
+function cleanLabel(value){
+
+  return String(value??"")
+    .trim()
+    .replace(/\s+/g," ")
+    .toLowerCase();
+}
+
+function sameExpense(item,label,amount){
+
+  return (
+    cleanLabel(item?.label)===cleanLabel(label) &&
+    Math.abs(n(item?.amount)-n(amount))<0.005
+  );
+}
+
+/*
+  Find whether a paid record exists for ANY ID.
+*/
+function transferPaidStatus(
+  ym,
+  category,
+  oldId,
+  newId
+){
+
+  if(!S.paidExpenses){
+    S.paidExpenses={};
+  }
+
+  const oldKey=
+    paidKey(
+      ym,
+      "recurring",
+      category+"__"+oldId
+    );
+
+  const newKey=
+    paidKey(
+      ym,
+      "recurring",
+      category+"__"+newId
+    );
+
+  if(S.paidExpenses[oldKey]){
+
+    S.paidExpenses[newKey]=true;
+  }
+
+  /*
+    Delete the old paid record after transferring it.
+  */
+
+  if(oldId!==newId){
+    delete S.paidExpenses[oldKey];
+  }
+}
+
+/*
+  Deduplicate ONE known legacy recurring expense
+  inside a specific month.
+
+  Rules:
+  1. Canonical ID wins.
+  2. Exact known signature duplicates are removed.
+  3. If any duplicate was paid, canonical becomes paid.
+  4. Custom unrelated expenses are untouched.
+*/
+function cleanupLegacyRecurringItem(
+  ym,
+  budget,
+  legacy
+){
+
+  if(!budget[legacy.category]){
+    budget[legacy.category]=
+      clone(DEFAULT_CATEGORIES[legacy.category]);
+  }
+
+  const category=
+    budget[legacy.category];
+
+  if(!Array.isArray(category.items)){
+    category.items=[];
+  }
+
+  const matches=
+    category.items.filter(item=>
+      sameExpense(
+        item,
+        legacy.label,
+        legacy.amount
+      ) ||
+      item.id===legacy.id
+    );
+
+  let canonical=
+    matches.find(
+      item=>item.id===legacy.id
+    );
+
+  /*
+    If no canonical ID exists but an old duplicate does,
+    promote the first exact match to canonical.
+  */
+
+  if(!canonical && matches.length){
+
+    canonical=matches[0];
+
+    const oldId=canonical.id;
+
+    canonical.id=legacy.id;
+
+    transferPaidStatus(
+      ym,
+      legacy.category,
+      oldId,
+      legacy.id
+    );
+  }
+
+  /*
+    If nothing exists, create the canonical expense.
+  */
+
+  if(!canonical){
+
+    canonical={
+      id:legacy.id,
+      label:legacy.label,
+      amount:legacy.amount
+    };
+
+    category.items.push(canonical);
+
+    return;
+  }
+
+  /*
+    Canonical label and amount are restored.
+    This prevents old migrated versions from leaving
+    slightly different labels or amounts behind.
+  */
+
+  canonical.id=legacy.id;
+  canonical.label=legacy.label;
+  canonical.amount=legacy.amount;
+
+  /*
+    Preserve paid status from every duplicate before
+    removing it.
+  */
+
+  category.items.forEach(item=>{
+
+    if(item===canonical)return;
+
+    if(
+      sameExpense(
+        item,
+        legacy.label,
+        legacy.amount
+      )
+    ){
+
+      const oldId=item.id;
+
+      transferPaidStatus(
+        ym,
+        legacy.category,
+        oldId,
+        legacy.id
+      );
+    }
+  });
+
+  /*
+    Keep exactly one canonical copy.
+  */
+
+  category.items=
+    category.items.filter(item=>
+      item===canonical ||
+      !sameExpense(
+        item,
+        legacy.label,
+        legacy.amount
+      )
+    );
+}
+
+/*
+  This maps old v2 category structures to the
+  new canonical categories.
+
+  Examples:
+    old tesla -> transportation
+    old phone -> utilities/subscriptions
+    old streaming -> subscriptions
+*/
+function migrateOldCategoryItems(
+  sep,
+  oldKey,
+  targetRules
+){
+
+  const old=sep?.[oldKey];
+
+  if(!old || !Array.isArray(old.items)){
+    return;
+  }
+
+  old.items.forEach(item=>{
+
+    const label=String(item.label||"").trim();
+    const amount=n(item.amount);
+
+    /*
+      First try an exact known legacy match.
+    */
+
+    const known=
+      LEGACY_RECURRING.find(rule=>
+        targetRules.includes(rule.category) &&
+        sameExpense(
+          item,
+          rule.label,
+          rule.amount
+        )
+      );
+
+    if(known){
+
+      const target=
+        sep[known.category] ||
+        (
+          sep[known.category]=
+            clone(DEFAULT_CATEGORIES[known.category])
+        );
+
+      if(!Array.isArray(target.items)){
+        target.items=[];
+      }
+
+      /*
+        Move paid state from the old ID to the canonical ID.
+      */
+
+      transferPaidStatus(
+        "2026-09",
+        known.category,
+        item.id,
+        known.id
+      );
+
+      /*
+        Add only if not already present.
+      */
+
+      const existing=
+        target.items.find(x=>
+          x.id===known.id
+        );
+
+      if(!existing){
+
+        target.items.push({
+          id:known.id,
+          label:known.label,
+          amount:known.amount
+        });
+      }
+
+      return;
+    }
+
+    /*
+      Unknown old v2 items are preserved rather than deleted.
+    */
+
+    const targetCategory=
+      targetRules[0]||"other";
+
+    const target=
+      sep[targetCategory] ||
+      (
+        sep[targetCategory]=
+          clone(DEFAULT_CATEGORIES[targetCategory])
+      );
+
+    target.items=
+      Array.isArray(target.items)
+        ?target.items
+        :[];
+
+    const exists=
+      target.items.some(x=>
+        cleanLabel(x.label)===cleanLabel(label) &&
+        Math.abs(n(x.amount)-amount)<0.005
+      );
+
+    if(!exists){
+
+      target.items.push({
+        id:"migrated_"+oldKey+"_"+(item.id||uid()),
+        label,
+        amount
+      });
+    }
+  });
+}
+
+/* -------------------------------------------------
+   REMOVE OBSOLETE LEGACY CATEGORY BUCKETS
+
+   Older versions migrated Tesla / Phone / Streaming into the
+   newer canonical categories but left the old buckets behind.
+   Because custom categories are preserved, those old buckets
+   continued rendering and made the same expenses appear twice.
+
+   The contents have already been migrated above, so these legacy
+   containers can now be safely removed.
+------------------------------------------------- */
+
 function cleanupObsoleteLegacyCategories(){
 
   if(!S.monthBudgets){
@@ -1357,1394 +2065,4376 @@ function cleanupObsoleteLegacyCategories(){
   });
 }
 
-function migrateOldCategoryItems(budget, oldKey, targetRules){
-
-  if(!budget || !budget[oldKey])return;
-
-  const items = Array.isArray(budget[oldKey])
-    ? budget[oldKey]
-    : [];
-
-  if(!items.length)return;
-
-  Object.entries(targetRules).forEach(([target,matchers])=>{
-
-    const matches = items.filter(item=>{
-      const label = String(item?.label || "").toLowerCase();
-
-      return matchers.some(m=>label.includes(m));
-    });
-
-    if(!matches.length)return;
-
-    if(!Array.isArray(budget[target])){
-      budget[target]=[];
-    }
-
-    matches.forEach(item=>{
-      const exists = budget[target].some(existing =>
-        String(existing.label).toLowerCase() === String(item.label).toLowerCase() &&
-        Number(existing.amount) === Number(item.amount)
-      );
-
-      if(!exists){
-        budget[target].push({
-          ...item,
-          id:item.id || uid("exp")
-        });
-      }
-    });
-  });
-}
+/* -------------------------------------------------
+   DUPLICATE CLEANUP
+------------------------------------------------- */
 
 function cleanupRecurringDuplicates(){
 
+  if(!S.monthBudgets){
+    S.monthBudgets={};
+  }
+
+  /*
+    Clean all months that currently exist.
+
+    This is important because duplicates may already have
+    been created in October, November, December, etc.
+  */
+
   allMonthsRaw().forEach(ym=>{
 
-    const budget=S.monthBudgets[ym];
+    const budget=
+      S.monthBudgets[ym];
 
     if(!budget)return;
 
-    Object.keys(budget).forEach(category=>{
+    /*
+      First normalize the month without destroying
+      existing custom items.
+    */
 
-      if(!Array.isArray(budget[category]))return;
+    const normalized=
+      normalizeBudget(budget);
 
-      const seen=new Set();
-      const clean=[];
+    /*
+      Now clean every known legacy expense.
+    */
 
-      budget[category].forEach(item=>{
+    LEGACY_RECURRING.forEach(legacy=>{
 
-        const normalizedLabel=String(item?.label || "")
-          .trim()
-          .toLowerCase();
-
-        const amount=Number(item?.amount || 0);
-
-        const signature=
-          normalizedLabel + "||" + amount;
-
-        /*
-          Only exact duplicate recurring/default-style entries are
-          removed here. Different labels or different amounts remain.
-        */
-        if(item?.recurring && seen.has(signature)){
-          return;
-        }
-
-        if(item?.recurring){
-          seen.add(signature);
-        }
-
-        clean.push(item);
-      });
-
-      budget[category]=clean;
+      cleanupLegacyRecurringItem(
+        ym,
+        normalized,
+        legacy
+      );
     });
+
+    S.monthBudgets[ym]=normalized;
   });
 }
 
-function migrateState(){
+/*
+  Clean duplicate one-time expenses.
 
-  let raw=null;
+  Only known September one-time expenses are
+  automatically deduplicated.
+*/
+function cleanupOneTimeDuplicates(){
 
-  try{
-    raw=localStorage.getItem(SAVE_KEY);
-
-    if(!raw){
-      for(const key of LEGACY_SAVE_KEYS){
-        const legacy=localStorage.getItem(key);
-
-        if(legacy){
-          raw=legacy;
-          break;
-        }
-      }
-    }
-  }catch(e){
-    raw=null;
+  if(!Array.isArray(S.oneTimeExpenses)){
+    S.oneTimeExpenses=[];
   }
 
-  if(raw){
-    try{
-      const state=JSON.parse(raw);
+  const cleaned=[];
+  const canonicalBySignature={};
 
-      S={
-        ...S,
-        ...state
+  S.oneTimeExpenses.forEach(item=>{
+
+    const known=
+      LEGACY_ONE_TIME.find(rule=>
+        rule.month===item.month &&
+        sameExpense(
+          item,
+          rule.label,
+          rule.amount
+        )
+      );
+
+    if(!known){
+
+      /*
+        Unknown/custom one-time expense.
+        Preserve exactly as entered.
+      */
+
+      cleaned.push(item);
+      return;
+    }
+
+    const signature=
+      known.month+
+      "__"+
+      cleanLabel(known.label)+
+      "__"+
+      n(known.amount).toFixed(2);
+
+    const existing=
+      canonicalBySignature[signature];
+
+    if(!existing){
+
+      /*
+        Promote the first matching expense to canonical ID.
+      */
+
+      const oldId=item.id;
+
+      item.id=known.id;
+      item.label=known.label;
+      item.amount=known.amount;
+      item.month=known.month;
+
+      canonicalBySignature[signature]=item;
+      cleaned.push(item);
+
+      /*
+        Transfer paid status if the old copy had one.
+      */
+
+      if(
+        oldId &&
+        oldId!==known.id &&
+        S.paidExpenses?.[
+          paidKey(
+            known.month,
+            "one",
+            oldId
+          )
+        ]
+      ){
+
+        S.paidExpenses[
+          paidKey(
+            known.month,
+            "one",
+            known.id
+          )
+        ]=true;
+
+        delete S.paidExpenses[
+          paidKey(
+            known.month,
+            "one",
+            oldId
+          )
+        ];
+      }
+
+      return;
+    }
+
+    /*
+      Duplicate found.
+
+      If duplicate is paid, transfer that status
+      to the canonical item.
+    */
+
+    if(
+      S.paidExpenses?.[
+        paidKey(
+          item.month,
+          "one",
+          item.id
+        )
+      ]
+    ){
+
+      S.paidExpenses[
+        paidKey(
+          known.month,
+          "one",
+          known.id
+        )
+      ]=true;
+    }
+
+    delete S.paidExpenses[
+      paidKey(
+        item.month,
+        "one",
+        item.id
+      )
+    ];
+  });
+
+  S.oneTimeExpenses=cleaned;
+
+  /*
+    Remove obsolete deferred-rent naming from older builds.
+  */
+
+  S.oneTimeExpenses=
+    S.oneTimeExpenses.filter(
+      e=>
+        !(
+          cleanLabel(e.label)==="september rent (deferred)" &&
+          e.month==="2026-09"
+        )
+    );
+}
+
+/*
+  Clean duplicate September extra income.
+
+  This prevents the $4,500 payment from becoming
+  $9,000, $13,500, etc.
+*/
+function cleanupExtraIncomeDuplicates(){
+
+  S.monthOverrides=
+    S.monthOverrides||{};
+
+  const sep=
+    S.monthOverrides["2026-09"] ||
+    (
+      S.monthOverrides["2026-09"]={}
+    );
+
+  const list=
+    Array.isArray(sep.extraIncome)
+      ?sep.extraIncome
+      :[];
+
+  const cleaned=[];
+  let canonical=null;
+
+  list.forEach(item=>{
+
+    const isDeal=
+      cleanLabel(item.label)==="deal / contract payment" &&
+      Math.abs(n(item.amount)-4500)<0.005;
+
+    if(!isDeal){
+
+      /*
+        Preserve all custom extra income.
+      */
+
+      cleaned.push(item);
+      return;
+    }
+
+    if(!canonical){
+
+      canonical={
+        id:"ei_deal_2026_09",
+        label:"Deal / Contract Payment",
+        amount:4500
       };
-    }catch(e){}
-  }
 
-  if(!S.monthBudgets)S.monthBudgets={};
-  if(!S.monthOverrides)S.monthOverrides={};
-  if(!S.paidExpenses)S.paidExpenses={};
-  if(!S.checklist?.length)S.checklist=DEFAULT_CHECKLIST.map(text=>({
-    id:uid("task"),
-    text,
-    done:false
-  }));
-
-  if(!S.goal){
-    S.goal={
-      month:DEFAULT_GOAL_MONTH,
-      name:DEFAULT_GOAL_NAME
-    };
-  }
-
-  const months=allMonthsRaw();
-
-  S.months=months;
-
-  months.forEach(ym=>{
-
-    if(!S.monthBudgets[ym]){
-      S.monthBudgets[ym]=defaultBudget();
-    }else{
-      S.monthBudgets[ym]=normalizeBudget(S.monthBudgets[ym]);
+      cleaned.push(canonical);
+      return;
     }
+
+    /*
+      Duplicate deal payment intentionally discarded.
+    */
   });
 
   /*
-    Legacy category migration.
-    This keeps old saved data useful while moving it into the
-    canonical current categories.
+    If the known payment somehow disappeared completely,
+    restore exactly one copy.
   */
 
-  months.forEach(ym=>{
+  if(!canonical){
 
-    const budget=S.monthBudgets[ym];
+    canonical={
+      id:"ei_deal_2026_09",
+      label:"Deal / Contract Payment",
+      amount:4500
+    };
 
-    migrateOldCategoryItems(
-      budget,
-      "tesla",
-      {
-        transportation:[
-          "insurance",
-          "fsd",
-          "supercharging",
-          "tire",
-          "rim",
-          "windshield"
-        ]
-      }
-    );
+    cleaned.push(canonical);
+  }
 
-    migrateOldCategoryItems(
-      budget,
-      "phone",
-      {
-        subscriptions:[
-          "phone",
-          "applecare"
-        ]
-      }
-    );
-
-    migrateOldCategoryItems(
-      budget,
-      "streaming",
-      {
-        subscriptions:[
-          "starz",
-          "paramount",
-          "disney",
-          "netflix",
-          "hulu",
-          "streaming"
-        ]
-      }
-    );
-  });
-
-  /*
-    This is the critical fix:
-    remove the legacy source buckets after their contents have
-    been migrated.
-  */
-  cleanupObsoleteLegacyCategories();
-
-  cleanupRecurringDuplicates();
-
-  seedLegacyData();
-
-  S.migrationVersion=MIGRATION_VERSION;
-
-  save();
+  sep.extraIncome=cleaned;
 }
+
+/* -------------------------------------------------
+   LEGACY SEED
+------------------------------------------------- */
 
 function seedLegacyData(){
 
-  if(!S.monthBudgets[APP_START]){
-    S.monthBudgets[APP_START]=defaultBudget();
-  }
-
-  S.monthBudgets[APP_START]=normalizeBudget(
-    S.monthBudgets[APP_START]
-  );
+  S.monthBudgets=
+    S.monthBudgets||{};
 
   /*
-    Apply September one-time expenses only if they are not already
-    present. This prevents re-seeding on every page load.
+    Make sure the five original months exist.
   */
-  const sep=S.monthBudgets[APP_START];
 
-  SEPTEMBER_ONE_TIME.forEach(([label,amount,category])=>{
+  INITIAL_MONTHS.forEach(ym=>{
 
-    if(!Array.isArray(sep[category])){
-      sep[category]=[];
-    }
+    if(!S.monthBudgets[ym]){
 
-    const exists=sep[category].some(item=>
-      String(item.label).toLowerCase()===label.toLowerCase() &&
-      Number(item.amount)===Number(amount)
-    );
+      const previous=
+        INITIAL_MONTHS
+          .filter(m=>m<ym)
+          .sort()
+          .pop();
 
-    if(!exists){
-      sep[category].push({
-        id:uid("exp"),
-        label,
-        amount:Number(amount),
-        recurring:false
-      });
+      if(previous && S.monthBudgets[previous]){
+
+        S.monthBudgets[ym]=
+          clone(S.monthBudgets[previous]);
+
+      }else{
+
+        S.monthBudgets[ym]=
+          normalizeBudget(S.categories);
+      }
     }
   });
 
-  if(!S.monthOverrides[APP_START]){
-    S.monthOverrides[APP_START]={};
-  }
-
-  if(
-    S.monthOverrides[APP_START].extraIncome === undefined ||
-    S.monthOverrides[APP_START].extraIncome === null
-  ){
-    S.monthOverrides[APP_START].extraIncome=4500;
-  }
-
-  if(S.miscBudget===undefined){
-    S.miscBudget=1000;
-  }
-
-  if(!S.goal){
-    S.goal={
-      month:DEFAULT_GOAL_MONTH,
-      name:DEFAULT_GOAL_NAME
-    };
-  }
-
   /*
-    Cleanup again here so older saves that enter this function are
-    guaranteed not to retain obsolete buckets.
+    DO NOT simply push the old recurring expenses.
+
+    The cleanup function below will make sure every
+    initial month contains one canonical copy.
   */
+
   cleanupObsoleteLegacyCategories();
   cleanupRecurringDuplicates();
 
-  S.months=allMonthsRaw();
+  /*
+    September extra income.
+  */
+
+  cleanupExtraIncomeDuplicates();
+
+  /*
+    September one-time expenses.
+  */
+
+  cleanupOneTimeDuplicates();
+
+  /*
+    Goals/checklist/paid tracking.
+  */
+
+  S.goalExpenses=
+    Array.isArray(S.goalExpenses)
+      ?S.goalExpenses
+      :clone(DEFAULT_GOALS);
+
+  S.checklist=
+    Array.isArray(S.checklist)
+      ?S.checklist
+      :clone(DEFAULT_CHECKLIST);
+
+  S.paidExpenses=
+    S.paidExpenses||{};
+
+  S.meta=
+    S.meta||{};
+
+  S.meta.seededLegacyData=true;
+  S.meta.migrationVersion=MIGRATION_VERSION;
 }
 
-function save(){
-  try{
-    localStorage.setItem(SAVE_KEY,JSON.stringify(S));
-  }catch(e){
-    console.warn("Could not save budget",e);
+/* -------------------------------------------------
+   MIGRATION
+------------------------------------------------- */
+
+function migrateState(state){
+
+  const defaults=clone(DEFAULT_STATE);
+
+  state.tab=
+    state.tab||defaults.tab;
+
+  state.activeMonth=
+    state.activeMonth||defaults.activeMonth;
+
+  state.goalMonth=
+    state.goalMonth||defaults.goalMonth;
+
+  state.goalLabel=
+    state.goalLabel||defaults.goalLabel;
+
+  state.income=
+    state.income===undefined
+      ?DEFAULT_INCOME
+      :n(state.income);
+
+  state.miscBudget=
+    state.miscBudget===undefined
+      ?1000
+      :n(state.miscBudget);
+
+  state.categories=
+    state.categories ||
+    clone(DEFAULT_CATEGORIES);
+
+  state.monthBudgets=
+    state.monthBudgets||{};
+
+  state.monthOverrides=
+    state.monthOverrides||{};
+
+  state.oneTimeExpenses=
+    Array.isArray(state.oneTimeExpenses)
+      ?state.oneTimeExpenses
+      :[];
+
+  state.goalExpenses=
+    Array.isArray(state.goalExpenses)
+      ?state.goalExpenses
+      :clone(DEFAULT_GOALS);
+
+  state.checklist=
+    Array.isArray(state.checklist)
+      ?state.checklist
+      :clone(DEFAULT_CHECKLIST);
+
+  state.paidExpenses=
+    state.paidExpenses||{};
+
+  state.meta=
+    state.meta||{};
+
+  /*
+    -------------------------------------------------
+    OLD V2 CATEGORY MIGRATION
+    -------------------------------------------------
+
+    Old builds could have:
+      tesla
+      phone
+      streaming
+      transportation
+
+    The old code copied those into the new categories
+    using new "migrated_*" IDs.
+
+    That was one of the sources of doubling.
+
+    We now map known expenses directly to the canonical
+    legacy IDs.
+  */
+
+  const sep=
+    state.monthBudgets["2026-09"];
+
+  if(sep){
+
+    /*
+      Tesla -> Transportation
+    */
+
+    migrateOldCategoryItems(
+      sep,
+      "tesla",
+      ["transportation"]
+    );
+
+    /*
+      Phone -> Utilities / Subscriptions.
+
+      Known items such as Apple One, AppleCare+ and Prime
+      are matched to their canonical subscription entries.
+      Unknown phone items are preserved under Utilities.
+    */
+
+    migrateOldCategoryItems(
+      sep,
+      "phone",
+      ["subscriptions","utilities"]
+    );
+
+    /*
+      Streaming -> Subscriptions
+    */
+
+    migrateOldCategoryItems(
+      sep,
+      "streaming",
+      ["subscriptions"]
+    );
+
+    /*
+      Old transportation -> Transportation
+    */
+
+    migrateOldCategoryItems(
+      sep,
+      "transportation",
+      ["transportation"]
+    );
+
+    /*
+      Normalize after conversion.
+    */
+
+    state.monthBudgets["2026-09"]=
+      normalizeBudget(sep);
   }
-}
 
-function getBudget(ym){
-  if(!S.monthBudgets[ym]){
-    S.monthBudgets[ym]=defaultBudget();
-  }
+  /*
+    Ensure the original months exist.
 
-  S.monthBudgets[ym]=normalizeBudget(S.monthBudgets[ym]);
+    IMPORTANT:
+    Existing month budgets are never overwritten.
+  */
 
-  return S.monthBudgets[ym];
-}
+  INITIAL_MONTHS.forEach(ym=>{
 
-function getIncome(ym){
-  const override=S.monthOverrides?.[ym];
+    if(!state.monthBudgets[ym]){
 
-  if(
-    override &&
-    override.income !== undefined &&
-    override.income !== null
-  ){
-    return Number(override.income)||0;
-  }
+      const previous=
+        INITIAL_MONTHS
+          .filter(m=>m<ym)
+          .sort()
+          .pop();
 
-  return DEFAULT_INCOME;
-}
+      if(previous && state.monthBudgets[previous]){
 
-function getExtraIncome(ym){
-  return Number(
-    S.monthOverrides?.[ym]?.extraIncome || 0
-  )||0;
-}
+        state.monthBudgets[ym]=
+          clone(state.monthBudgets[previous]);
 
-function expenseKey(ym,category,id){
-  return `${ym}__${category}__${id}`;
-}
-
-function isPaid(ym,category,id){
-  return !!S.paidExpenses[expenseKey(ym,category,id)];
-}
-
-function setPaid(ym,category,id,paid){
-
-  const key=expenseKey(ym,category,id);
-
-  if(paid){
-    S.paidExpenses[key]=true;
-  }else{
-    delete S.paidExpenses[key];
-  }
-
-  save();
-  renderAll();
-}
-
-function monthExpenses(ym){
-
-  const budget=getBudget(ym);
-  const result=[];
-
-  Object.entries(budget).forEach(([category,items])=>{
-
-    if(!Array.isArray(items))return;
-
-    items.forEach(item=>{
-
-      result.push({
-        ...item,
-        category
-      });
-    });
-  });
-
-  return result;
-}
-
-function monthExpenseTotal(ym){
-  return monthExpenses(ym).reduce(
-    (sum,item)=>sum+(Number(item.amount)||0),
-    0
-  );
-}
-
-function monthPaidTotal(ym){
-  return monthExpenses(ym).reduce(
-    (sum,item)=>
-      sum+(isPaid(ym,item.category,item.id)?Number(item.amount)||0:0),
-    0
-  );
-}
-
-function monthOutstanding(ym){
-  return monthExpenseTotal(ym)-monthPaidTotal(ym);
-}
-
-function getCarryover(ym){
-
-  const months=allMonthsRaw();
-  const index=months.indexOf(ym);
-
-  if(index<=0)return 0;
-
-  const previous=months[index-1];
-
-  return calculateFinalBalance(previous);
-}
-
-function calculateFinalBalance(ym){
-
-  const income=getIncome(ym);
-  const extra=getExtraIncome(ym);
-  const carryover=getCarryover(ym);
-  const expenses=monthExpenseTotal(ym);
-
-  return income+extra+carryover-expenses;
-}
-
-function calculateCashAfterPaid(ym){
-
-  const income=getIncome(ym);
-  const extra=getExtraIncome(ym);
-  const carryover=getCarryover(ym);
-  const paid=monthPaidTotal(ym);
-
-  return income+extra+carryover-paid;
-}
-
-function goalTotal(){
-
-  return GOAL_EXPENSES.reduce(
-    (sum,item)=>sum+Number(item[1]||0),
-    0
-  );
-}
-
-function goalSaved(){
-
-  const target=S.goal?.month || DEFAULT_GOAL_MONTH;
-  const months=allMonthsRaw();
-
-  let total=0;
-
-  months.forEach(ym=>{
-    if(ym<=target){
-      const final=calculateFinalBalance(ym);
-
-      if(final>0){
-        total+=final;
       }
     }
   });
 
-  return Math.max(0,total);
+  /*
+    Cleanup happens after old-v2 conversion.
+  */
+
+  S=state;
+
+  cleanupObsoleteLegacyCategories();
+  cleanupRecurringDuplicates();
+  cleanupExtraIncomeDuplicates();
+  cleanupOneTimeDuplicates();
+
+  state.meta.migrationVersion=
+    MIGRATION_VERSION;
+
+  state.meta.seededLegacyData=true;
+
+  return state;
 }
 
-function renderMonthBar(){
+/* -------------------------------------------------
+   LOAD STATE
+------------------------------------------------- */
 
-  const bar=document.getElementById("monthBar");
+function loadState(){
 
-  bar.innerHTML="";
+  const stored=findStoredState();
 
-  allMonthsRaw().forEach(ym=>{
+  if(stored){
 
-    const btn=document.createElement("button");
+    const defaults=clone(DEFAULT_STATE);
 
-    btn.className="month-pill"+(ym===currentMonth?" active":"");
-    btn.textContent=monthShort(ym);
+    S={
+      ...defaults,
+      ...stored,
 
-    btn.addEventListener("click",()=>{
-      currentMonth=ym;
-      renderAll();
-    });
+      categories:
+        stored.categories ||
+        defaults.categories,
 
-    bar.appendChild(btn);
-  });
+      monthBudgets:
+        stored.monthBudgets ||
+        {},
 
-  const add=document.createElement("button");
+      monthOverrides:
+        stored.monthOverrides ||
+        {},
 
-  add.className="month-pill add";
-  add.textContent="＋ Add";
+      oneTimeExpenses:
+        stored.oneTimeExpenses ||
+        [],
 
-  add.addEventListener("click",openAddMonth);
+      goalExpenses:
+        stored.goalExpenses ||
+        defaults.goalExpenses,
 
-  bar.appendChild(add);
-}
+      checklist:
+        stored.checklist ||
+        defaults.checklist,
 
-function renderHero(){
+      paidExpenses:
+        stored.paidExpenses ||
+        {}
+    };
 
-  const ym=currentMonth;
+    migrateState(S);
 
-  const final=calculateFinalBalance(ym);
-  const income=getIncome(ym);
-  const extra=getExtraIncome(ym);
-  const expenses=monthExpenseTotal(ym);
-  const paid=monthPaidTotal(ym);
-  const outstanding=expenses-paid;
-  const carryover=getCarryover(ym);
+  }else{
 
-  document.getElementById("monthLabel").textContent=monthLabel(ym);
-  document.getElementById("remainingHero").textContent=money(final);
-  document.getElementById("totalIncome").textContent=money(income);
-  document.getElementById("totalExtra").textContent=money(extra);
-  document.getElementById("totalExpenses").textContent=money(expenses);
-  document.getElementById("totalPaid").textContent=money(paid);
-  document.getElementById("totalOutstanding").textContent=money(outstanding);
-  document.getElementById("carryoverValue").textContent=money(carryover);
-  document.getElementById("finalBalance").textContent=money(final);
-
-  const balanceBox=document.getElementById("balanceBox");
-
-  balanceBox.classList.toggle("negative",final<0);
-
-  const expensesList=monthExpenses(ym);
-  const paidCount=expensesList.filter(item=>
-    isPaid(ym,item.category,item.id)
-  ).length;
-
-  const totalCount=expensesList.length;
-
-  document.getElementById("paidCount").textContent=
-    `${paidCount} / ${totalCount}`;
-
-  const pct=totalCount
-    ? Math.round((paidCount/totalCount)*100)
-    : 0;
-
-  document.getElementById("paidProgress").style.width=pct+"%";
-
-  document.getElementById("paidSummaryText").textContent=
-    `${money(paid)} paid • ${money(outstanding)} remaining`;
-
-  const goalMonth=S.goal?.month || DEFAULT_GOAL_MONTH;
-  const goalName=S.goal?.name || DEFAULT_GOAL_NAME;
-  const target=goalTotal();
-  const saved=goalSaved();
-  const goalPct=target
-    ? Math.min(100,Math.max(0,(saved/target)*100))
-    : 0;
-
-  document.getElementById("goalName").textContent=goalName;
-  document.getElementById("goalMonth").textContent=monthLabel(goalMonth);
-  document.getElementById("goalAmount").textContent=money0(target);
-  document.getElementById("goalProgress").style.width=goalPct+"%";
-  document.getElementById("goalText").textContent=
-    `${money(saved)} toward ${money(target)} (${Math.round(goalPct)}%)`;
-}
-
-function renderInputs(){
-
-  const ym=currentMonth;
-
-  document.getElementById("incomeInput").value=
-    getIncome(ym);
-
-  document.getElementById("extraIncomeInput").value=
-    getExtraIncome(ym);
-}
-
-function renderExpenses(){
-
-  const container=document.getElementById("expenseContainer");
-  const budget=getBudget(currentMonth);
-
-  container.innerHTML="";
-
-  const entries=Object.entries(budget);
-
-  if(!entries.length){
-    container.innerHTML='<div class="empty">No expenses yet</div>';
-    return;
+    S=clone(DEFAULT_STATE);
   }
 
-  entries.forEach(([category,items])=>{
+  /*
+    This is intentionally safe to run every load.
 
-    if(!Array.isArray(items))return;
+    The migration is idempotent:
+    running it again produces the same data rather
+    than adding another copy.
+  */
 
-    const section=document.createElement("div");
-    section.className="category";
+  seedLegacyData();
 
-    const total=items.reduce(
-      (sum,item)=>sum+(Number(item.amount)||0),
-      0
+  ensureAllMonths();
+
+  /*
+    Save the cleaned state immediately.
+
+    This is what actually fixes the already-doubled
+    data in localStorage.
+  */
+
+  try{
+
+    localStorage.setItem(
+      SAVE_KEY,
+      JSON.stringify(S)
     );
 
-    section.innerHTML=`
-      <div class="category-head">
-        <div class="category-name">
-          ${escapeHtml(DEFAULT_CATEGORIES[category] || category)}
-        </div>
-        <div class="category-total money">${money(total)}</div>
-      </div>
-      <div class="expense-list"></div>
-    `;
+  }catch(err){
 
-    const list=section.querySelector(".expense-list");
+    console.error(
+      "Initial save error",
+      err
+    );
+  }
+}
 
-    items.forEach(item=>{
+/* -------------------------------------------------
+   SAVE
+------------------------------------------------- */
 
-      const paid=isPaid(currentMonth,category,item.id);
+function save(){
 
-      const row=document.createElement("div");
+  clearTimeout(saveTimer);
 
-      row.className="expense"+(paid?" paid":"");
+  saveTimer=setTimeout(()=>{
 
-      row.innerHTML=`
-        <button
-          class="check ${paid?"checked":""}"
-          aria-label="${paid?"Mark unpaid":"Mark paid"}"
-        >${paid?"✓":""}</button>
+    try{
 
-        <div class="expense-main">
-          <div class="expense-label">${escapeHtml(item.label)}</div>
-          <div class="expense-meta">
-            ${item.recurring?"Recurring":"One-time"}
-            ${paid?'<span class="paid-tag">• PAID</span>':""}
+      localStorage.setItem(
+        SAVE_KEY,
+        JSON.stringify(S)
+      );
+
+      showToast("✓ Saved");
+
+    }catch(err){
+
+      console.error(err);
+
+      showToast("Could not save");
+    }
+
+  },250);
+}
+
+/* -------------------------------------------------
+   RENDER
+------------------------------------------------- */
+
+function render(){
+
+  ensureAllMonths();
+
+  let content="";
+
+  if(S.tab==="overview"){
+    content=renderOverview();
+  }
+
+  if(S.tab==="budget"){
+    content=renderBudget();
+  }
+
+  if(S.tab==="goal"){
+    content=renderGoal();
+  }
+
+  if(S.tab==="investing"){
+    content=renderInvesting();
+  }
+
+  if(S.tab==="more"){
+    content=renderMore();
+  }
+
+  document.getElementById("app").innerHTML=
+    renderNav()+
+    content+
+    renderTabs()+
+    renderFab()+
+    renderSheet();
+
+  bindEvents();
+}
+
+/* -------------------------------------------------
+   NAV
+------------------------------------------------- */
+
+function renderNav(){
+
+  const months=allMonths();
+  const index=months.indexOf(S.activeMonth);
+
+  const previous=
+    index>0
+      ?months[index-1]
+      :null;
+
+  const next=
+    index<months.length-1
+      ?months[index+1]
+      :null;
+
+  return `
+
+    <div class="nav">
+
+      <div class="nav-top">
+
+        <div>
+          <div class="title">God's Plan</div>
+
+          <div class="subtitle">
+            Budget &amp; financial plan
           </div>
         </div>
 
-        <div class="expense-amount money">${money(item.amount)}</div>
+        <button
+          class="income-button"
+          data-income
+        >
+          Income
+        </button>
 
-        <button class="delete-expense" aria-label="Delete expense">×</button>
-      `;
+      </div>
 
-      row.querySelector(".check").addEventListener("click",()=>{
-        setPaid(
-          currentMonth,
-          category,
-          item.id,
-          !paid
-        );
-      });
+      <div class="month-header">
 
-      row.querySelector(".delete-expense").addEventListener("click",()=>{
+        <button
+          class="month-arrow"
+          data-nav-month="${previous||""}"
+          ${previous?"":"disabled"}
+          style="${previous?"":"opacity:.25"}"
+        >
+          ‹
+        </button>
 
-        if(!confirm(`Delete "${item.label}"?`))return;
+        <div class="month-title-wrap">
 
-        S.monthBudgets[currentMonth][category]=
-          S.monthBudgets[currentMonth][category].filter(
-            x=>x.id!==item.id
-          );
+          <div class="month-title">
+            ${esc(monthLabel(S.activeMonth))}
+          </div>
 
-        delete S.paidExpenses[
-          expenseKey(currentMonth,category,item.id)
-        ];
+          <div class="month-caption">
+            ${S.tab==="overview"
+              ?"Monthly overview"
+              :"Active budget month"}
+          </div>
 
-        save();
-        renderAll();
-      });
+        </div>
 
-      list.appendChild(row);
-    });
+        <button
+          class="month-arrow"
+          data-nav-month="${next||""}"
+          ${next?"":"disabled"}
+          style="${next?"":"opacity:.25"}"
+        >
+          ›
+        </button>
 
-    const addRow=document.createElement("div");
+      </div>
 
-    addRow.className="add-row";
+      <div class="month-scroll">
 
-    addRow.innerHTML=`
-      <input class="input quick-label" placeholder="Add ${escapeHtml(DEFAULT_CATEGORIES[category] || category)}">
-      <input class="input quick-amount" type="number" step="0.01" inputmode="decimal" placeholder="$">
-      <button class="btn soft quick-add">＋</button>
-    `;
+        ${months.map(m=>`
 
-    addRow.querySelector(".quick-add").addEventListener("click",()=>{
+          <button
+            class="month-chip ${
+              m===S.activeMonth
+                ?"active"
+                :""
+            }"
+            data-month="${esc(m)}"
+          >
+            ${esc(shortMonth(m))}
+          </button>
 
-      const label=addRow.querySelector(".quick-label").value.trim();
-      const amount=Number(addRow.querySelector(".quick-amount").value);
+        `).join("")}
 
-      if(!label || !Number.isFinite(amount)){
-        showToast("Enter a name and amount");
-        return;
-      }
+      </div>
 
-      S.monthBudgets[currentMonth][category].push({
-        id:uid("exp"),
-        label,
-        amount,
-        recurring:false
-      });
-
-      save();
-      renderAll();
-    });
-
-    section.appendChild(addRow);
-    container.appendChild(section);
-  });
-}
-
-function renderMonthSummary(){
-
-  const ym=currentMonth;
-  const expenses=monthExpenses(ym);
-
-  const paid=expenses.filter(item=>
-    isPaid(ym,item.category,item.id)
-  );
-
-  const unpaid=expenses.filter(item=>
-    !isPaid(ym,item.category,item.id)
-  );
-
-  const paidAmount=paid.reduce(
-    (sum,item)=>sum+Number(item.amount||0),
-    0
-  );
-
-  const unpaidAmount=unpaid.reduce(
-    (sum,item)=>sum+Number(item.amount||0),
-    0
-  );
-
-  document.getElementById("monthSummary").innerHTML=`
-    <div class="total-line">
-      <span>Total expenses</span>
-      <strong>${money(expenses.reduce((s,x)=>s+Number(x.amount||0),0))}</strong>
-    </div>
-
-    <div class="total-line">
-      <span>Paid</span>
-      <strong style="color:var(--green)">${money(paidAmount)}</strong>
-    </div>
-
-    <div class="total-line">
-      <span>Not paid</span>
-      <strong style="color:var(--orange)">${money(unpaidAmount)}</strong>
-    </div>
-
-    <div class="total-line">
-      <span>Paid count</span>
-      <strong>${paid.length}</strong>
-    </div>
-
-    <div class="total-line">
-      <span>Unpaid count</span>
-      <strong>${unpaid.length}</strong>
-    </div>
-
-    <div class="progress" style="margin-top:10px">
-      <span style="width:${expenses.length?(paid.length/expenses.length)*100:0}%"></span>
-    </div>
-
-    <div class="muted" style="font-size:10px;margin-top:7px">
-      ${paid.length} paid • ${unpaid.length} not paid
     </div>
   `;
 }
 
-function renderOverview(){
+/* -------------------------------------------------
+   HERO
+------------------------------------------------- */
 
-  const container=document.getElementById("overviewContainer");
+function renderHero(){
 
-  container.innerHTML="";
+  const ym=S.activeMonth;
 
-  const months=allMonthsRaw();
+  const income=totalIncome(ym);
+  const spending=totalSpending(ym);
+  const net=monthlyNet(ym);
 
-  months.forEach(ym=>{
+  const rate=
+    income>0
+      ?Math.round(net/income*100)
+      :0;
 
-    const income=getIncome(ym);
-    const extra=getExtraIncome(ym);
-    const expenses=monthExpenseTotal(ym);
-    const paid=monthPaidTotal(ym);
-    const outstanding=expenses-paid;
-    const final=calculateFinalBalance(ym);
+  const projected=
+    projectedGoalBalance();
 
-    const list=monthExpenses(ym);
+  const target=
+    goalTotal();
 
-    const paidCount=list.filter(item=>
-      isPaid(ym,item.category,item.id)
-    ).length;
+  const pct=
+    target>0
+      ?Math.min(
+          100,
+          Math.max(
+            0,
+            Math.round(projected/target*100)
+          )
+        )
+      :0;
 
-    const div=document.createElement("div");
+  return `
 
-    div.className="overview-month";
+    <div class="hero">
 
-    div.innerHTML=`
-      <div class="overview-title">
+      <div class="hero-glow"></div>
+
+      <div class="eyebrow">
+        ${esc(monthLabel(ym))}
+      </div>
+
+      <div class="hero-number ${
+        net<0
+          ?"balance-negative"
+          :"balance-positive"
+      }">
+        ${money(net)}
+      </div>
+
+      <div class="hero-caption">
+        monthly net
+      </div>
+
+      <div class="stats">
+
         <div>
-          <strong>${monthLabel(ym)}</strong>
-          <div class="muted" style="font-size:10px;margin-top:2px">
-            ${paidCount} of ${list.length} expenses paid
+          <div class="stat-label">Income</div>
+          <div class="stat-value">
+            ${money(income)}
           </div>
         </div>
 
-        <strong class="money" style="color:${final<0?"var(--red)":"var(--text)"}">
-          ${money(final)}
-        </strong>
+        <div>
+          <div class="stat-label">Expenses</div>
+          <div class="stat-value">
+            ${money(spending)}
+          </div>
+        </div>
+
+        <div>
+          <div class="stat-label">Savings Rate</div>
+          <div class="stat-value">
+            ${rate}%
+          </div>
+        </div>
+
+        <div>
+          <div class="stat-label">Ending Balance</div>
+
+          <div class="stat-value ${
+            endingBalance(ym)<0
+              ?"balance-negative"
+              :"balance-positive"
+          }">
+            ${money(endingBalance(ym))}
+          </div>
+
+        </div>
+
       </div>
 
-      <div class="overview-stats">
-        <div class="overview-stat">
-          <small>INCOME</small>
-          <strong>${money(income)}</strong>
-        </div>
+      <div class="progress">
 
-        <div class="overview-stat">
-          <small>EXTRA</small>
-          <strong>${money(extra)}</strong>
-        </div>
+        <div
+          class="progress-fill"
+          style="width:${pct}%"
+        ></div>
 
-        <div class="overview-stat">
-          <small>PAID</small>
-          <strong>${money(paid)}</strong>
-        </div>
-
-        <div class="overview-stat">
-          <small>UNPAID</small>
-          <strong>${money(outstanding)}</strong>
-        </div>
       </div>
 
-      <div class="progress" style="margin-top:9px">
-        <span style="width:${list.length?(paidCount/list.length)*100:0}%"></span>
+      <div class="progress-row">
+
+        <span>
+          ${esc(S.goalLabel)}
+        </span>
+
+        <span>
+          ${money(projected)} / ${money(target)}
+        </span>
+
       </div>
-    `;
 
-    div.addEventListener("click",()=>{
-      currentMonth=ym;
-      switchTab("budget");
-      renderAll();
-    });
-
-    container.appendChild(div);
-  });
+    </div>
+  `;
 }
 
-function renderChecklist(){
+/* -------------------------------------------------
+   PAYMENT SUMMARY
+------------------------------------------------- */
 
-  const container=document.getElementById("checklistContainer");
+function renderPaymentSummary(ym){
 
-  container.innerHTML="";
+  const stats=
+    getMonthPaymentStats(ym);
 
-  if(!S.checklist.length){
-    container.innerHTML='<div class="empty">Your checklist is clear</div>';
-    return;
-  }
+  return `
 
-  S.checklist.forEach(item=>{
+    <div class="paid-summary">
 
-    const row=document.createElement("div");
+      <div class="paid-summary-top">
 
-    row.className="check-item"+(item.done?" done":"");
+        <div class="paid-summary-title">
+          Paid This Month
+        </div>
 
-    row.innerHTML=`
-      <input type="checkbox" ${item.done?"checked":""}>
-      <span style="flex:1;font-size:13px">${escapeHtml(item.text)}</span>
-      <button
-        class="delete-expense"
-        aria-label="Delete checklist item"
-      >×</button>
-    `;
+        <div class="paid-summary-value">
+          ${money(stats.paid)}
+          <span style="color:var(--tertiary);font-weight:500">
+            / ${money(stats.total)}
+          </span>
+        </div>
 
-    row.querySelector("input").addEventListener("change",e=>{
-      item.done=e.target.checked;
-      save();
-      renderChecklist();
-    });
+      </div>
 
-    row.querySelector(".delete-expense").addEventListener("click",()=>{
-      S.checklist=S.checklist.filter(x=>x.id!==item.id);
-      save();
-      renderChecklist();
-    });
+      <div class="paid-progress">
 
-    container.appendChild(row);
-  });
+        <div
+          class="paid-progress-fill"
+          style="width:${stats.pct}%"
+        ></div>
+
+      </div>
+
+      <div class="paid-meta">
+        ${stats.paidCount} paid
+        ·
+        ${stats.unpaidCount} unpaid
+        ·
+        ${stats.pct}% complete
+        ${stats.outstanding>0
+          ?" · "+money(stats.outstanding)+" outstanding"
+          :" · All tracked expenses paid"}
+      </div>
+
+    </div>
+  `;
 }
 
-function switchTab(tab){
+/* -------------------------------------------------
+   OVERVIEW
+------------------------------------------------- */
 
-  activeTab=tab;
+function renderOverview(){
 
-  document.querySelectorAll(".tab").forEach(btn=>{
-    btn.classList.toggle(
-      "active",
-      btn.dataset.tab===tab
-    );
-  });
+  const ym=S.activeMonth;
 
-  document.getElementById("budgetTab").style.display=
-    tab==="budget"?"block":"none";
+  const extras=
+    S.monthOverrides?.[ym]?.extraIncome||[];
 
-  document.getElementById("overviewTab").style.display=
-    tab==="overview"?"block":"none";
+  const oneTimes=
+    (S.oneTimeExpenses||[])
+      .filter(e=>e.month===ym);
 
-  document.getElementById("checklistTab").style.display=
-    tab==="checklist"?"block":"none";
+  const start=
+    startingBalance(ym);
 
-  if(tab==="overview"){
-    renderOverview();
-  }
+  return `
 
-  if(tab==="checklist"){
-    renderChecklist();
-  }
-}
+    ${renderHero()}
 
-function renderAll(){
+    <div class="starting-card">
 
-  S.months=allMonthsRaw();
+      <div class="starting-label">
+        Starting balance from previous month
+      </div>
 
-  if(!S.months.includes(currentMonth)){
-    currentMonth=S.months[0] || APP_START;
-  }
+      <div class="starting-value">
+        ${money(start)}
+      </div>
 
-  renderMonthBar();
-  renderHero();
-  renderInputs();
-  renderExpenses();
-  renderMonthSummary();
-  renderOverview();
-  renderChecklist();
+    </div>
 
-  switchTab(activeTab);
-}
+    <div class="section">
 
-function openModal(id){
-  document.getElementById(id).classList.add("show");
-}
+      <div class="section-title">
+        Income
+      </div>
 
-function closeModal(id){
-  document.getElementById(id).classList.remove("show");
-}
+      <div class="group">
 
-function openAddMonth(){
+        <div
+          class="row"
+          data-income
+        >
 
-  document.getElementById("monthModalTitle").textContent="Add Month";
+          <div class="row-label">
+            Base Income
+          </div>
 
-  const months=allMonthsRaw();
+          <div class="row-value">
+            ${money(baseIncome(ym))}
+          </div>
 
-  let next=months[months.length-1];
+          <div class="chevron">›</div>
 
-  if(next){
-    const d=monthDate(next);
-    d.setMonth(d.getMonth()+1);
+        </div>
 
-    next=
-      d.getFullYear()+
-      "-" +
-      String(d.getMonth()+1).padStart(2,"0");
-  }else{
-    next=APP_START;
-  }
+        <div class="row">
 
-  document.getElementById("newMonthInput").value=next;
-  document.getElementById("newMonthIncome").value=DEFAULT_INCOME;
+          <div class="row-label">
+            Extra Income
+          </div>
 
-  openModal("monthModal");
-}
+          <div class="row-value">
+            ${money(extraIncome(ym))}
+          </div>
 
-function addMonth(ym,income){
+        </div>
 
-  if(!ym)return false;
+      </div>
 
-  if(S.months.includes(ym)){
-    currentMonth=ym;
-    return true;
-  }
-
-  S.months.push(ym);
-  S.months.sort(sortMonths);
-
-  /*
-    Each month receives its own independent budget object.
-    Nothing is linked by reference to another month.
-  */
-  S.monthBudgets[ym]=defaultBudget();
-
-  S.monthOverrides[ym]={
-    income:Number(income ?? DEFAULT_INCOME)||DEFAULT_INCOME,
-    extraIncome:0
-  };
-
-  currentMonth=ym;
-
-  save();
-  renderAll();
-
-  return true;
-}
-
-function removeCurrentMonth(){
-
-  const months=allMonthsRaw();
-
-  if(months.length<=1){
-    showToast("You need at least one month");
-    return;
-  }
-
-  const ym=currentMonth;
-
-  if(!confirm(`Remove ${monthLabel(ym)} and its budget?`)){
-    return;
-  }
-
-  delete S.monthBudgets[ym];
-  delete S.monthOverrides[ym];
-
-  Object.keys(S.paidExpenses).forEach(key=>{
-    if(key.startsWith(ym+"__")){
-      delete S.paidExpenses[key];
-    }
-  });
-
-  S.months=S.months.filter(x=>x!==ym);
-
-  const remaining=allMonthsRaw();
-
-  currentMonth=remaining[0] || APP_START;
-
-  save();
-  renderAll();
-
-  showToast(`${monthLabel(ym)} removed`);
-}
-
-function openEditMonth(){
-
-  const ym=currentMonth;
-
-  document.getElementById("editMonthInput").value=ym;
-  document.getElementById("editMonthIncome").value=getIncome(ym);
-  document.getElementById("editMonthExtra").value=getExtraIncome(ym);
-
-  openModal("editMonthModal");
-}
-
-function saveEditMonth(){
-
-  const oldYm=currentMonth;
-
-  const newYm=document.getElementById("editMonthInput").value;
-  const income=Number(document.getElementById("editMonthIncome").value)||0;
-  const extra=Number(document.getElementById("editMonthExtra").value)||0;
-
-  if(!newYm){
-    showToast("Choose a month");
-    return;
-  }
-
-  if(newYm!==oldYm && S.months.includes(newYm)){
-    showToast("That month already exists");
-    return;
-  }
-
-  if(newYm!==oldYm){
-
-    S.monthBudgets[newYm]=S.monthBudgets[oldYm];
-    S.monthOverrides[newYm]=S.monthOverrides[oldYm] || {};
-
-    Object.keys(S.paidExpenses).forEach(key=>{
-
-      if(key.startsWith(oldYm+"__")){
-
-        const rest=key.slice(oldYm.length);
-
-        if(S.paidExpenses[key]){
-          S.paidExpenses[newYm+rest]=true;
-        }
-
-        delete S.paidExpenses[key];
+      ${
+        extras.length
+        ?`
+          <div class="footer-note">
+            ${extras.map(e=>
+              `${esc(e.label)} · ${money(e.amount)}`
+            ).join("<br>")}
+          </div>
+        `
+        :""
       }
-    });
 
-    delete S.monthBudgets[oldYm];
-    delete S.monthOverrides[oldYm];
+      <div class="section-title">
+        Expenses
+      </div>
 
-    S.months=S.months.filter(x=>x!==oldYm);
-    S.months.push(newYm);
-    S.months.sort(sortMonths);
+      <div class="group">
 
-    currentMonth=newYm;
-  }
+        ${Object.entries(
+          categoryBudget(ym)
+        )
+        .filter(([key])=>key!=="investing")
+        .map(([key,c])=>`
 
-  if(!S.monthOverrides[currentMonth]){
-    S.monthOverrides[currentMonth]={};
-  }
+          <div
+            class="row"
+            data-category="${esc(key)}"
+          >
 
-  S.monthOverrides[currentMonth].income=income;
-  S.monthOverrides[currentMonth].extraIncome=extra;
+            <span
+              class="dot"
+              style="background:${esc(c.color)}"
+            ></span>
 
-  save();
-  closeModal("editMonthModal");
-  renderAll();
+            <div class="row-label">
+              ${esc(c.label)}
+            </div>
 
-  showToast("Month updated");
+            <div class="row-value">
+              ${money(categoryTotal(ym,c))}
+            </div>
+
+            <div class="chevron">›</div>
+
+          </div>
+
+        `).join("")}
+
+        <div class="row">
+
+          <div class="row-label">
+            Misc / Personal Buffer
+          </div>
+
+          <div class="row-value">
+            ${money(getMiscBudget(ym))}
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="row-label">
+            One-Time Expenses
+          </div>
+
+          <div class="row-value">
+            ${money(oneTimeTotal(ym))}
+          </div>
+
+        </div>
+
+      </div>
+
+      ${
+        oneTimes.length
+        ?`
+          <div class="footer-note">
+            ${oneTimes.map(e=>
+              `${esc(e.label)} · ${money(e.amount)}`
+            ).join("<br>")}
+          </div>
+        `
+        :""
+      }
+
+      ${renderPaymentSummary(ym)}
+
+      <div class="section-title">
+        Carry Over
+      </div>
+
+      <div class="group">
+
+        <div class="row">
+
+          <div class="row-label">
+            Starting Balance
+          </div>
+
+          <div class="row-value">
+            ${money(start)}
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="row-label">
+            This Month
+          </div>
+
+          <div class="row-value ${
+            monthlyNet(ym)<0
+              ?"balance-negative"
+              :"balance-positive"
+          }">
+            ${money(monthlyNet(ym))}
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="row-label">
+            Ending Balance
+          </div>
+
+          <div class="row-value ${
+            endingBalance(ym)<0
+              ?"balance-negative"
+              :"balance-positive"
+          }">
+            ${money(endingBalance(ym))}
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  `;
 }
 
-function openAddExpense(){
+/* -------------------------------------------------
+   BUDGET
+------------------------------------------------- */
 
-  const select=document.getElementById("newExpenseCategory");
+function renderBudget(){
 
-  select.innerHTML="";
+  const ym=S.activeMonth;
+  const budget=categoryBudget(ym);
+  const stats=getMonthPaymentStats(ym);
 
-  Object.entries(DEFAULT_CATEGORIES).forEach(([key,label])=>{
+  return `
 
-    const option=document.createElement("option");
+    <div style="height:20px"></div>
 
-    option.value=key;
-    option.textContent=label;
+    <div class="section">
 
-    select.appendChild(option);
-  });
+      <div class="section-title">
+        ${esc(monthLabel(ym))} Budget
+      </div>
 
-  document.getElementById("newExpenseLabel").value="";
-  document.getElementById("newExpenseAmount").value="";
+      <div class="callout" style="margin-bottom:12px">
 
-  openModal("expenseModal");
+        This month's expenses are independent.
+
+        Changes here only affect
+        <strong>${esc(shortMonth(ym))}</strong>.
+
+        Other months keep their own budgets.
+
+      </div>
+
+      ${renderPaymentSummary(ym)}
+
+      ${Object.entries(budget)
+        .map(([key,c])=>{
+
+          if(key==="investing")return "";
+
+          return `
+
+            <div class="section-title">
+              ${esc(c.icon||"")}
+              ${esc(c.label)}
+            </div>
+
+            <div class="group">
+
+              ${(c.items||[]).map(item=>{
+
+                const paid=
+                  isPaid(
+                    ym,
+                    "recurring",
+                    key+"__"+item.id
+                  );
+
+                return `
+
+                  <div class="row">
+
+                    <button
+                      class="payment-button"
+                      data-toggle-paid="1"
+                      data-paid-type="recurring"
+                      data-paid-id="${esc(key+"__"+item.id)}"
+                    >
+
+                      <div class="check ${
+                        paid?"done":""
+                      }">
+                        ${paid?"✓":""}
+                      </div>
+
+                    </button>
+
+                    <div class="row-label ${
+                      paid?"strike":""
+                    }">
+                      ${esc(item.label)}
+                    </div>
+
+                    <input
+                      class="num-input"
+                      type="number"
+                      step="0.01"
+                      value="${n(item.amount).toFixed(2)}"
+                      data-amount="${esc(key)}"
+                      data-item="${esc(item.id)}"
+                    >
+
+                  </div>
+
+                `;
+              }).join("")}
+
+              <button
+                class="add-row"
+                data-edit-category="${esc(key)}"
+              >
+                Edit ${esc(c.label)}
+              </button>
+
+            </div>
+
+          `;
+        }).join("")}
+
+      <div class="section-title">
+        Misc / Personal Buffer
+      </div>
+
+      <div class="group">
+
+        <div class="row">
+
+          <button
+            class="payment-button"
+            data-toggle-paid="1"
+            data-paid-type="misc"
+            data-paid-id="misc"
+          >
+
+            <div class="check ${
+              isPaid(ym,"misc","misc")
+                ?"done"
+                :""
+            }">
+              ${
+                isPaid(ym,"misc","misc")
+                  ?"✓"
+                  :""
+              }
+            </div>
+
+          </button>
+
+          <div class="row-label ${
+            isPaid(ym,"misc","misc")
+              ?"strike"
+              :""
+          }">
+            Monthly Buffer
+          </div>
+
+          <input
+            class="num-input"
+            type="number"
+            step="0.01"
+            value="${getMiscBudget(ym).toFixed(2)}"
+            data-misc
+          >
+
+        </div>
+
+      </div>
+
+      <div class="section-title">
+        One-Time Expenses
+      </div>
+
+      <div class="group">
+
+        ${(S.oneTimeExpenses||[])
+          .filter(e=>e.month===ym)
+          .map(e=>{
+
+            const paid=
+              isPaid(ym,"one",e.id);
+
+            return `
+
+              <div class="row">
+
+                <button
+                  class="payment-button"
+                  data-toggle-paid="1"
+                  data-paid-type="one"
+                  data-paid-id="${esc(e.id)}"
+                >
+
+                  <div class="check ${
+                    paid?"done":""
+                  }">
+                    ${paid?"✓":""}
+                  </div>
+
+                </button>
+
+                <div
+                  class="row-label ${
+                    paid?"strike":""
+                  }"
+                  data-edit-one="${esc(e.id)}"
+                >
+                  ${esc(e.label)}
+                </div>
+
+                <div class="row-value">
+                  ${money(e.amount)}
+                </div>
+
+                <div
+                  class="chevron"
+                  data-edit-one="${esc(e.id)}"
+                >
+                  ›
+                </div>
+
+              </div>
+
+            `;
+          }).join("")}
+
+        <button
+          class="add-row"
+          data-add-one
+        >
+          ＋ Add One-Time Expense
+        </button>
+
+      </div>
+
+      <div class="footer-note">
+        ${stats.unpaidCount} unpaid item${
+          stats.unpaidCount===1?"":"s"
+        } remain${stats.unpaidCount===1?"s":""}
+        this month
+      </div>
+
+    </div>
+  `;
 }
 
-function saveExpense(){
+/* -------------------------------------------------
+   GOAL
+------------------------------------------------- */
 
-  const label=document.getElementById("newExpenseLabel").value.trim();
-  const amount=Number(document.getElementById("newExpenseAmount").value);
-  const category=document.getElementById("newExpenseCategory").value;
+function renderGoal(){
 
-  if(!label){
-    showToast("Enter an expense name");
-    return;
-  }
+  const target=goalTotal();
+  const projected=projectedGoalBalance();
+  const pct=goalPercent();
 
-  if(!Number.isFinite(amount)){
-    showToast("Enter a valid amount");
-    return;
-  }
+  return `
 
-  const budget=getBudget(currentMonth);
+    <div style="height:20px"></div>
 
-  if(!Array.isArray(budget[category])){
-    budget[category]=[];
-  }
+    <div class="hero">
 
-  budget[category].push({
-    id:uid("exp"),
-    label,
-    amount,
-    recurring:false
-  });
+      <div class="eyebrow">
+        ${esc(S.goalLabel)}
+      </div>
 
-  save();
-  closeModal("expenseModal");
-  renderAll();
+      <div class="hero-number">
+        ${money(projected)}
+      </div>
 
-  showToast("Expense added");
+      <div class="hero-caption">
+        projected balance by
+        ${esc(monthLabel(S.goalMonth))}
+      </div>
+
+      <div class="progress">
+
+        <div
+          class="progress-fill"
+          style="width:${pct}%"
+        ></div>
+
+      </div>
+
+      <div class="progress-row">
+
+        <span>
+          ${pct}%
+        </span>
+
+        <span>
+          ${money(target)}
+        </span>
+
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <div class="section-title">
+        Goal Settings
+      </div>
+
+      <div class="group">
+
+        <div
+          class="row"
+          data-goal-setting="name"
+        >
+
+          <div class="row-label">
+            Goal
+          </div>
+
+          <div class="row-value">
+            ${esc(S.goalLabel)}
+          </div>
+
+          <div class="chevron">›</div>
+
+        </div>
+
+        <div
+          class="row"
+          data-goal-setting="month"
+        >
+
+          <div class="row-label">
+            Target Month
+          </div>
+
+          <div class="row-value">
+            ${esc(monthLabel(S.goalMonth))}
+          </div>
+
+          <div class="chevron">›</div>
+
+        </div>
+
+        <div
+          class="row"
+          data-goal-setting="amount"
+        >
+
+          <div class="row-label">
+            Target Amount
+          </div>
+
+          <div class="row-value">
+            ${money(target)}
+          </div>
+
+          <div class="chevron">›</div>
+
+        </div>
+
+      </div>
+
+      <div class="section-title">
+        Goal Expenses
+      </div>
+
+      <div class="group">
+
+        ${(S.goalExpenses||[])
+          .map(e=>`
+
+            <div
+              class="row"
+              data-goal-item="${esc(e.id)}"
+            >
+
+              <div class="row-label">
+
+                ${esc(e.label)}
+
+                ${
+                  e.estimate
+                  ?`
+                    <div class="row-sub">
+                      ${esc(e.estimate)}
+                    </div>
+                  `
+                  :""
+                }
+
+              </div>
+
+              <div class="row-value">
+                ${money(e.amount)}
+              </div>
+
+              <div class="chevron">›</div>
+
+            </div>
+
+          `).join("")}
+
+        <button
+          class="add-row"
+          data-add-goal
+        >
+          ＋ Add Goal Item
+        </button>
+
+      </div>
+
+    </div>
+  `;
 }
 
-function addChecklist(){
+/* -------------------------------------------------
+   INVESTING
+------------------------------------------------- */
 
-  const input=document.getElementById("newChecklistItem");
-  const text=input.value.trim();
+function renderInvesting(){
 
-  if(!text){
-    showToast("Enter a checklist item");
-    return;
-  }
+  const ym=S.activeMonth;
+  const c=categoryBudget(ym).investing;
 
-  S.checklist.push({
-    id:uid("task"),
-    text,
-    done:false
-  });
+  return `
 
-  input.value="";
+    <div style="height:20px"></div>
 
-  save();
-  closeModal("checklistModal");
-  renderChecklist();
+    <div class="hero">
 
-  showToast("Added to checklist");
+      <div class="eyebrow">
+        ${esc(monthLabel(ym))}
+      </div>
+
+      <div class="hero-number">
+        ${money(investmentSpending(ym))}
+      </div>
+
+      <div class="hero-caption">
+        monthly planned investing
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <div class="callout" style="margin-bottom:18px">
+
+        Investment amounts are also
+        <strong>month-specific</strong>.
+
+        Changing one month will not change
+        another month.
+
+      </div>
+
+      <div class="section-title">
+        Investment Budget
+      </div>
+
+      <div class="group">
+
+        ${(c.items||[]).map(item=>`
+
+          <div class="row">
+
+            <div class="row-label">
+              ${esc(item.label)}
+            </div>
+
+            <input
+              class="num-input"
+              type="number"
+              step="0.01"
+              value="${n(item.amount).toFixed(2)}"
+              data-amount="investing"
+              data-item="${esc(item.id)}"
+            >
+
+          </div>
+
+        `).join("")}
+
+      </div>
+
+    </div>
+  `;
 }
 
-function escapeHtml(value){
+/* -------------------------------------------------
+   MORE
+------------------------------------------------- */
 
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+function renderMore(){
+
+  const stats=
+    getMonthPaymentStats(S.activeMonth);
+
+  return `
+
+    <div style="height:20px"></div>
+
+    <div class="section">
+
+      <div class="section-title">
+        Plan
+      </div>
+
+      <div class="group">
+
+        <div
+          class="row"
+          data-open-months
+        >
+
+          <div class="row-label">
+            Months
+          </div>
+
+          <div class="chevron">›</div>
+
+        </div>
+
+        <div
+          class="row"
+          data-open-checklist
+        >
+
+          <div class="row-label">
+            Checklist
+          </div>
+
+          <div class="row-value">
+            ${
+              (S.checklist||[])
+                .filter(x=>x.done).length
+            } / ${(S.checklist||[]).length}
+          </div>
+
+          <div class="chevron">›</div>
+
+        </div>
+
+        <div
+          class="row"
+          data-open-settings
+        >
+
+          <div class="row-label">
+            Settings
+          </div>
+
+          <div class="chevron">›</div>
+
+        </div>
+
+      </div>
+
+      <div class="section-title">
+        ${esc(shortMonth(S.activeMonth))} Payments
+      </div>
+
+      <div class="group">
+
+        <div class="row">
+
+          <div class="row-label">
+            Paid
+          </div>
+
+          <div class="row-value balance-positive">
+            ${money(stats.paid)}
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="row-label">
+            Outstanding
+          </div>
+
+          <div class="row-value ${
+            stats.outstanding>0
+              ?"balance-negative"
+              :"balance-positive"
+          }">
+            ${money(stats.outstanding)}
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="row-label">
+            Payment Progress
+          </div>
+
+          <div class="row-value">
+            ${stats.pct}%
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="section-title">
+        Carry Over
+      </div>
+
+      <div class="group">
+
+        ${allMonths().map(ym=>`
+
+          <div
+            class="row"
+            data-month-summary="${esc(ym)}"
+          >
+
+            <div class="row-label">
+
+              ${esc(monthLabel(ym))}
+
+              <div class="row-sub">
+
+                Start
+                ${money(startingBalance(ym))}
+                · Net
+                ${money(monthlyNet(ym))}
+                · End
+                ${money(endingBalance(ym))}
+
+              </div>
+
+            </div>
+
+            <div class="row-value ${
+              endingBalance(ym)<0
+                ?"balance-negative"
+                :"balance-positive"
+            }">
+              ${money(endingBalance(ym))}
+            </div>
+
+            <div class="chevron">›</div>
+
+          </div>
+
+        `).join("")}
+
+      </div>
+
+      <div class="section-title">
+        Account
+      </div>
+
+      <div class="group">
+
+        <div class="row">
+
+          <div class="row-label">
+            Default Monthly Income
+          </div>
+
+          <div class="row-value">
+            ${money(S.income)}
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="row-label">
+            Default Misc Buffer
+          </div>
+
+          <div class="row-value">
+            ${money(S.miscBudget)}
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  `;
 }
 
-function showToast(message){
+/* -------------------------------------------------
+   TABS
+------------------------------------------------- */
 
-  const toast=document.getElementById("toast");
+function renderTabs(){
 
-  toast.textContent=message;
-  toast.classList.add("show");
+  const tabs=[
+    ["overview","⌂","Overview"],
+    ["budget","▤","Budget"],
+    ["goal","◎","Goal"],
+    ["investing","↗","Invest"],
+    ["more","•••","More"]
+  ];
 
-  clearTimeout(showToast.timer);
+  return `
 
-  showToast.timer=setTimeout(()=>{
-    toast.classList.remove("show");
-  },2200);
+    <div class="tabbar">
+
+      ${tabs.map(([id,icon,label])=>`
+
+        <button
+          class="tab ${
+            S.tab===id
+              ?"active"
+              :""
+          }"
+          data-tab="${id}"
+        >
+
+          <div class="tab-icon">
+            ${icon}
+          </div>
+
+          <div class="tab-label">
+            ${label}
+          </div>
+
+        </button>
+
+      `).join("")}
+
+    </div>
+  `;
 }
 
-/* TAB EVENTS */
+/* -------------------------------------------------
+   FAB
+------------------------------------------------- */
 
-document.querySelectorAll(".tab").forEach(btn=>{
+function renderFab(){
 
-  btn.addEventListener("click",()=>{
-    switchTab(btn.dataset.tab);
-  });
-});
+  if(!fabOpen){
 
-/* INPUT EVENTS */
-
-document.getElementById("incomeInput").addEventListener("change",e=>{
-
-  if(!S.monthOverrides[currentMonth]){
-    S.monthOverrides[currentMonth]={};
+    return `
+      <button
+        class="fab"
+        data-fab-toggle
+      >
+        ＋
+      </button>
+    `;
   }
 
-  S.monthOverrides[currentMonth].income=
-    Number(e.target.value)||0;
+  return `
 
-  save();
-  renderAll();
-});
+    <div
+      class="fab-bg"
+      data-close-fab
+    ></div>
 
-document.getElementById("extraIncomeInput").addEventListener("change",e=>{
+    <div class="fab-menu">
 
-  if(!S.monthOverrides[currentMonth]){
-    S.monthOverrides[currentMonth]={};
+      <button
+        class="fab-option"
+        data-fab="extra"
+      >
+        ＋ Extra Income
+      </button>
+
+      <button
+        class="fab-option"
+        data-fab="expense"
+      >
+        − Expense
+      </button>
+
+      <button
+        class="fab-option"
+        data-fab="investment"
+      >
+        ↗ Investment
+      </button>
+
+      <button
+        class="fab-option"
+        data-fab="goal"
+      >
+        ◎ Goal Item
+      </button>
+
+      <button
+        class="fab-option"
+        data-fab="check"
+      >
+        ✓ Checklist
+      </button>
+
+    </div>
+
+    <button
+      class="fab"
+      data-fab-toggle
+      style="transform:rotate(45deg)"
+    >
+      ＋
+    </button>
+  `;
+}
+
+/* -------------------------------------------------
+   SHEET SHELL
+------------------------------------------------- */
+
+function sheetShell(
+  title,
+  body,
+  saveLabel="Done",
+  danger=""
+){
+
+  return `
+
+    <div
+      class="sheet-bg"
+      id="sheet-bg"
+    >
+
+      <div class="sheet">
+
+        <div class="handle"></div>
+
+        <div class="sheet-nav">
+
+          <button
+            class="sheet-btn"
+            data-sheet-cancel
+          >
+            Cancel
+          </button>
+
+          <div class="sheet-title">
+            ${esc(title)}
+          </div>
+
+          <button
+            class="sheet-btn bold"
+            data-sheet-save
+          >
+            ${esc(saveLabel)}
+          </button>
+
+        </div>
+
+        <div class="sheet-body">
+
+          ${body}
+
+          ${danger}
+
+        </div>
+
+      </div>
+
+    </div>
+  `;
+}
+
+/* -------------------------------------------------
+   SHEETS
+------------------------------------------------- */
+
+function renderSheet(){
+
+  if(!sheet)return "";
+
+  /* INCOME */
+
+  if(sheet.type==="income"){
+
+    const ym=sheet.month;
+
+    const extras=
+      S.monthOverrides?.[ym]?.extraIncome||[];
+
+    return sheetShell(
+      monthLabel(ym),
+
+      `
+
+        <div class="field">
+
+          <div class="field-label">
+            Base Monthly Income
+          </div>
+
+          <div class="field-box">
+
+            <input
+              id="income-input"
+              type="number"
+              step="0.01"
+              value="${baseIncome(ym).toFixed(2)}"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="field">
+
+          <div class="field-label">
+            Extra Income
+          </div>
+
+          <div class="group">
+
+            ${extras.map(e=>`
+
+              <div
+                class="row"
+                data-edit-extra="${esc(e.id)}"
+              >
+
+                <div class="row-label">
+                  ${esc(e.label)}
+                </div>
+
+                <div class="row-value">
+                  ${money(e.amount)}
+                </div>
+
+                <div class="chevron">›</div>
+
+              </div>
+
+            `).join("")}
+
+            <button
+              class="add-row"
+              data-add-extra
+            >
+              ＋ Add Extra Income
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="callout">
+
+          Income is independent by month.
+          Changing ${esc(shortMonth(ym))}
+          will not change another month.
+
+        </div>
+
+      `
+    );
   }
 
-  S.monthOverrides[currentMonth].extraIncome=
-    Number(e.target.value)||0;
+  /* EXTRA INCOME */
 
-  save();
-  renderAll();
-});
+  if(sheet.type==="extra"){
 
-/* MONTH EVENTS */
+    const ym=sheet.month;
 
-document.getElementById("addMonthBtn")
-  .addEventListener("click",openAddMonth);
+    const e=
+      sheet.id
+      ?(
+        S.monthOverrides?.[ym]?.extraIncome||[]
+      ).find(x=>x.id===sheet.id)
+      :null;
 
-document.getElementById("addMonthBtn2")
-  .addEventListener("click",openAddMonth);
+    const danger=sheet.id
+      ?`
+        <button
+          class="delete-button"
+          data-delete-extra
+        >
+          Delete Extra Income
+        </button>
+      `
+      :"";
 
-document.getElementById("overviewAddMonth")
-  .addEventListener("click",openAddMonth);
+    return sheetShell(
+      sheet.id
+        ?"Edit Extra Income"
+        :"Extra Income",
 
-document.getElementById("removeMonthBtn")
-  .addEventListener("click",removeCurrentMonth);
+      `
 
-document.getElementById("editMonthBtn")
-  .addEventListener("click",openEditMonth);
+        <div class="field">
 
-document.getElementById("saveMonthBtn")
-  .addEventListener("click",()=>{
+          <div class="field-label">
+            Description
+          </div>
 
-    const ym=document.getElementById("newMonthInput").value;
-    const income=Number(
-      document.getElementById("newMonthIncome").value
-    )||DEFAULT_INCOME;
+          <div class="field-box">
 
-    if(!ym){
-      showToast("Choose a month");
-      return;
-    }
+            <input
+              id="extra-label"
+              type="text"
+              value="${esc(e?.label||"")}"
+              placeholder="Income source"
+            >
 
-    if(S.months.includes(ym)){
-      showToast("That month already exists");
-      return;
-    }
+          </div>
 
-    addMonth(ym,income);
-    closeModal("monthModal");
+        </div>
 
-    showToast(`${monthLabel(ym)} added`);
-  });
+        <div class="field">
 
-document.getElementById("saveEditMonthBtn")
-  .addEventListener("click",saveEditMonth);
+          <div class="field-label">
+            Amount
+          </div>
 
-/* EXPENSE EVENTS */
+          <div class="field-box">
 
-document.getElementById("addExpenseBtn")
-  .addEventListener("click",openAddExpense);
+            <input
+              id="extra-amount"
+              type="number"
+              step="0.01"
+              value="${n(e?.amount||0).toFixed(2)}"
+            >
 
-document.getElementById("saveExpenseBtn")
-  .addEventListener("click",saveExpense);
+          </div>
 
-/* CHECKLIST EVENTS */
+        </div>
 
-document.getElementById("addChecklistBtn")
-  .addEventListener("click",()=>{
-    document.getElementById("newChecklistItem").value="";
-    openModal("checklistModal");
-  });
+      `,
+      "Done",
+      danger
+    );
+  }
 
-document.getElementById("saveChecklistBtn")
-  .addEventListener("click",addChecklist);
+  /* CATEGORY */
 
-/* SETTINGS */
+  if(sheet.type==="category"){
 
-document.getElementById("settingsBtn")
-  .addEventListener("click",()=>{
-    openModal("settingsModal");
-  });
+    const ym=sheet.month;
+    const key=sheet.key;
+    const c=categoryBudget(ym)[key];
 
-document.getElementById("resetChecklistBtn")
-  .addEventListener("click",()=>{
+    return sheetShell(
+      c.label,
 
-    if(!confirm("Reset the checklist?"))return;
+      `
 
-    S.checklist=DEFAULT_CHECKLIST.map(text=>({
-      id:uid("task"),
-      text,
-      done:false
-    }));
+        <div class="field">
 
-    save();
-    closeModal("settingsModal");
-    renderChecklist();
+          <div class="field-label">
+            Category Name
+          </div>
 
-    showToast("Checklist reset");
-  });
+          <div class="field-box">
 
-document.getElementById("resetBudgetBtn")
-  .addEventListener("click",()=>{
+            <input
+              id="cat-name"
+              type="text"
+              value="${esc(c.label)}"
+            >
 
-    if(!confirm(
-      "Reset all budget months to the default recurring setup? Your checklist will stay."
-    ))return;
+          </div>
 
-    S.monthBudgets={};
-    S.monthOverrides={};
-    S.paidExpenses={};
+        </div>
 
-    allMonthsRaw().forEach(ym=>{
-      S.monthBudgets[ym]=defaultBudget();
-      S.monthOverrides[ym]={
-        income:DEFAULT_INCOME,
-        extraIncome:0
+        <div class="field">
+
+          <div class="field-label">
+            Icon
+          </div>
+
+          <div class="field-box">
+
+            <input
+              id="cat-icon"
+              type="text"
+              value="${esc(c.icon||"")}"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="field">
+
+          <div class="field-label">
+            Color
+          </div>
+
+          <div class="color-grid">
+
+            ${COLORS.map(color=>`
+
+              <button
+                class="color-dot ${
+                  c.color===color
+                    ?"selected"
+                    :""
+                }"
+                style="background:${color}"
+                data-color="${color}"
+              ></button>
+
+            `).join("")}
+
+          </div>
+
+        </div>
+
+        <div class="field">
+
+          <div class="field-label">
+            Items
+          </div>
+
+          <div class="group">
+
+            ${(c.items||[]).map(item=>`
+
+              <div class="row">
+
+                <input
+                  class="text-input"
+                  value="${esc(item.label)}"
+                  data-item-label="${esc(item.id)}"
+                >
+
+                <button
+                  style="
+                    color:var(--red);
+                    font-size:22px;
+                  "
+                  data-delete-item="${esc(item.id)}"
+                >
+                  ×
+                </button>
+
+              </div>
+
+            `).join("")}
+
+            <div class="row">
+
+              <input
+                id="new-item"
+                class="text-input"
+                placeholder="New item"
+              >
+
+              <button
+                style="
+                  color:var(--blue);
+                  font-weight:600;
+                "
+                data-add-item
+              >
+                Add
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="callout">
+
+          These values belong only to
+          <strong>${esc(shortMonth(ym))}</strong>.
+
+          Other months have their own copy.
+
+        </div>
+
+      `,
+      "Done"
+    );
+  }
+
+  /* ONE-TIME EXPENSE */
+
+  if(sheet.type==="one"){
+
+    const e=
+      sheet.id
+      ?S.oneTimeExpenses.find(
+        x=>x.id===sheet.id
+      )
+      :null;
+
+    const danger=sheet.id
+      ?`
+        <button
+          class="delete-button"
+          data-delete-one
+        >
+          Delete Expense
+        </button>
+      `
+      :"";
+
+    return sheetShell(
+      sheet.id
+        ?"Edit Expense"
+        :"One-Time Expense",
+
+      `
+
+        <div class="field">
+
+          <div class="field-label">
+            Description
+          </div>
+
+          <div class="field-box">
+
+            <input
+              id="one-label"
+              type="text"
+              value="${esc(e?.label||"")}"
+              placeholder="Expense"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="field">
+
+          <div class="field-label">
+            Amount
+          </div>
+
+          <div class="field-box">
+
+            <input
+              id="one-amount"
+              type="number"
+              step="0.01"
+              value="${n(e?.amount||0).toFixed(2)}"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="field">
+
+          <div class="field-label">
+            Month
+          </div>
+
+          <div class="month-scroll" style="padding:0">
+
+            ${allMonths().map(m=>`
+
+              <button
+                class="month-chip ${
+                  (sheet.month||S.activeMonth)===m
+                    ?"active"
+                    :""
+                }"
+                data-one-month="${esc(m)}"
+              >
+                ${esc(shortMonth(m))}
+              </button>
+
+            `).join("")}
+
+          </div>
+
+        </div>
+
+      `,
+      "Done",
+      danger
+    );
+  }
+
+  /* GOAL ITEM */
+
+  if(sheet.type==="goalItem"){
+
+    const e=
+      sheet.id
+      ?S.goalExpenses.find(
+        x=>x.id===sheet.id
+      )
+      :null;
+
+    const danger=sheet.id
+      ?`
+        <button
+          class="delete-button"
+          data-delete-goal
+        >
+          Delete Goal Item
+        </button>
+      `
+      :"";
+
+    return sheetShell(
+      sheet.id
+        ?"Edit Goal Item"
+        :"Goal Item",
+
+      `
+
+        <div class="field">
+
+          <div class="field-label">
+            Name
+          </div>
+
+          <div class="field-box">
+
+            <input
+              id="goal-item-label"
+              type="text"
+              value="${esc(e?.label||"")}"
+              placeholder="Goal expense"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="field">
+
+          <div class="field-label">
+            Amount
+          </div>
+
+          <div class="field-box">
+
+            <input
+              id="goal-item-amount"
+              type="number"
+              step="0.01"
+              value="${n(e?.amount||0).toFixed(2)}"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="field">
+
+          <div class="field-label">
+            Note
+          </div>
+
+          <div class="field-box">
+
+            <input
+              id="goal-item-note"
+              type="text"
+              value="${esc(e?.estimate||"")}"
+              placeholder="Optional"
+            >
+
+          </div>
+
+        </div>
+
+      `,
+      "Done",
+      danger
+    );
+  }
+
+  /* GOAL NAME */
+
+  if(sheet.type==="goalName"){
+
+    return sheetShell(
+      "Goal Name",
+
+      `
+
+        <div class="field">
+
+          <div class="field-label">
+            Name
+          </div>
+
+          <div class="field-box">
+
+            <input
+              id="goal-name"
+              type="text"
+              value="${esc(S.goalLabel)}"
+            >
+
+          </div>
+
+        </div>
+
+      `
+    );
+  }
+
+  /* GOAL MONTH */
+
+  if(sheet.type==="goalMonth"){
+
+    return sheetShell(
+      "Target Month",
+
+      `
+
+        <div class="field">
+
+          <div class="month-scroll" style="padding:0">
+
+            ${allMonths().map(m=>`
+
+              <button
+                class="month-chip ${
+                  m===S.goalMonth
+                    ?"active"
+                    :""
+                }"
+                data-goal-month="${esc(m)}"
+              >
+                ${esc(shortMonth(m))}
+              </button>
+
+            `).join("")}
+
+          </div>
+
+        </div>
+
+      `
+    );
+  }
+
+  /* GOAL AMOUNT */
+
+  if(sheet.type==="goalAmount"){
+
+    return sheetShell(
+      "Target Amount",
+
+      `
+
+        <div class="field">
+
+          <div class="field-label">
+            Goal Target
+          </div>
+
+          <div class="field-box">
+
+            <input
+              id="goal-amount"
+              type="number"
+              step="0.01"
+              value="${goalTotal().toFixed(2)}"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="callout">
+
+          This changes the total goal target
+          while keeping your individual goal
+          items intact as much as possible.
+
+        </div>
+
+      `
+    );
+  }
+
+  /* MONTHS */
+
+  if(sheet.type==="months"){
+
+    const months=allMonths();
+
+    return sheetShell(
+      "Months",
+
+      `
+
+        <div class="callout" style="margin-bottom:18px">
+
+          Each month has its own budget.
+
+          A new month starts by copying the
+          previous month's budget once.
+
+          After creation, the months are
+          completely independent.
+
+        </div>
+
+        <div class="group">
+
+          ${months.map((ym,index)=>{
+
+            const canRemove=
+              months.length>1 &&
+              ym!==APP_START;
+
+            return `
+
+              <div class="row">
+
+                <div
+                  class="row-label"
+                  data-select-month="${esc(ym)}"
+                >
+
+                  ${esc(monthLabel(ym))}
+
+                  <div class="row-sub">
+
+                    Start
+                    ${money(startingBalance(ym))}
+                    · Net
+                    ${money(monthlyNet(ym))}
+                    · End
+                    ${money(endingBalance(ym))}
+
+                  </div>
+
+                </div>
+
+                <div class="row-value ${
+                  endingBalance(ym)<0
+                    ?"balance-negative"
+                    :"balance-positive"
+                }">
+                  ${money(endingBalance(ym))}
+                </div>
+
+                ${
+                  canRemove
+                  ?`
+                    <button
+                      class="remove-month"
+                      data-remove-month="${esc(ym)}"
+                    >
+                      Remove
+                    </button>
+                  `
+                  :`
+                    <div class="chevron">›</div>
+                  `
+                }
+
+              </div>
+
+            `;
+          }).join("")}
+
+          <button
+            class="add-row"
+            data-add-month
+          >
+            ＋ Add Next Month
+          </button>
+
+        </div>
+
+        <div class="danger-callout">
+
+          Removing a month removes that month's
+          budget and month-specific data.
+          Your other months remain unchanged.
+
+        </div>
+
+      `
+    );
+  }
+
+  /* ADD MONTH */
+
+  if(sheet.type==="addMonth"){
+
+    const next=sheet.next;
+    const previous=shiftMonth(next,-1);
+
+    return sheetShell(
+      "Add Month",
+
+      `
+
+        <div class="callout" style="margin-bottom:20px">
+
+          ${esc(monthLabel(next))}
+          will start with a copy of
+          ${esc(monthLabel(previous))}.
+
+          After creation, you can change this
+          month's expenses without changing the
+          previous month.
+
+        </div>
+
+        <div class="field">
+
+          <div class="field-label">
+            Base Income
+          </div>
+
+          <div class="field-box">
+
+            <input
+              id="new-month-income"
+              type="number"
+              step="0.01"
+              value="${baseIncome(previous).toFixed(2)}"
+            >
+
+          </div>
+
+        </div>
+
+      `
+    );
+  }
+
+  /* CHECKLIST */
+
+  if(sheet.type==="checklist"){
+
+    return sheetShell(
+      "Checklist",
+
+      `
+
+        <div class="group">
+
+          ${(S.checklist||[]).map(item=>`
+
+            <div
+              class="row"
+              data-toggle-check="${esc(item.id)}"
+            >
+
+              <div
+                class="check ${
+                  item.done
+                    ?"done"
+                    :""
+                }"
+              >
+                ${item.done?"✓":""}
+              </div>
+
+              <div
+                class="row-label ${
+                  item.done
+                    ?"strike"
+                    :""
+                }"
+              >
+                ${esc(item.label)}
+              </div>
+
+              <button
+                style="
+                  color:var(--red);
+                  font-size:22px;
+                "
+                data-delete-check="${esc(item.id)}"
+              >
+                ×
+              </button>
+
+            </div>
+
+          `).join("")}
+
+          <div class="row">
+
+            <input
+              id="new-check"
+              class="text-input"
+              placeholder="Add checklist item"
+            >
+
+            <button
+              style="
+                color:var(--blue);
+                font-weight:600;
+              "
+              data-add-check
+            >
+              Add
+            </button>
+
+          </div>
+
+        </div>
+
+      `
+    );
+  }
+
+  /* SETTINGS */
+
+  if(sheet.type==="settings"){
+
+    return sheetShell(
+      "Settings",
+
+      `
+
+        <div class="field">
+
+          <div class="field-label">
+            Default Monthly Income
+          </div>
+
+          <div class="field-box">
+
+            <input
+              id="settings-income"
+              type="number"
+              step="0.01"
+              value="${n(S.income).toFixed(2)}"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="field">
+
+          <div class="field-label">
+            Default Misc Buffer
+          </div>
+
+          <div class="field-box">
+
+            <input
+              id="settings-misc"
+              type="number"
+              step="0.01"
+              value="${n(S.miscBudget).toFixed(2)}"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="callout">
+
+          These are defaults for future months.
+
+          Existing months keep their own
+          saved values.
+
+        </div>
+
+      `,
+      "Save"
+    );
+  }
+
+  return "";
+}
+
+/* -------------------------------------------------
+   EVENTS
+------------------------------------------------- */
+
+function bindEvents(){
+
+  /* Tabs */
+
+  document.querySelectorAll("[data-tab]")
+    .forEach(btn=>{
+
+      btn.onclick=()=>{
+
+        S.tab=btn.dataset.tab;
+
+        fabOpen=false;
+        sheet=null;
+
+        save();
+        render();
       };
     });
 
-    /*
-      Restore the intentional September-specific data.
-    */
-    seedLegacyData();
+  /* Month chips */
 
-    save();
-    closeModal("settingsModal");
-    renderAll();
+  document.querySelectorAll(
+    ".nav [data-month]"
+  ).forEach(btn=>{
 
-    showToast("Budget reset");
+    btn.onclick=()=>{
+
+      S.activeMonth=
+        btn.dataset.month;
+
+      fabOpen=false;
+      sheet=null;
+
+      ensureMonth(S.activeMonth);
+
+      save();
+      render();
+    };
   });
 
-document.getElementById("clearAllBtn")
-  .addEventListener("click",()=>{
+  /* Month arrows */
 
-    if(!confirm(
-      "This will erase the entire local budget. Continue?"
-    ))return;
+  document.querySelectorAll(
+    "[data-nav-month]"
+  ).forEach(btn=>{
 
-    try{
-      localStorage.removeItem(SAVE_KEY);
+    btn.onclick=()=>{
 
-      LEGACY_SAVE_KEYS.forEach(key=>{
-        localStorage.removeItem(key);
-      });
-    }catch(e){}
+      const target=
+        btn.dataset.navMonth;
 
-    location.reload();
+      if(!target)return;
+
+      S.activeMonth=target;
+
+      ensureMonth(target);
+
+      save();
+      render();
+    };
   });
 
-/* CLOSE MODALS */
+  /* Categories */
 
-document.querySelectorAll("[data-close]").forEach(btn=>{
+  document.querySelectorAll(
+    "[data-category]"
+  ).forEach(btn=>{
 
-  btn.addEventListener("click",()=>{
-    closeModal(btn.dataset.close);
+    btn.onclick=()=>{
+
+      const key=
+        btn.dataset.category;
+
+      sheet={
+        type:"category",
+        month:S.activeMonth,
+        key
+      };
+
+      render();
+    };
   });
-});
 
-document.querySelectorAll(".modal-backdrop").forEach(backdrop=>{
+  document.querySelectorAll(
+    "[data-edit-category]"
+  ).forEach(btn=>{
 
-  backdrop.addEventListener("click",e=>{
-    if(e.target===backdrop){
-      backdrop.classList.remove("show");
-    }
+    btn.onclick=()=>{
+
+      sheet={
+        type:"category",
+        month:S.activeMonth,
+        key:btn.dataset.editCategory
+      };
+
+      render();
+    };
   });
-});
 
-/* INITIALIZE */
+  /* Amounts */
 
-migrateState();
+  document.querySelectorAll(
+    "[data-amount]"
+  ).forEach(input=>{
 
-S.months=allMonthsRaw();
+    input.onchange=()=>{
 
-if(!S.months.includes(currentMonth)){
-  currentMonth=S.months[0] || APP_START;
+      const ym=S.activeMonth;
+      const key=input.dataset.amount;
+      const id=input.dataset.item;
+
+      const item=
+        categoryBudget(ym)
+          [key]
+          ?.items
+          ?.find(x=>x.id===id);
+
+      if(item){
+
+        item.amount=
+          n(input.value);
+
+        save();
+        render();
+      }
+    };
+  });
+
+  /* Misc */
+
+  const misc=
+    document.querySelector("[data-misc]");
+
+  if(misc){
+
+    misc.onchange=()=>{
+
+      const ov=
+        S.monthOverrides[S.activeMonth] ||
+        (S.monthOverrides[S.activeMonth]={});
+
+      ov.miscBudget=
+        n(misc.value);
+
+      save();
+      render();
+    };
+  }
+
+  /* Paid */
+
+  document.querySelectorAll(
+    "[data-toggle-paid]"
+  ).forEach(btn=>{
+
+    btn.onclick=e=>{
+
+      e.stopPropagation();
+
+      togglePaid(
+        S.activeMonth,
+        btn.dataset.paidType,
+        btn.dataset.paidId
+      );
+    };
+  });
+
+  /* One-time edit */
+
+  document.querySelectorAll(
+    "[data-edit-one]"
+  ).forEach(btn=>{
+
+    btn.onclick=()=>{
+
+      const e=
+        S.oneTimeExpenses.find(
+          x=>x.id===btn.dataset.editOne
+        );
+
+      if(!e)return;
+
+      sheet={
+        type:"one",
+        id:e.id,
+        month:e.month
+      };
+
+      render();
+    };
+  });
+
+  const addOne=
+    document.querySelector("[data-add-one]");
+
+  if(addOne){
+
+    addOne.onclick=()=>{
+
+      sheet={
+        type:"one",
+        month:S.activeMonth
+      };
+
+      render();
+    };
+  }
+
+  /* Goal items */
+
+  document.querySelectorAll(
+    "[data-goal-item]"
+  ).forEach(btn=>{
+
+    btn.onclick=()=>{
+
+      sheet={
+        type:"goalItem",
+        id:btn.dataset.goalItem
+      };
+
+      render();
+    };
+  });
+
+  const addGoal=
+    document.querySelector("[data-add-goal]");
+
+  if(addGoal){
+
+    addGoal.onclick=()=>{
+
+      sheet={
+        type:"goalItem"
+      };
+
+      render();
+    };
+  }
+
+  /* Goal settings */
+
+  document.querySelectorAll(
+    "[data-goal-setting]"
+  ).forEach(btn=>{
+
+    btn.onclick=()=>{
+
+      const type=
+        btn.dataset.goalSetting;
+
+      if(type==="name"){
+        sheet={type:"goalName"};
+      }
+
+      if(type==="month"){
+        sheet={type:"goalMonth"};
+      }
+
+      if(type==="amount"){
+        sheet={type:"goalAmount"};
+      }
+
+      render();
+    };
+  });
+
+  /* Income */
+
+  document.querySelectorAll(
+    "[data-income]"
+  ).forEach(btn=>{
+
+    btn.onclick=()=>{
+
+      sheet={
+        type:"income",
+        month:S.activeMonth
+      };
+
+      render();
+    };
+  });
+
+  /* More */
+
+  const openMonths=
+    document.querySelector("[data-open-months]");
+
+  if(openMonths){
+
+    openMonths.onclick=()=>{
+
+      sheet={type:"months"};
+
+      render();
+    };
+  }
+
+  const openChecklist=
+    document.querySelector("[data-open-checklist]");
+
+  if(openChecklist){
+
+    openChecklist.onclick=()=>{
+
+      sheet={type:"checklist"};
+
+      render();
+    };
+  }
+
+  const openSettings=
+    document.querySelector("[data-open-settings]");
+
+  if(openSettings){
+
+    openSettings.onclick=()=>{
+
+      sheet={type:"settings"};
+
+      render();
+    };
+  }
+
+  /* Month summaries */
+
+  document.querySelectorAll(
+    "[data-month-summary]"
+  ).forEach(btn=>{
+
+    btn.onclick=()=>{
+
+      S.activeMonth=
+        btn.dataset.monthSummary;
+
+      save();
+      render();
+    };
+  });
+
+  /* FAB */
+
+  const fabToggle=
+    document.querySelector("[data-fab-toggle]");
+
+  if(fabToggle){
+
+    fabToggle.onclick=()=>{
+
+      fabOpen=!fabOpen;
+
+      render();
+    };
+  }
+
+  const closeFab=
+    document.querySelector("[data-close-fab]");
+
+  if(closeFab){
+
+    closeFab.onclick=()=>{
+
+      fabOpen=false;
+
+      render();
+    };
+  }
+
+  document.querySelectorAll(
+    "[data-fab]"
+  ).forEach(btn=>{
+
+    btn.onclick=()=>{
+
+      const type=
+        btn.dataset.fab;
+
+      fabOpen=false;
+
+      if(type==="extra"){
+
+        sheet={
+          type:"extra",
+          month:S.activeMonth
+        };
+      }
+
+      if(type==="expense"){
+
+        sheet={
+          type:"one",
+          month:S.activeMonth
+        };
+      }
+
+      if(type==="investment"){
+
+        S.tab="investing";
+
+        save();
+        render();
+
+        return;
+      }
+
+      if(type==="goal"){
+
+        sheet={
+          type:"goalItem"
+        };
+      }
+
+      if(type==="check"){
+
+        sheet={
+          type:"checklist"
+        };
+      }
+
+      render();
+    };
+  });
+
+  /* Sheet */
+
+  bindSheetEvents();
 }
 
-renderAll();
+/* -------------------------------------------------
+   SHEET EVENTS
+------------------------------------------------- */
 
+function bindSheetEvents(){
+
+  const cancel=
+    document.querySelector(
+      "[data-sheet-cancel]"
+    );
+
+  if(cancel){
+
+    cancel.onclick=()=>{
+
+      sheet=null;
+
+      render();
+    };
+  }
+
+  const bg=
+    document.getElementById("sheet-bg");
+
+  if(bg){
+
+    bg.onclick=e=>{
+
+      if(e.target===bg){
+
+        sheet=null;
+
+        render();
+      }
+    };
+  }
+
+  const saveBtn=
+    document.querySelector(
+      "[data-sheet-save]"
+    );
+
+  if(saveBtn){
+
+    saveBtn.onclick=saveSheet;
+  }
+
+  /* Income */
+
+  if(sheet?.type==="income"){
+
+    const addExtra=
+      document.querySelector(
+        "[data-add-extra]"
+      );
+
+    if(addExtra){
+
+      addExtra.onclick=()=>{
+
+        sheet={
+          type:"extra",
+          month:sheet.month
+        };
+
+        render();
+      };
+    }
+
+    document.querySelectorAll(
+      "[data-edit-extra]"
+    ).forEach(btn=>{
+
+      btn.onclick=()=>{
+
+        sheet={
+          type:"extra",
+          id:btn.dataset.editExtra,
+          month:sheet.month
+        };
+
+        render();
+      };
+    });
+  }
+
+  /* Extra income */
+
+  if(sheet?.type==="extra"){
+
+    const del=
+      document.querySelector(
+        "[data-delete-extra]"
+      );
+
+    if(del){
+
+      del.onclick=()=>{
+
+        const list=
+          S.monthOverrides?.[sheet.month]
+            ?.extraIncome || [];
+
+        if(S.monthOverrides[sheet.month]){
+
+          S.monthOverrides[sheet.month]
+            .extraIncome=
+            list.filter(
+              e=>e.id!==sheet.id
+            );
+        }
+
+        save();
+
+        sheet={
+          type:"income",
+          month:sheet.month
+        };
+
+        render();
+      };
+    }
+  }
+
+  /* Category */
+
+  if(sheet?.type==="category"){
+
+    document.querySelectorAll(
+      "[data-color]"
+    ).forEach(btn=>{
+
+      btn.onclick=()=>{
+
+        sheet.color=
+          btn.dataset.color;
+
+        document.querySelectorAll(
+          "[data-color]"
+        ).forEach(x=>{
+
+          x.classList.toggle(
+            "selected",
+            x.dataset.color===sheet.color
+          );
+        });
+      };
+    });
+
+    document.querySelectorAll(
+      "[data-delete-item]"
+    ).forEach(btn=>{
+
+      btn.onclick=()=>{
+
+        const c=
+          categoryBudget(sheet.month)
+            [sheet.key];
+
+        c.items=
+          c.items.filter(
+            i=>i.id!==btn.dataset.deleteItem
+          );
+
+        save();
+        render();
+      };
+    });
+
+    const add=
+      document.querySelector(
+        "[data-add-item]"
+      );
+
+    if(add){
+
+      add.onclick=()=>{
+
+        const input=
+          document.getElementById(
+            "new-item"
+          );
+
+        const value=
+          input?.value?.trim();
+
+        if(!value)return;
+
+        categoryBudget(sheet.month)
+          [sheet.key]
+          .items
+          .push({
+            id:uid(),
+            label:value,
+            amount:0
+          });
+
+        save();
+        render();
+      };
+    }
+  }
+
+  /* One-time */
+
+  if(sheet?.type==="one"){
+
+    document.querySelectorAll(
+      "[data-one-month]"
+    ).forEach(btn=>{
+
+      btn.onclick=()=>{
+
+        sheet.month=
+          btn.dataset.oneMonth;
+
+        document.querySelectorAll(
+          "[data-one-month]"
+        ).forEach(x=>{
+
+          x.classList.toggle(
+            "active",
+            x.dataset.oneMonth===sheet.month
+          );
+        });
+      };
+    });
+
+    const del=
+      document.querySelector(
+        "[data-delete-one]"
+      );
+
+    if(del){
+
+      del.onclick=()=>{
+
+        S.oneTimeExpenses=
+          S.oneTimeExpenses.filter(
+            e=>e.id!==sheet.id
+          );
+
+        Object.keys(
+          S.paidExpenses||{}
+        ).forEach(key=>{
+
+          if(
+            key.endsWith(
+              "__one__"+sheet.id
+            )
+          ){
+            delete S.paidExpenses[key];
+          }
+        });
+
+        save();
+
+        sheet=null;
+
+        render();
+      };
+    }
+  }
+
+  /* Goal */
+
+  if(sheet?.type==="goalItem"){
+
+    const del=
+      document.querySelector(
+        "[data-delete-goal]"
+      );
+
+    if(del){
+
+      del.onclick=()=>{
+
+        S.goalExpenses=
+          S.goalExpenses.filter(
+            e=>e.id!==sheet.id
+          );
+
+        save();
+
+        sheet=null;
+
+        render();
+      };
+    }
+  }
+
+  /* Goal month */
+
+  if(sheet?.type==="goalMonth"){
+
+    document.querySelectorAll(
+      "[data-goal-month]"
+    ).forEach(btn=>{
+
+      btn.onclick=()=>{
+
+        S.goalMonth=
+          btn.dataset.goalMonth;
+
+        ensureAllMonths();
+
+        save();
+
+        sheet=null;
+
+        render();
+      };
+    });
+  }
+
+  /* Months */
+
+  if(sheet?.type==="months"){
+
+    document.querySelectorAll(
+      "[data-select-month]"
+    ).forEach(btn=>{
+
+      btn.onclick=()=>{
+
+        S.activeMonth=
+          btn.dataset.selectMonth;
+
+        ensureMonth(
+          S.activeMonth
+        );
+
+        save();
+
+        sheet=null;
+
+        render();
+      };
+    });
+
+    const add=
+      document.querySelector(
+        "[data-add-month]"
+      );
+
+    if(add){
+
+      add.onclick=()=>{
+
+        const months=allMonths();
+
+        const last=
+          months[months.length-1];
+
+        sheet={
+          type:"addMonth",
+          next:shiftMonth(last,1)
+        };
+
+        render();
+      };
+    }
+
+    /* Remove month */
+
+    document.querySelectorAll(
+      "[data-remove-month]"
+    ).forEach(btn=>{
+
+      btn.onclick=e=>{
+
+        e.stopPropagation();
+
+        const ym=
+          btn.dataset.removeMonth;
+
+        if(ym===APP_START){
+
+          showToast(
+            "September 2026 cannot be removed"
+          );
+
+          return;
+        }
+
+        const months=allMonths();
+
+        if(months.length<=1){
+
+          showToast(
+            "Keep at least one month"
+          );
+
+          return;
+        }
+
+        /*
+          Remove only that month.
+          No other month is modified.
+        */
+
+        delete S.monthBudgets[ym];
+
+        delete S.monthOverrides[ym];
+
+        S.oneTimeExpenses=
+          S.oneTimeExpenses.filter(
+            e=>e.month!==ym
+          );
+
+        /*
+          Remove paid records belonging
+          to the deleted month.
+        */
+
+        Object.keys(
+          S.paidExpenses||{}
+        ).forEach(key=>{
+
+          if(key.startsWith(ym+"__")){
+
+            delete S.paidExpenses[key];
+          }
+        });
+
+        /*
+          If the removed month was active,
+          move to the previous available month.
+        */
+
+        if(S.activeMonth===ym){
+
+          const remaining=
+            allMonths();
+
+          const fallback=
+            remaining
+              .filter(m=>m<ym)
+              .pop() ||
+            remaining[0];
+
+          S.activeMonth=fallback;
+        }
+
+        /*
+          If goal month was removed,
+          move goal to nearest remaining month.
+        */
+
+        if(S.goalMonth===ym){
+
+          const remaining=
+            allMonths();
+
+          S.goalMonth=
+            remaining.includes(APP_START)
+              ?(
+                remaining
+                  .filter(m=>m<=S.activeMonth)
+                  .pop() ||
+                remaining[remaining.length-1]
+              )
+              :remaining[remaining.length-1];
+        }
+
+        save();
+
+        sheet={
+          type:"months"
+        };
+
+        render();
+
+        showToast(
+          monthLabel(ym)+" removed"
+        );
+      };
+    });
+  }
+
+  /* Checklist */
+
+  if(sheet?.type==="checklist"){
+
+    document.querySelectorAll(
+      "[data-toggle-check]"
+    ).forEach(row=>{
+
+      row.onclick=e=>{
+
+        if(
+          e.target.closest(
+            "[data-delete-check]"
+          )
+        )return;
+
+        const item=
+          S.checklist.find(
+            x=>x.id===row.dataset.toggleCheck
+          );
+
+        if(item){
+
+          item.done=!item.done;
+
+          save();
+          render();
+        }
+      };
+    });
+
+    document.querySelectorAll(
+      "[data-delete-check]"
+    ).forEach(btn=>{
+
+      btn.onclick=e=>{
+
+        e.stopPropagation();
+
+        S.checklist=
+          S.checklist.filter(
+            x=>x.id!==btn.dataset.deleteCheck
+          );
+
+        save();
+        render();
+      };
+    });
+
+    const add=
+      document.querySelector(
+        "[data-add-check]"
+      );
+
+    if(add){
+
+      add.onclick=()=>{
+
+        const input=
+          document.getElementById(
+            "new-check"
+          );
+
+        const value=
+          input?.value?.trim();
+
+        if(!value)return;
+
+        S.checklist.push({
+          id:uid(),
+          label:value,
+          done:false
+        });
+
+        save();
+        render();
+      };
+    }
+  }
+}
+
+/* -------------------------------------------------
+   SAVE SHEET
+------------------------------------------------- */
+
+function saveSheet(){
+
+  if(!sheet)return;
+
+  /* INCOME */
+
+  if(sheet.type==="income"){
+
+    const value=
+      document.getElementById(
+        "income-input"
+      )?.value;
+
+    S.monthOverrides[sheet.month]=
+      S.monthOverrides[sheet.month]||{};
+
+    S.monthOverrides[sheet.month].income=
+      n(value);
+
+    save();
+
+    sheet=null;
+
+    render();
+
+    return;
+  }
+
+  /* EXTRA */
+
+  if(sheet.type==="extra"){
+
+    const label=
+      document.getElementById(
+        "extra-label"
+      )?.value?.trim();
+
+    const amount=
+      n(
+        document.getElementById(
+          "extra-amount"
+        )?.value
+      );
+
+    if(!label)return;
+
+    S.monthOverrides[sheet.month]=
+      S.monthOverrides[sheet.month]||{};
+
+    S.monthOverrides[sheet.month].extraIncome=
+      S.monthOverrides[sheet.month].extraIncome||[];
+
+    const list=
+      S.monthOverrides[sheet.month].extraIncome;
+
+    if(sheet.id){
+
+      const e=
+        list.find(x=>x.id===sheet.id);
+
+      if(e){
+
+        e.label=label;
+        e.amount=amount;
+      }
+
+    }else{
+
+      list.push({
+        id:uid(),
+        label,
+        amount
+      });
+    }
+
+    save();
+
+    sheet={
+      type:"income",
+      month:sheet.month
+    };
+
+    render();
+
+    return;
+  }
+
+  /* CATEGORY */
+
+  if(sheet.type==="category"){
+
+    const c=
+      categoryBudget(sheet.month)
+        [sheet.key];
+
+    const name=
+      document.getElementById(
+        "cat-name"
+      )?.value?.trim();
+
+    const icon=
+      document.getElementById(
+        "cat-icon"
+      )?.value?.trim();
+
+    if(name)c.label=name;
+
+    if(icon)c.icon=icon;
+
+    if(sheet.color){
+      c.color=sheet.color;
+    }
+
+    document.querySelectorAll(
+      "[data-item-label]"
+    ).forEach(input=>{
+
+      const item=
+        c.items.find(
+          x=>x.id===input.dataset.itemLabel
+        );
+
+      if(item){
+
+        const value=
+          input.value.trim();
+
+        if(value){
+          item.label=value;
+        }
+      }
+    });
+
+    save();
+
+    sheet=null;
+
+    render();
+
+    return;
+  }
+
+  /* ONE-TIME */
+
+  if(sheet.type==="one"){
+
+    const label=
+      document.getElementById(
+        "one-label"
+      )?.value?.trim();
+
+    const amount=
+      n(
+        document.getElementById(
+          "one-amount"
+        )?.value
+      );
+
+    if(!label)return;
+
+    if(sheet.id){
+
+      const e=
+        S.oneTimeExpenses.find(
+          x=>x.id===sheet.id
+        );
+
+      if(e){
+
+        e.label=label;
+        e.amount=amount;
+        e.month=
+          sheet.month||e.month;
+      }
+
+    }else{
+
+      S.oneTimeExpenses.push({
+        id:uid(),
+        label,
+        amount,
+        month:
+          sheet.month||
+          S.activeMonth
+      });
+    }
+
+    save();
+
+    sheet=null;
+
+    render();
+
+    return;
+  }
+
+  /* GOAL ITEM */
+
+  if(sheet.type==="goalItem"){
+
+    const label=
+      document.getElementById(
+        "goal-item-label"
+      )?.value?.trim();
+
+    const amount=
+      n(
+        document.getElementById(
+          "goal-item-amount"
+        )?.value
+      );
+
+    const note=
+      document.getElementById(
+        "goal-item-note"
+      )?.value?.trim()||"";
+
+    if(!label)return;
+
+    if(sheet.id){
+
+      const e=
+        S.goalExpenses.find(
+          x=>x.id===sheet.id
+        );
+
+      if(e){
+
+        e.label=label;
+        e.amount=amount;
+        e.estimate=note;
+      }
+
+    }else{
+
+      S.goalExpenses.push({
+        id:uid(),
+        label,
+        amount,
+        estimate:note
+      });
+    }
+
+    save();
+
+    sheet=null;
+
+    render();
+
+    return;
+  }
+
+  /* GOAL NAME */
+
+  if(sheet.type==="goalName"){
+
+    const value=
+      document.getElementById(
+        "goal-name"
+      )?.value?.trim();
+
+    if(value){
+      S.goalLabel=value;
+    }
+
+    save();
+
+    sheet=null;
+
+    render();
+
+    return;
+  }
+
+  /* GOAL AMOUNT */
+
+  if(sheet.type==="goalAmount"){
+
+    const target=
+      n(
+        document.getElementById(
+          "goal-amount"
+        )?.value
+      );
+
+    const current=
+      goalTotal();
+
+    const difference=
+      target-current;
+
+    if(S.goalExpenses.length){
+
+      const last=
+        S.goalExpenses[
+          S.goalExpenses.length-1
+        ];
+
+      last.amount=
+        Math.max(
+          0,
+          n(last.amount)+difference
+        );
+
+    }else{
+
+      S.goalExpenses.push({
+        id:uid(),
+        label:"Move Day Goal",
+        amount:target,
+        estimate:""
+      });
+    }
+
+    save();
+
+    sheet=null;
+
+    render();
+
+    return;
+  }
+
+  /* ADD MONTH */
+
+  if(sheet.type==="addMonth"){
+
+    const next=sheet.next;
+    const previous=
+      shiftMonth(next,-1);
+
+    /*
+      Create the month only once.
+      The previous budget is copied once.
+      Future edits are independent.
+    */
+
+    if(!S.monthBudgets[next]){
+
+      ensureMonth(previous);
+
+      S.monthBudgets[next]=
+        clone(
+          S.monthBudgets[previous]
+        );
+    }
+
+    const income=
+      n(
+        document.getElementById(
+          "new-month-income"
+        )?.value
+      );
+
+    S.monthOverrides[next]=
+      S.monthOverrides[next]||{};
+
+    S.monthOverrides[next].income=
+      income;
+
+    S.activeMonth=next;
+
+    save();
+
+    sheet=null;
+
+    render();
+
+    return;
+  }
+
+  /* SETTINGS */
+
+  if(sheet.type==="settings"){
+
+    const income=
+      n(
+        document.getElementById(
+          "settings-income"
+        )?.value
+      );
+
+    const misc=
+      n(
+        document.getElementById(
+          "settings-misc"
+        )?.value
+      );
+
+    S.income=income;
+    S.miscBudget=misc;
+
+    save();
+
+    sheet=null;
+
+    render();
+
+    return;
+  }
+
+  if(sheet.type==="months"){
+
+    sheet=null;
+
+    render();
+
+    return;
+  }
+
+  if(sheet.type==="checklist"){
+
+    sheet=null;
+
+    render();
+
+    return;
+  }
+
+  sheet=null;
+
+  render();
+}
+
+/* -------------------------------------------------
+   START
+------------------------------------------------- */
+
+loadState();
+ensureAllMonths();
+render();
 </script>
 
 </body>
