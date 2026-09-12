@@ -729,6 +729,14 @@ const DEFAULT_INCOME=5390;
 const DEFAULT_GOAL_MONTH="2026-11";
 const DEFAULT_GOAL_NAME="Move Day";
 
+/*
+  Migration version.
+
+  Version 4 specifically cleans duplicate legacy expenses
+  that were created by earlier versions of the migration.
+*/
+const MIGRATION_VERSION=4;
+
 const COLORS=[
   "#0a84ff",
   "#30d158",
@@ -984,6 +992,98 @@ const INITIAL_MONTHS=[
   "2027-01"
 ];
 
+/* -------------------------------------------------
+   KNOWN LEGACY RECURRING EXPENSES
+-------------------------------------------------
+
+   These are the only recurring expenses that the
+   migration is allowed to automatically deduplicate.
+
+   This prevents legitimate custom expenses from
+   accidentally being deleted.
+------------------------------------------------- */
+
+const LEGACY_RECURRING=[
+  {
+    category:"housing",
+    id:"legacy_rent",
+    label:"Rent",
+    amount:525
+  },
+  {
+    category:"utilities",
+    id:"legacy_tmobile",
+    label:"T-Mobile",
+    amount:250
+  },
+  {
+    category:"transportation",
+    id:"legacy_tesla_ins",
+    label:"Tesla Insurance",
+    amount:198.78
+  },
+  {
+    category:"transportation",
+    id:"legacy_tesla_fsd",
+    label:"Tesla FSD",
+    amount:106.67
+  },
+  {
+    category:"transportation",
+    id:"legacy_tesla_rim",
+    label:"Rim & Tire Protection",
+    amount:16
+  },
+  {
+    category:"transportation",
+    id:"legacy_tesla_wind",
+    label:"Windshield Protection",
+    amount:16
+  },
+  {
+    category:"transportation",
+    id:"legacy_supercharging",
+    label:"Tesla Supercharging",
+    amount:60
+  },
+  {
+    category:"subscriptions",
+    id:"legacy_apple_one",
+    label:"Apple One",
+    amount:39.99
+  },
+  {
+    category:"subscriptions",
+    id:"legacy_starz",
+    label:"Starz",
+    amount:11.99
+  },
+  {
+    category:"subscriptions",
+    id:"legacy_paramount",
+    label:"Paramount+",
+    amount:8
+  },
+  {
+    category:"subscriptions",
+    id:"legacy_disney",
+    label:"Disney+",
+    amount:10
+  },
+  {
+    category:"subscriptions",
+    id:"legacy_prime",
+    label:"Amazon Prime",
+    amount:7.53
+  },
+  {
+    category:"subscriptions",
+    id:"legacy_applecare",
+    label:"AppleCare+ (Daughter's Phone)",
+    amount:19.99
+  }
+];
+
 /* September one-time expenses from original setup */
 
 const LEGACY_ONE_TIME=[
@@ -1063,7 +1163,8 @@ const DEFAULT_STATE={
   paidExpenses:{},
 
   meta:{
-    seededLegacyData:true
+    seededLegacyData:true,
+    migrationVersion:MIGRATION_VERSION
   }
 };
 
@@ -1187,7 +1288,9 @@ function normalizeBudget(budget){
     };
   });
 
-  /* Preserve any custom categories */
+  /*
+    Preserve custom categories.
+  */
 
   Object.keys(budget||{}).forEach(key=>{
 
@@ -1235,9 +1338,8 @@ function ensureMonth(ym){
   if(previous && S.monthBudgets[previous]){
 
     /*
-      IMPORTANT:
-      This copies the previous budget only
-      when a month is created for the first time.
+      Copy previous budget ONLY when the new
+      month is first created.
     */
 
     S.monthBudgets[ym]=
@@ -1576,7 +1678,7 @@ function getMonthPaymentStats(ym){
 }
 
 /* -------------------------------------------------
-   MIGRATION
+   STORAGE
 ------------------------------------------------- */
 
 function findStoredState(){
@@ -1612,51 +1714,607 @@ function findStoredState(){
   return null;
 }
 
-function upsertLegacyItem(
-  budget,
-  categoryKey,
-  id,
-  label,
-  amount
+/* -------------------------------------------------
+   MIGRATION HELPERS
+------------------------------------------------- */
+
+/*
+  Normalize a label so old versions that changed
+  capitalization/spacing can still be recognized.
+*/
+function cleanLabel(value){
+
+  return String(value??"")
+    .trim()
+    .replace(/\s+/g," ")
+    .toLowerCase();
+}
+
+function sameExpense(item,label,amount){
+
+  return (
+    cleanLabel(item?.label)===cleanLabel(label) &&
+    Math.abs(n(item?.amount)-n(amount))<0.005
+  );
+}
+
+/*
+  Find whether a paid record exists for ANY ID.
+*/
+function transferPaidStatus(
+  ym,
+  category,
+  oldId,
+  newId
 ){
 
-  if(!budget[categoryKey]){
-    budget[categoryKey]=
-      clone(DEFAULT_CATEGORIES[categoryKey]);
+  if(!S.paidExpenses){
+    S.paidExpenses={};
   }
 
-  const items=
-    budget[categoryKey].items ||
-    (budget[categoryKey].items=[]);
-
-  const existingById=
-    items.find(i=>i.id===id);
-
-  if(existingById){
-
-    existingById.amount=amount;
-    existingById.label=label;
-
-    return;
-  }
-
-  const existingBySignature=
-    items.find(
-      i=>
-        i.label===label &&
-        n(i.amount)===amount
+  const oldKey=
+    paidKey(
+      ym,
+      "recurring",
+      category+"__"+oldId
     );
 
-  if(existingBySignature){
+  const newKey=
+    paidKey(
+      ym,
+      "recurring",
+      category+"__"+newId
+    );
+
+  if(S.paidExpenses[oldKey]){
+
+    S.paidExpenses[newKey]=true;
+  }
+
+  /*
+    Delete the old paid record after transferring it.
+  */
+
+  if(oldId!==newId){
+    delete S.paidExpenses[oldKey];
+  }
+}
+
+/*
+  Deduplicate ONE known legacy recurring expense
+  inside a specific month.
+
+  Rules:
+  1. Canonical ID wins.
+  2. Exact known signature duplicates are removed.
+  3. If any duplicate was paid, canonical becomes paid.
+  4. Custom unrelated expenses are untouched.
+*/
+function cleanupLegacyRecurringItem(
+  ym,
+  budget,
+  legacy
+){
+
+  if(!budget[legacy.category]){
+    budget[legacy.category]=
+      clone(DEFAULT_CATEGORIES[legacy.category]);
+  }
+
+  const category=
+    budget[legacy.category];
+
+  if(!Array.isArray(category.items)){
+    category.items=[];
+  }
+
+  const matches=
+    category.items.filter(item=>
+      sameExpense(
+        item,
+        legacy.label,
+        legacy.amount
+      ) ||
+      item.id===legacy.id
+    );
+
+  let canonical=
+    matches.find(
+      item=>item.id===legacy.id
+    );
+
+  /*
+    If no canonical ID exists but an old duplicate does,
+    promote the first exact match to canonical.
+  */
+
+  if(!canonical && matches.length){
+
+    canonical=matches[0];
+
+    const oldId=canonical.id;
+
+    canonical.id=legacy.id;
+
+    transferPaidStatus(
+      ym,
+      legacy.category,
+      oldId,
+      legacy.id
+    );
+  }
+
+  /*
+    If nothing exists, create the canonical expense.
+  */
+
+  if(!canonical){
+
+    canonical={
+      id:legacy.id,
+      label:legacy.label,
+      amount:legacy.amount
+    };
+
+    category.items.push(canonical);
+
     return;
   }
 
-  items.push({
-    id,
-    label,
-    amount
+  /*
+    Canonical label and amount are restored.
+    This prevents old migrated versions from leaving
+    slightly different labels or amounts behind.
+  */
+
+  canonical.id=legacy.id;
+  canonical.label=legacy.label;
+  canonical.amount=legacy.amount;
+
+  /*
+    Preserve paid status from every duplicate before
+    removing it.
+  */
+
+  category.items.forEach(item=>{
+
+    if(item===canonical)return;
+
+    if(
+      sameExpense(
+        item,
+        legacy.label,
+        legacy.amount
+      )
+    ){
+
+      const oldId=item.id;
+
+      transferPaidStatus(
+        ym,
+        legacy.category,
+        oldId,
+        legacy.id
+      );
+    }
+  });
+
+  /*
+    Keep exactly one canonical copy.
+  */
+
+  category.items=
+    category.items.filter(item=>
+      item===canonical ||
+      !sameExpense(
+        item,
+        legacy.label,
+        legacy.amount
+      )
+    );
+}
+
+/*
+  This maps old v2 category structures to the
+  new canonical categories.
+
+  Examples:
+    old tesla -> transportation
+    old phone -> utilities/subscriptions
+    old streaming -> subscriptions
+*/
+function migrateOldCategoryItems(
+  sep,
+  oldKey,
+  targetRules
+){
+
+  const old=sep?.[oldKey];
+
+  if(!old || !Array.isArray(old.items)){
+    return;
+  }
+
+  old.items.forEach(item=>{
+
+    const label=String(item.label||"").trim();
+    const amount=n(item.amount);
+
+    /*
+      First try an exact known legacy match.
+    */
+
+    const known=
+      LEGACY_RECURRING.find(rule=>
+        targetRules.includes(rule.category) &&
+        sameExpense(
+          item,
+          rule.label,
+          rule.amount
+        )
+      );
+
+    if(known){
+
+      const target=
+        sep[known.category] ||
+        (
+          sep[known.category]=
+            clone(DEFAULT_CATEGORIES[known.category])
+        );
+
+      if(!Array.isArray(target.items)){
+        target.items=[];
+      }
+
+      /*
+        Move paid state from the old ID to the canonical ID.
+      */
+
+      transferPaidStatus(
+        "2026-09",
+        known.category,
+        item.id,
+        known.id
+      );
+
+      /*
+        Add only if not already present.
+      */
+
+      const existing=
+        target.items.find(x=>
+          x.id===known.id
+        );
+
+      if(!existing){
+
+        target.items.push({
+          id:known.id,
+          label:known.label,
+          amount:known.amount
+        });
+      }
+
+      return;
+    }
+
+    /*
+      Unknown old v2 items are preserved rather than deleted.
+    */
+
+    const targetCategory=
+      targetRules[0]||"other";
+
+    const target=
+      sep[targetCategory] ||
+      (
+        sep[targetCategory]=
+          clone(DEFAULT_CATEGORIES[targetCategory])
+      );
+
+    target.items=
+      Array.isArray(target.items)
+        ?target.items
+        :[];
+
+    const exists=
+      target.items.some(x=>
+        cleanLabel(x.label)===cleanLabel(label) &&
+        Math.abs(n(x.amount)-amount)<0.005
+      );
+
+    if(!exists){
+
+      target.items.push({
+        id:"migrated_"+oldKey+"_"+(item.id||uid()),
+        label,
+        amount
+      });
+    }
   });
 }
+
+/* -------------------------------------------------
+   DUPLICATE CLEANUP
+------------------------------------------------- */
+
+function cleanupRecurringDuplicates(){
+
+  if(!S.monthBudgets){
+    S.monthBudgets={};
+  }
+
+  /*
+    Clean all months that currently exist.
+
+    This is important because duplicates may already have
+    been created in October, November, December, etc.
+  */
+
+  allMonthsRaw().forEach(ym=>{
+
+    const budget=
+      S.monthBudgets[ym];
+
+    if(!budget)return;
+
+    /*
+      First normalize the month without destroying
+      existing custom items.
+    */
+
+    const normalized=
+      normalizeBudget(budget);
+
+    /*
+      Now clean every known legacy expense.
+    */
+
+    LEGACY_RECURRING.forEach(legacy=>{
+
+      cleanupLegacyRecurringItem(
+        ym,
+        normalized,
+        legacy
+      );
+    });
+
+    S.monthBudgets[ym]=normalized;
+  });
+}
+
+/*
+  Clean duplicate one-time expenses.
+
+  Only known September one-time expenses are
+  automatically deduplicated.
+*/
+function cleanupOneTimeDuplicates(){
+
+  if(!Array.isArray(S.oneTimeExpenses)){
+    S.oneTimeExpenses=[];
+  }
+
+  const cleaned=[];
+  const canonicalBySignature={};
+
+  S.oneTimeExpenses.forEach(item=>{
+
+    const known=
+      LEGACY_ONE_TIME.find(rule=>
+        rule.month===item.month &&
+        sameExpense(
+          item,
+          rule.label,
+          rule.amount
+        )
+      );
+
+    if(!known){
+
+      /*
+        Unknown/custom one-time expense.
+        Preserve exactly as entered.
+      */
+
+      cleaned.push(item);
+      return;
+    }
+
+    const signature=
+      known.month+
+      "__"+
+      cleanLabel(known.label)+
+      "__"+
+      n(known.amount).toFixed(2);
+
+    const existing=
+      canonicalBySignature[signature];
+
+    if(!existing){
+
+      /*
+        Promote the first matching expense to canonical ID.
+      */
+
+      const oldId=item.id;
+
+      item.id=known.id;
+      item.label=known.label;
+      item.amount=known.amount;
+      item.month=known.month;
+
+      canonicalBySignature[signature]=item;
+      cleaned.push(item);
+
+      /*
+        Transfer paid status if the old copy had one.
+      */
+
+      if(
+        oldId &&
+        oldId!==known.id &&
+        S.paidExpenses?.[
+          paidKey(
+            known.month,
+            "one",
+            oldId
+          )
+        ]
+      ){
+
+        S.paidExpenses[
+          paidKey(
+            known.month,
+            "one",
+            known.id
+          )
+        ]=true;
+
+        delete S.paidExpenses[
+          paidKey(
+            known.month,
+            "one",
+            oldId
+          )
+        ];
+      }
+
+      return;
+    }
+
+    /*
+      Duplicate found.
+
+      If duplicate is paid, transfer that status
+      to the canonical item.
+    */
+
+    if(
+      S.paidExpenses?.[
+        paidKey(
+          item.month,
+          "one",
+          item.id
+        )
+      ]
+    ){
+
+      S.paidExpenses[
+        paidKey(
+          known.month,
+          "one",
+          known.id
+        )
+      ]=true;
+    }
+
+    delete S.paidExpenses[
+      paidKey(
+        item.month,
+        "one",
+        item.id
+      )
+    ];
+  });
+
+  S.oneTimeExpenses=cleaned;
+
+  /*
+    Remove obsolete deferred-rent naming from older builds.
+  */
+
+  S.oneTimeExpenses=
+    S.oneTimeExpenses.filter(
+      e=>
+        !(
+          cleanLabel(e.label)==="september rent (deferred)" &&
+          e.month==="2026-09"
+        )
+    );
+}
+
+/*
+  Clean duplicate September extra income.
+
+  This prevents the $4,500 payment from becoming
+  $9,000, $13,500, etc.
+*/
+function cleanupExtraIncomeDuplicates(){
+
+  S.monthOverrides=
+    S.monthOverrides||{};
+
+  const sep=
+    S.monthOverrides["2026-09"] ||
+    (
+      S.monthOverrides["2026-09"]={}
+    );
+
+  const list=
+    Array.isArray(sep.extraIncome)
+      ?sep.extraIncome
+      :[];
+
+  const cleaned=[];
+  let canonical=null;
+
+  list.forEach(item=>{
+
+    const isDeal=
+      cleanLabel(item.label)==="deal / contract payment" &&
+      Math.abs(n(item.amount)-4500)<0.005;
+
+    if(!isDeal){
+
+      /*
+        Preserve all custom extra income.
+      */
+
+      cleaned.push(item);
+      return;
+    }
+
+    if(!canonical){
+
+      canonical={
+        id:"ei_deal_2026_09",
+        label:"Deal / Contract Payment",
+        amount:4500
+      };
+
+      cleaned.push(canonical);
+      return;
+    }
+
+    /*
+      Duplicate deal payment intentionally discarded.
+    */
+  });
+
+  /*
+    If the known payment somehow disappeared completely,
+    restore exactly one copy.
+  */
+
+  if(!canonical){
+
+    canonical={
+      id:"ei_deal_2026_09",
+      label:"Deal / Contract Payment",
+      amount:4500
+    };
+
+    cleaned.push(canonical);
+  }
+
+  sep.extraIncome=cleaned;
+}
+
+/* -------------------------------------------------
+   LEGACY SEED
+------------------------------------------------- */
 
 function seedLegacyData(){
 
@@ -1664,7 +2322,7 @@ function seedLegacyData(){
     S.monthBudgets||{};
 
   /*
-    Make sure the five initial months exist.
+    Make sure the five original months exist.
   */
 
   INITIAL_MONTHS.forEach(ym=>{
@@ -1691,204 +2349,25 @@ function seedLegacyData(){
   });
 
   /*
-    Add all original recurring expenses to
-    each initial month without duplicating
-    anything already entered by the user.
+    DO NOT simply push the old recurring expenses.
+
+    The cleanup function below will make sure every
+    initial month contains one canonical copy.
   */
 
-  INITIAL_MONTHS.forEach(ym=>{
-
-    const budget=
-      S.monthBudgets[ym] ||
-      normalizeBudget(S.categories);
-
-    upsertLegacyItem(
-      budget,
-      "housing",
-      "legacy_rent",
-      "Rent",
-      525
-    );
-
-    upsertLegacyItem(
-      budget,
-      "utilities",
-      "legacy_tmobile",
-      "T-Mobile",
-      250
-    );
-
-    upsertLegacyItem(
-      budget,
-      "transportation",
-      "legacy_tesla_ins",
-      "Tesla Insurance",
-      198.78
-    );
-
-    upsertLegacyItem(
-      budget,
-      "transportation",
-      "legacy_tesla_fsd",
-      "Tesla FSD",
-      106.67
-    );
-
-    upsertLegacyItem(
-      budget,
-      "transportation",
-      "legacy_tesla_rim",
-      "Rim & Tire Protection",
-      16
-    );
-
-    upsertLegacyItem(
-      budget,
-      "transportation",
-      "legacy_tesla_wind",
-      "Windshield Protection",
-      16
-    );
-
-    upsertLegacyItem(
-      budget,
-      "transportation",
-      "legacy_supercharging",
-      "Tesla Supercharging",
-      60
-    );
-
-    upsertLegacyItem(
-      budget,
-      "subscriptions",
-      "legacy_apple_one",
-      "Apple One",
-      39.99
-    );
-
-    upsertLegacyItem(
-      budget,
-      "subscriptions",
-      "legacy_starz",
-      "Starz",
-      11.99
-    );
-
-    upsertLegacyItem(
-      budget,
-      "subscriptions",
-      "legacy_paramount",
-      "Paramount+",
-      8
-    );
-
-    upsertLegacyItem(
-      budget,
-      "subscriptions",
-      "legacy_disney",
-      "Disney+",
-      10
-    );
-
-    upsertLegacyItem(
-      budget,
-      "subscriptions",
-      "legacy_prime",
-      "Amazon Prime",
-      7.53
-    );
-
-    upsertLegacyItem(
-      budget,
-      "subscriptions",
-      "legacy_applecare",
-      "AppleCare+ (Daughter's Phone)",
-      19.99
-    );
-
-    S.monthBudgets[ym]=
-      normalizeBudget(budget);
-  });
+  cleanupRecurringDuplicates();
 
   /*
     September extra income.
   */
 
-  S.monthOverrides=
-    S.monthOverrides||{};
-
-  S.monthOverrides["2026-09"]=
-    S.monthOverrides["2026-09"]||{};
-
-  const sep=
-    S.monthOverrides["2026-09"];
-
-  sep.extraIncome=
-    Array.isArray(sep.extraIncome)
-      ?sep.extraIncome
-      :[];
-
-  const deal=
-    sep.extraIncome.find(
-      e=>e.label==="Deal / Contract Payment"
-    );
-
-  if(deal){
-
-    deal.amount=4500;
-
-  }else{
-
-    sep.extraIncome.push({
-      id:"ei_deal_2026_09",
-      label:"Deal / Contract Payment",
-      amount:4500
-    });
-  }
+  cleanupExtraIncomeDuplicates();
 
   /*
     September one-time expenses.
   */
 
-  S.oneTimeExpenses=
-    Array.isArray(S.oneTimeExpenses)
-      ?S.oneTimeExpenses
-      :[];
-
-  LEGACY_ONE_TIME.forEach(item=>{
-
-    const existing=
-      S.oneTimeExpenses.find(
-        e=>
-          e.label===item.label &&
-          e.month===item.month
-      );
-
-    if(existing){
-
-      existing.amount=item.amount;
-
-    }else{
-
-      S.oneTimeExpenses.push(
-        clone(item)
-      );
-    }
-  });
-
-  /*
-    Remove obsolete duplicate deferred rent
-    from older versions.
-  */
-
-  S.oneTimeExpenses=
-    S.oneTimeExpenses.filter(
-      e=>
-        !(
-          e.label==="September Rent (deferred)" &&
-          e.month==="2026-09"
-        )
-    );
+  cleanupOneTimeDuplicates();
 
   /*
     Goals/checklist/paid tracking.
@@ -1911,7 +2390,12 @@ function seedLegacyData(){
     S.meta||{};
 
   S.meta.seededLegacyData=true;
+  S.meta.migrationVersion=MIGRATION_VERSION;
 }
+
+/* -------------------------------------------------
+   MIGRATION
+------------------------------------------------- */
 
 function migrateState(state){
 
@@ -1971,11 +2455,23 @@ function migrateState(state){
     state.meta||{};
 
   /*
-    If the old v2 architecture exists,
-    September may already contain the original
-    Tesla/Phone/Streaming categories.
-    Convert that data into the new categories
-    without deleting user data.
+    -------------------------------------------------
+    OLD V2 CATEGORY MIGRATION
+    -------------------------------------------------
+
+    Old builds could have:
+      tesla
+      phone
+      streaming
+      transportation
+
+    The old code copied those into the new categories
+    using new "migrated_*" IDs.
+
+    That was one of the sources of doubling.
+
+    We now map known expenses directly to the canonical
+    legacy IDs.
   */
 
   const sep=
@@ -1983,69 +2479,63 @@ function migrateState(state){
 
   if(sep){
 
-    if(sep.tesla){
+    /*
+      Tesla -> Transportation
+    */
 
-      (sep.tesla.items||[]).forEach(item=>{
+    migrateOldCategoryItems(
+      sep,
+      "tesla",
+      ["transportation"]
+    );
 
-        upsertLegacyItem(
-          sep,
-          "transportation",
-          "migrated_"+item.id,
-          item.label,
-          n(item.amount)
-        );
-      });
-    }
+    /*
+      Phone -> Utilities / Subscriptions.
 
-    if(sep.phone){
+      Known items such as Apple One, AppleCare+ and Prime
+      are matched to their canonical subscription entries.
+      Unknown phone items are preserved under Utilities.
+    */
 
-      (sep.phone.items||[]).forEach(item=>{
+    migrateOldCategoryItems(
+      sep,
+      "phone",
+      ["subscriptions","utilities"]
+    );
 
-        upsertLegacyItem(
-          sep,
-          "utilities",
-          "migrated_phone_"+item.id,
-          item.label,
-          n(item.amount)
-        );
-      });
-    }
+    /*
+      Streaming -> Subscriptions
+    */
 
-    if(sep.streaming){
+    migrateOldCategoryItems(
+      sep,
+      "streaming",
+      ["subscriptions"]
+    );
 
-      (sep.streaming.items||[]).forEach(item=>{
+    /*
+      Old transportation -> Transportation
+    */
 
-        upsertLegacyItem(
-          sep,
-          "subscriptions",
-          "migrated_stream_"+item.id,
-          item.label,
-          n(item.amount)
-        );
-      });
-    }
+    migrateOldCategoryItems(
+      sep,
+      "transportation",
+      ["transportation"]
+    );
 
-    if(sep.transportation){
-
-      (sep.transportation.items||[]).forEach(item=>{
-
-        upsertLegacyItem(
-          sep,
-          "transportation",
-          "migrated_transport_"+item.id,
-          item.label,
-          n(item.amount)
-        );
-      });
-    }
+    /*
+      Normalize after conversion.
+    */
 
     state.monthBudgets["2026-09"]=
       normalizeBudget(sep);
   }
 
   /*
-    Legacy month-specific system can already
-    contain values. Keep them intact.
+    Ensure the original months exist.
+
+    IMPORTANT:
+    Existing month budgets are never overwritten.
   */
 
   INITIAL_MONTHS.forEach(ym=>{
@@ -2067,8 +2557,27 @@ function migrateState(state){
     }
   });
 
+  /*
+    Cleanup happens after old-v2 conversion.
+  */
+
+  S=state;
+
+  cleanupRecurringDuplicates();
+  cleanupExtraIncomeDuplicates();
+  cleanupOneTimeDuplicates();
+
+  state.meta.migrationVersion=
+    MIGRATION_VERSION;
+
+  state.meta.seededLegacyData=true;
+
   return state;
 }
+
+/* -------------------------------------------------
+   LOAD STATE
+------------------------------------------------- */
 
 function loadState(){
 
@@ -2118,8 +2627,24 @@ function loadState(){
     S=clone(DEFAULT_STATE);
   }
 
+  /*
+    This is intentionally safe to run every load.
+
+    The migration is idempotent:
+    running it again produces the same data rather
+    than adding another copy.
+  */
+
   seedLegacyData();
+
   ensureAllMonths();
+
+  /*
+    Save the cleaned state immediately.
+
+    This is what actually fixes the already-doubled
+    data in localStorage.
+  */
 
   try{
 
@@ -2136,6 +2661,10 @@ function loadState(){
     );
   }
 }
+
+/* -------------------------------------------------
+   SAVE
+------------------------------------------------- */
 
 function save(){
 
@@ -4275,8 +4804,8 @@ function renderSheet(){
           ${esc(monthLabel(previous))}.
 
           After creation, you can change this
-          month's expenses without changing
-          the previous month.
+          month's expenses without changing the
+          previous month.
 
         </div>
 
@@ -5324,7 +5853,7 @@ function bindSheetEvents(){
 
         /*
           If goal month was removed,
-          move goal to the nearest remaining month.
+          move goal to nearest remaining month.
         */
 
         if(S.goalMonth===ym){
